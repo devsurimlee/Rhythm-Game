@@ -7,6 +7,9 @@ import javax.swing.ImageIcon;
 
 public class Note extends Thread {
 	private Image noteBasicImage = new ImageIcon(Main.class.getResource("../images/noteBasic.png")).getImage();
+	private Image noteEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
+	
 	private int x, y = 580 - (1000 / Main.SLEEP_TIME * Main.NOTE_SPEED) * Main.REACH_TIME; // 현재 노트 위치 확인, 노트 생성후, 정확히 1초 뒤에 판정라인에 도달한다.
 	private String noteType;
 	private boolean proceeded = true; //현재의 노트의 진행 여부를 체크

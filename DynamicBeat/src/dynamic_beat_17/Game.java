@@ -26,6 +26,9 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 //	private Image blueFlareImage;
 	private Image judgeImage;
+	private Image judgeEffectImage;
+
+	
 	private Image keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	private Image keyPadDImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	private Image keyPadFImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
@@ -34,6 +37,12 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image keyPadJImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	private Image keyPadKImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	private Image keyPadLImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
+	
+	//노트 판정이펙트추가
+	private Image keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
+	
+	
 
 	private String titleName;
 	private String difficulty;
@@ -65,6 +74,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawImage(noteRouteLineImage, 844, 30, null);
 		g.drawImage(noteRouteLineImage, 948, 30, null);
 		g.drawImage(noteRouteLineImage, 1052, 30, null);
+		g.drawImage(keyPadLEffectImage, 175, 500, null);
+
+		
+		
 		g.drawImage(gameInfoImage, 0, 660, null);
 		g.drawImage(judgementLineImage, 0, 580, null);
 		for (int i = 0; i < noteList.size(); i++) {
@@ -114,16 +127,26 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawImage(keyPadKImage, 848, 580, null);
 		g.drawImage(keyPadLImage, 952, 580, null);
 		
+		//
+//		g.drawImage(keyPadLEffectImage, 900, 500, null);
+
+		
+		
 	}
 
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
 		judge("s");
+		// 눌렀을때만 이펙트 뜸
+		keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
+
 	}
 
 	public void releaseS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
+		keyPadLEffectImage = null;
+
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
@@ -202,6 +225,8 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	public void releaseL() {
 		noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadLImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
+
+
 	}
 
 	@Override
@@ -414,6 +439,87 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 					new Beat(startTime, "Space"),
 			};
 		}
+		
+		else if(titleName.equals("Miya - Ask The Wind") && difficulty.equals("Easy")) {
+			int startTime = 1000;
+			beats = new Beat[] {
+					new Beat(startTime, "Space"),
+			};
+		}
+		
+		else if(titleName.equals("Miya - Ask The Wind") && difficulty.equals("Hard")) {
+			int startTime = 4460 - Main.REACH_TIME * 1000; //항상 똑같은 첫번째 노트가 판정바에 적중하는 박자 타이밍
+			int gap = 125 ; //박자 계산
+			beats = new Beat[] {
+					//수동으로 찍어줘야함.
+					new Beat(startTime + gap * 3 , "F"),
+					new Beat(startTime + gap * 13 , "J"),
+					new Beat(startTime + gap * 23 , "F"),
+					new Beat(startTime + gap * 33 , "J"),
+					new Beat(startTime + gap * 43 , "F"),
+					new Beat(startTime + gap * 53 , "D"),
+					new Beat(startTime + gap * 63 , "S"),
+					new Beat(startTime + gap * 73 , "D"),
+					new Beat(startTime + gap * 83 , "F"),
+					new Beat(startTime + gap * 93 , "F"),
+					new Beat(startTime + gap * 103 , "F"),
+					new Beat(startTime + gap * 113 , "F"),
+					new Beat(startTime + gap * 123 , "F"),
+					new Beat(startTime + gap * 133 , "F"),
+					new Beat(startTime + gap * 143 , "F"),
+					new Beat(startTime + gap * 153 , "F"),
+					new Beat(startTime + gap * 163 , "F"),
+					new Beat(startTime + gap * 173 , "F"),
+					new Beat(startTime + gap * 183 , "F"),
+					new Beat(startTime + gap * 193 , "F"),
+					new Beat(startTime + gap * 203 , "F"),
+					new Beat(startTime + gap * 213 , "F"),
+					new Beat(startTime + gap * 223 , "F"),
+					new Beat(startTime + gap * 233 , "F"),
+					new Beat(startTime + gap * 243 , "F"),
+					new Beat(startTime + gap * 253 , "F"),
+					new Beat(startTime + gap * 263 , "F"),
+					new Beat(startTime + gap * 273 , "F"),
+					new Beat(startTime + gap * 283 , "F"),
+					new Beat(startTime + gap * 293 , "F"),
+					new Beat(startTime + gap * 303 , "F"),
+					new Beat(startTime + gap * 313 , "F"),
+					new Beat(startTime + gap * 323 , "F"),
+					new Beat(startTime + gap * 333 , "F"),
+					new Beat(startTime + gap * 343 , "F"),
+					new Beat(startTime + gap * 353 , "F"),
+					new Beat(startTime + gap * 363 , "F"),
+					new Beat(startTime + gap * 373 , "F"),
+					new Beat(startTime + gap * 383 , "F"),
+					new Beat(startTime + gap * 393 , "F"),
+					new Beat(startTime + gap * 403 , "F"),
+					new Beat(startTime + gap * 413 , "F"),
+					new Beat(startTime + gap * 423 , "F"),
+					new Beat(startTime + gap * 433 , "F"),
+					new Beat(startTime + gap * 443 , "F"),
+					new Beat(startTime + gap * 453 , "F"),
+					new Beat(startTime + gap * 463 , "F"),
+					new Beat(startTime + gap * 473 , "F"),
+					new Beat(startTime + gap * 483 , "F"),
+					new Beat(startTime + gap * 493 , "F"),
+					new Beat(startTime + gap * 503 , "F"),
+					new Beat(startTime + gap * 513 , "F"),
+					new Beat(startTime + gap * 523 , "F"),
+					new Beat(startTime + gap * 533 , "F"),
+					new Beat(startTime + gap * 543 , "F"),
+					new Beat(startTime + gap * 553 , "F"),
+					new Beat(startTime + gap * 563 , "F"),
+					new Beat(startTime + gap * 573 , "F"),
+					new Beat(startTime + gap * 583 , "F"),
+					new Beat(startTime + gap * 593 , "F"),
+					new Beat(startTime + gap * 603 , "F"),
+					new Beat(startTime + gap * 613 , "F"),
+					new Beat(startTime + gap * 623 , "F"),
+					new Beat(startTime + gap * 723 , "F"),
+					new Beat(startTime + gap * 823 , "F"),	
+			};
+		}
+		
 		int i = 0;
 		gameMusic.start();
 		while (i < beats.length && !isInterrupted()) {
@@ -429,7 +535,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 				try {
 					Thread.sleep(5);
 				}catch(Exception e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 			}
 		}
@@ -465,12 +571,18 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 		else if(judge.equals("Good")) { score += 300;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGood.png")).getImage();
+			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
 		}
 		else if(judge.equals("Great")) {score += 400;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGreat.png")).getImage();
+			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
 		}
 		else if(judge.equals("Perfect")) { score += 500;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgePerfect.png")).getImage();
+			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
 		}
 		else if(judge.equals("Early")) { score +=100;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeEarly.png")).getImage();
