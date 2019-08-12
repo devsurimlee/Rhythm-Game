@@ -16,8 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class DynamicBeat extends JFrame {
+public class DynamicBeat extends JPanel /*JFrame*/ {
 
 	private Image screenImage; // 더블버퍼링을 위해 전체 화면에 대해서 이미지를 담는 두 인스턴스
 	private Graphics screenGraphic;
@@ -83,13 +84,13 @@ public class DynamicBeat extends JFrame {
 				trackList.add(new Track("Energy Title Image.png", "Energy Start Image.jpg", 
 						"Energy Game Image.jpg", "Energy Selected.mp3", "Bensound - Energy.mp3", "Bensound - Energy"));
 				
-		setUndecorated(true); // 실행 시 기본적으로 보이는 메뉴바가 보이지 않게됨
-		setTitle("Dynamic Beat");
-		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-		setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
-		setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
-		setVisible(true); // 게임 화면이 정상적으로 출력되도록(보이게 하도록)
+//		setUndecorated(true); // 실행 시 기본적으로 보이는 메뉴바가 보이지 않게됨
+//		setTitle("Dynamic Beat");
+//		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+//		setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
+//		setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
+//		setVisible(true); // 게임 화면이 정상적으로 출력되도록(보이게 하도록)
 		setBackground(new Color(0, 0, 0, 0)); // 페인트 컬러시 배경을 회색이 아니라 전부 흰색으로 변환
 		setLayout(null); // 버튼이나 다른것들을 넣었을때 그 위치에 그대로 꽂히도록 설정
 

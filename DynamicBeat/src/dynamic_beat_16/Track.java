@@ -8,6 +8,7 @@ public class Track {
 	private String startMusic; //게임 선택 창 음악
 	private String gameMusic; // 해당 곡을 실행했을 때 음악
 	private String titleName; //곡 제목
+//	private String gameMovie; //게임 영상
 	
 	public String getTitleImage() {
 		return titleImage;
@@ -47,13 +48,14 @@ public class Track {
 	}
 
 	//생성자 추가(<생성자 필드 생성> track 클래스를 이용해서 새로운 변수를 만들어 줄때 한번에 값들을 초기화 해주는 메소드)
-	public Track(String titleImage, String startImage, String gameImage, String startMusic, String gameMusic, String titleName) {
+	public Track(String titleImage, String startImage, String gameImage, String startMusic, String gameMusic, /*String gameMovie,*/ String titleName) {
 		super();
 		this.titleImage = titleImage;
 		this.startImage = startImage;
 		this.gameImage = gameImage;
 		this.startMusic = startMusic;
 		this.gameMusic = gameMusic;
+//		this.gameMovie = gameMovie;
 		this.titleName = titleName;
 	}
 	
