@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
 	
-	int score = 0; //String padding 하기
+	int score = 0; 
 //겜 스타트때 0 초기화
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
@@ -97,8 +97,12 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawString("L", 993, 609);
 		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(new Font("Elephant", Font.BOLD, 30));
-		String stringScore = String.valueOf(this.score);
-		g.drawString(stringScore, 565, 702); // 점수 출력
+		
+		//점수 출력
+		String suffix = String.format("%06d", score);
+//		String stringScore = String.valueOf(this.score);
+//		String temp = leftPad(stringScore, 6, '0');
+		g.drawString(suffix, 565, 702); // 점수 출력
 //		g.drawImage(blueFlareImage, 320, 430, null);
 		g.drawImage(judgeImage, 460, 420, null);
 		g.drawImage(keyPadSImage, 228, 580, null);
