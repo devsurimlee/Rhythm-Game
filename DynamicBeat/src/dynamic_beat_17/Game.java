@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
-
+	
+	int score = 0; //String padding 하기
+//겜 스타트때 0 초기화
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
 	private Image gameInfoImage = new ImageIcon(Main.class.getResource("../images/gameInfo.png")).getImage();
@@ -37,7 +39,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private String difficulty;
 	private String musicTitle;
 	private Music gameMusic;
-
 	ArrayList<Note> noteList = new ArrayList<Note>();
 
 	public Game(String titleName, String difficulty, String musicTitle) { // 생성자 생성
@@ -96,7 +97,8 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawString("L", 993, 609);
 		g.setColor(Color.LIGHT_GRAY);
 		g.setFont(new Font("Elephant", Font.BOLD, 30));
-		g.drawString("000000", 565, 702); // 점수 출력
+		String stringScore = String.valueOf(this.score);
+		g.drawString(stringScore, 565, 702); // 점수 출력
 //		g.drawImage(blueFlareImage, 320, 430, null);
 		g.drawImage(judgeImage, 460, 420, null);
 		g.drawImage(keyPadSImage, 228, 580, null);
@@ -429,6 +431,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 	}
 	
+	public void scoreDraw(Graphics2D g, int score) {
+		
+	}
+	
 	public void judge(String input) {
 		for(int i = 0; i < noteList.size(); i++) { //먼저 입력된 것부터 찾음. 큐처럼 사용
 			Note note = noteList.get(i);
@@ -439,26 +445,30 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 	}
 	
+
+//	g.drawString("000000", 565, 702); // 점수 출력
+	
 	public void judgeEvent(String judge) {
 		if(!judge.equals("None")) {
 //			blueFlareImage = new ImageIcon(Main.class.getResource("../images/blueFlare.png")).getImage();
 		}
 		if(judge.equals("Miss")) {
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeMiss.png")).getImage();
+			
 		}
-		else if(judge.equals("Late")) {
+		else if(judge.equals("Late")) { score +=100;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeLate.png")).getImage();
 		}
-		else if(judge.equals("Good")) {
+		else if(judge.equals("Good")) { score += 300;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGood.png")).getImage();
 		}
-		else if(judge.equals("Great")) {
+		else if(judge.equals("Great")) {score += 400;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGreat.png")).getImage();
 		}
-		else if(judge.equals("Perfect")) {
+		else if(judge.equals("Perfect")) { score += 500;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgePerfect.png")).getImage();
 		}
-		else if(judge.equals("Early")) {
+		else if(judge.equals("Early")) { score +=100;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeEarly.png")).getImage();
 		}
 		
