@@ -465,4 +465,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	}
 	
 	
+	
+	
 }
