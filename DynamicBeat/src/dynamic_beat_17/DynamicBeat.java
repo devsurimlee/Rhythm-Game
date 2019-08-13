@@ -90,7 +90,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 						"Wild Flower Selected.mp3", "Joakim Karud - Wild Flower.mp3", "Joakim Karud - Wild Flower"));
 		trackList.add(new Track("Energy Title Image.png", "Energy Start Image.jpg", "Energy Game Image.jpg",
 				"Energy Selected.mp3", "Bensound - Energy.mp3", "Bensound - Energy"));
-		trackList.add(new Track("Energy Title Image.png", "Ask The Wind Start.jpg", "Energy Game Image.jpg",
+		trackList.add(new Track("Energy Title Image.png", "Ask The Wind Start.jpg", "Ask The Wind Game.jpg",
 				"Miya - Ask the wind.mp3", "Miya - Ask the wind.mp3", "Miya - Ask The Wind"));
 
 //		setUndecorated(true); // 실행 시 기본적으로 보이는 메뉴바가 보이지 않게됨
@@ -458,6 +458,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
 		hardButton.setVisible(false);
 		selectedMusic.close();
+		
+		introMusic = new Music("introMusic.mp3", true);
 		introMusic.start();
 		/// 클로즈로 저장하면 스레드가 지워져서 일드나 슬립으로 해야됨
 	}
