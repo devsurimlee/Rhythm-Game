@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="DynamicBeat/src"/>
+	<classpathentry kind="lib" path="DynamicBeat/lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="DynamicBeat/lib/jna-5.4.0.jar"/>
+	<classpathentry kind="lib" path="DynamicBeat/lib/jna-platform-5.4.0.jar"/>
+	<classpathentry kind="lib" path="DynamicBeat/lib/vlcj.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

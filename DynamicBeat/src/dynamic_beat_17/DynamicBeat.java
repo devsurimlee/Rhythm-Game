@@ -84,7 +84,7 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 				trackList.add(new Track("Energy Title Image.png", "Energy Start Image.jpg", 
 						"Energy Game Image.jpg", "Energy Selected.mp3", "Bensound - Energy.mp3", "Bensound - Energy"));
 				trackList.add(new Track("Energy Title Image.png", "Ask The Wind Start.jpg", 
-						"Ask The Wind Game.jpg", "Miya - Ask the wind.mp3", "Miya - Ask the wind.mp3", "Miya - Ask The Wind"));
+						"Energy Game Image.jpg", "Miya - Ask the wind.mp3", "Miya - Ask the wind.mp3", "Miya - Ask The Wind"));
 				
 //		setUndecorated(true); // 실행 시 기본적으로 보이는 메뉴바가 보이지 않게됨
 //		setTitle("Dynamic Beat");
