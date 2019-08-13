@@ -26,8 +26,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 //	private Image blueFlareImage;
 	private Image judgeImage;
-	private Image judgeEffectImage;
-
 	
 	private Image keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	private Image keyPadDImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
@@ -39,7 +37,15 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image keyPadLImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	
 	//노트 판정이펙트추가
+	private Image keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+	private Image keyPadDEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+	private Image keyPadFEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+	private Image keyPadSpaceLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+	private Image keyPadJEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+	private Image keyPadKEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 	private Image keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+
+	
 
 	
 	
@@ -74,7 +80,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawImage(noteRouteLineImage, 844, 30, null);
 		g.drawImage(noteRouteLineImage, 948, 30, null);
 		g.drawImage(noteRouteLineImage, 1052, 30, null);
-		g.drawImage(keyPadLEffectImage, 175, 500, null);
 
 		
 		
@@ -127,50 +132,61 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		g.drawImage(keyPadKImage, 848, 580, null);
 		g.drawImage(keyPadLImage, 952, 580, null);
 		
-		//
-//		g.drawImage(keyPadLEffectImage, 900, 500, null);
+		g.drawImage(keyPadSEffectImage, 180, 500, null);
+		g.drawImage(keyPadDEffectImage, 280, 500, null);
+		g.drawImage(keyPadFEffectImage, 380, 500, null);
+		
+//		g.drawImage(keyPadSpaceEffectImage, 180, 500, null);
+		g.drawImage(keyPadJEffectImage, 680, 500, null);
+		g.drawImage(keyPadKEffectImage, 780, 500, null);
+		g.drawImage(keyPadLEffectImage, 880, 500, null);
+
 
 		
 		
 	}
 
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
-		judge("s");
+		judge("S");
 		// 눌렀을때만 이펙트 뜸
-		keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
+		
+		keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
-
+		
 	}
 
 	public void releaseS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
-		keyPadLEffectImage = null;
-
+		keyPadSEffectImage = null;
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadSImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
 
 	public void pressD() {
-		judge("S");
+		judge("D");
+		keyPadDEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteDImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadDImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
 	}
 
 	public void releaseD() {
+		keyPadDEffectImage = null;
 		noteRouteDImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadDImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
 
 	public void pressF() {
 		judge("F");
+		keyPadFEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteFImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadFImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
 	}
 
 	public void releaseF() {
+		keyPadFEffectImage = null;
 		noteRouteFImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadFImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
@@ -193,36 +209,42 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 	public void pressJ() {
 		judge("J");
+		keyPadJEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteJImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadJImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
 	}
 
 	public void releaseJ() {
+		keyPadJEffectImage = null;
 		noteRouteJImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadJImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
 
 	public void pressK() {
 		judge("K");
+		keyPadKEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteKImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadKImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
 	}
 
 	public void releaseK() {
+		keyPadKEffectImage = null;
 		noteRouteKImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadKImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 	}
 
 	public void pressL() {
 		judge("L");
+		keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 		noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadLImage = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
 		new Music("drumHihat1.mp3", false).start();
 	}
 
 	public void releaseL() {
+		keyPadLEffectImage = null;
 		noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadLImage = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
 
@@ -571,17 +593,14 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 		else if(judge.equals("Good")) { score += 300;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGood.png")).getImage();
-			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 
 		}
 		else if(judge.equals("Great")) {score += 400;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgeGreat.png")).getImage();
-			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 
 		}
 		else if(judge.equals("Perfect")) { score += 500;
 			judgeImage = new ImageIcon(Main.class.getResource("../images/judgePerfect.png")).getImage();
-			judgeEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 
 		}
 		else if(judge.equals("Early")) { score +=100;
