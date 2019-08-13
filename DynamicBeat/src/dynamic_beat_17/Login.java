@@ -1,6 +1,8 @@
 package dynamic_beat_17;
 
+
 import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Example {
+public class Login {
 
 	private JFrame frame;
 	private JTextField userName;
@@ -24,7 +26,7 @@ public class Example {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Example window = new Example();
+					Login window = new Login();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +38,7 @@ public class Example {
 	/**
 	 * Create the application.
 	 */
-	public Example() {
+	public Login() {
 		initialize();
 	}
 
@@ -49,12 +51,12 @@ public class Example {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblUser = new JLabel("User");
-		lblUser.setBounds(37, 59, 136, 29);
+		JLabel lblUser = new JLabel("ID :");
+		lblUser.setBounds(99, 59, 74, 29);
 		frame.getContentPane().add(lblUser);
 		
-		JLabel lblPw = new JLabel("PW");
-		lblPw.setBounds(37, 115, 136, 29);
+		JLabel lblPw = new JLabel("PW :");
+		lblPw.setBounds(99, 115, 74, 29);
 		frame.getContentPane().add(lblPw);
 		
 		userName = new JTextField();
@@ -83,7 +85,11 @@ public class Example {
 				
 			}
 		});
-		btnNewButton.setBounds(62, 194, 97, 23);
+		btnNewButton.setBounds(147, 168, 97, 23);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnSignUp = new JButton("Sign up");
+		btnSignUp.setBounds(147, 211, 97, 23);
+		frame.getContentPane().add(btnSignUp);
 	}
 }

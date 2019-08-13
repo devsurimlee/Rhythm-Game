@@ -27,8 +27,8 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 	// 변수에 초기화 해주는것.
 	// background를 위쪽에서 바로 초기화 하도록 설정
 
-	private ImageIcon exitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/exitButtonEntered.png"));
-	private ImageIcon exitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/exitButtonBasic.png"));
+//	private ImageIcon exitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/exitButtonEntered.png"));
+//	private ImageIcon exitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/exitButtonBasic.png"));
 	private ImageIcon startButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/startButtonEntered.png"));
 	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));
 	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
@@ -46,9 +46,9 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 
 	//introBackground => background 로 한 이유는 시작화면에서 메인화면으로 전환되었을 경우 단순히 변수에 이미지만 변경하기 위해서
 	private Image background = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
-	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
+//	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
 
-	private JButton exitButton = new JButton(exitButtonBasicImage);
+//	private JButton exitButton = new JButton(exitButtonBasicImage);
 	private JButton startButton = new JButton(startButtonBasicImage);
 	private JButton quitButton = new JButton(quitButtonBasicImage);
 	private JButton leftButton = new JButton(leftButtonBasicImage);
@@ -101,38 +101,38 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 		introMusic.start(); // 게임을 실행하면서 동시에 음악이 시작됨.
 		
 		
-		exitButton.setBounds(1245, 0, 30, 30); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
-		exitButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
-		exitButton.setContentAreaFilled(false);
-		exitButton.setFocusPainted(false);
-		exitButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				exitButton.setIcon(exitButtonEnteredImage); // 마우스가 올라갔을때 엔터이미지로 변경
-				exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); //마우스가 올라갔을때 커서 변경
-				Music buttonEnteredMusic = new Music("buttonEnteredMusic.mp3", false);
-				buttonEnteredMusic.start(); //마우스가 올라갔을때 효과음
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				exitButton.setIcon(exitButtonBasicImage); // 마우스가 벗어났을때 베이직으로 변경
-				exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); //마우스가 벗어났을때 커서 변경
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
-				buttonEnteredMusic.start(); //마우스가 클릭되었을때 효과음
-				try {
-					Thread.sleep(1000); //효과음을 못 듣고 꺼질 경우를 대비해 소리가 나온 후 1초 후에 종료시키는 것
-				} catch(InterruptedException ex) {
-					ex.printStackTrace();
-				}
-				System.exit(0); // 클릭 했을때 해당 자체 게임이 종료가 된다.
-			}
-		});
-		add(exitButton); 
+//		exitButton.setBounds(1245, 0, 30, 30); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
+//		exitButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
+//		exitButton.setContentAreaFilled(false);
+//		exitButton.setFocusPainted(false);
+//		exitButton.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				exitButton.setIcon(exitButtonEnteredImage); // 마우스가 올라갔을때 엔터이미지로 변경
+//				exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); //마우스가 올라갔을때 커서 변경
+//				Music buttonEnteredMusic = new Music("buttonEnteredMusic.mp3", false);
+//				buttonEnteredMusic.start(); //마우스가 올라갔을때 효과음
+//			}
+//
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				exitButton.setIcon(exitButtonBasicImage); // 마우스가 벗어났을때 베이직으로 변경
+//				exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); //마우스가 벗어났을때 커서 변경
+//			}
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
+//				buttonEnteredMusic.start(); //마우스가 클릭되었을때 효과음
+//				try {
+//					Thread.sleep(1000); //효과음을 못 듣고 꺼질 경우를 대비해 소리가 나온 후 1초 후에 종료시키는 것
+//				} catch(InterruptedException ex) {
+//					ex.printStackTrace();
+//				}
+//				System.exit(0); // 클릭 했을때 해당 자체 게임이 종료가 된다.
+//			}
+//		});
+//		add(exitButton); 
 		
 		startButton.setBounds(40, 200, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		startButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
@@ -340,24 +340,24 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 		});
 		add(backButton);
 		
-		menuBar.setBounds(0, 0, 1280, 30);
-		menuBar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mouseX = e.getX();
-				mouseY = e.getY(); // 이벤트 발생시 x좌표와 y좌표를 얻어오겠다.
-			}
-		});
-		menuBar.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x = e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x - mouseX, y - mouseY); // JFrame의 위치 자체를 변경,
-				// 드래그 할때 자동으로 x좌표, y좌표를 얻어와서 자동으로 게임창의 위치를 바꿔줌 -> 메뉴바를 가지고 이동 가능
-			}
-		});
-		add(menuBar); // JFrame에 메뉴바가 추가되는것
+//		menuBar.setBounds(0, 0, 1280, 30);
+//		menuBar.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				mouseX = e.getX();
+//				mouseY = e.getY(); // 이벤트 발생시 x좌표와 y좌표를 얻어오겠다.
+//			}
+//		});
+//		menuBar.addMouseMotionListener(new MouseMotionAdapter() {
+//			@Override
+//			public void mouseDragged(MouseEvent e) {
+//				int x = e.getXOnScreen();
+//				int y = e.getYOnScreen();
+//				setLocation(x - mouseX, y - mouseY); // JFrame의 위치 자체를 변경,
+//				// 드래그 할때 자동으로 x좌표, y좌표를 얻어와서 자동으로 게임창의 위치를 바꿔줌 -> 메뉴바를 가지고 이동 가능
+//			}
+//		});
+//		add(menuBar); // JFrame에 메뉴바가 추가되는것
 	}
 
 	public void paint(Graphics g) {
