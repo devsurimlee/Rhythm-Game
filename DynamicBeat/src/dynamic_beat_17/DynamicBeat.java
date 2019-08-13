@@ -340,24 +340,24 @@ public class DynamicBeat extends JPanel /*JFrame*/ {
 		});
 		add(backButton);
 		
-		menuBar.setBounds(0, 0, 1280, 30);
-		menuBar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				mouseX = e.getX();
-				mouseY = e.getY(); // 이벤트 발생시 x좌표와 y좌표를 얻어오겠다.
-			}
-		});
-		menuBar.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				int x = e.getXOnScreen();
-				int y = e.getYOnScreen();
-				setLocation(x - mouseX, y - mouseY); // JFrame의 위치 자체를 변경,
-				// 드래그 할때 자동으로 x좌표, y좌표를 얻어와서 자동으로 게임창의 위치를 바꿔줌 -> 메뉴바를 가지고 이동 가능
-			}
-		});
-		add(menuBar); // JFrame에 메뉴바가 추가되는것
+//		menuBar.setBounds(0, 0, 1280, 30);
+//		menuBar.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				mouseX = e.getX();
+//				mouseY = e.getY(); // 이벤트 발생시 x좌표와 y좌표를 얻어오겠다.
+//			}
+//		});
+//		menuBar.addMouseMotionListener(new MouseMotionAdapter() {
+//			@Override
+//			public void mouseDragged(MouseEvent e) {
+//				int x = e.getXOnScreen();
+//				int y = e.getYOnScreen();
+//				setLocation(x - mouseX, y - mouseY); // JFrame의 위치 자체를 변경,
+//				// 드래그 할때 자동으로 x좌표, y좌표를 얻어와서 자동으로 게임창의 위치를 바꿔줌 -> 메뉴바를 가지고 이동 가능
+//			}
+//		});
+//		add(menuBar); // JFrame에 메뉴바가 추가되는것
 	}
 
 	public void paint(Graphics g) {
