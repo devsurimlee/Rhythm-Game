@@ -473,9 +473,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 	}
 
-	public void scoreDraw(Graphics2D g, int score) {
-
-	}
 
 	public void judgeKey(String input) {
 		for (int i = 0; i < noteList.size(); i++) { // 먼저 입력된 것부터 찾음. 큐처럼 사용

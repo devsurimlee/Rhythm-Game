@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import dynamic_beat_17.control.DynamicBeat;
 import dynamic_beat_17.view.Login;
+import dynamic_beat_17.view.SignUp;
 
 
 

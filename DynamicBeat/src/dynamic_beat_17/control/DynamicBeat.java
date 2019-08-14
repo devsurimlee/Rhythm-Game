@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,6 +52,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	private ImageIcon hardButtonBasicImage = new ImageIcon(Main.class.getResource("../images/hardButtonBasic.png"));
 	private ImageIcon backButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/backButtonEntered.png"));
 	private ImageIcon backButtonBasicImage = new ImageIcon(Main.class.getResource("../images/backButtonBasic.png"));
+	
+
 
 	// introBackground => background 로 한 이유는 시작화면에서 메인화면으로 전환되었을 경우 단순히 변수에 이미지만
 	// 변경하기 위해서
@@ -67,11 +70,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	private JButton hardButton = new JButton(hardButtonBasicImage);
 	private JButton backButton = new JButton(backButtonBasicImage);
 
-	private int mouseX, mouseY; // 프로그램 상에서 마우스 x좌표와 y좌표를 의미한다.
-
-//	private boolean isMainScreen = false; // 시작화면일때는 false, 메인 화면일때는 true값으로 변경
-//	private boolean isGameScreen = false; // 게임 화면으로 넘어온 변수 인지 아닌지
-
 	ArrayList<Track> trackList = new ArrayList<Track>(); // ArrayList 사용, 인덱스 0부터 사용.
 
 	// 처음에는 선언만 할 수 있도록 ,초기화 시킬 필요 없도록
@@ -85,7 +83,10 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 하나의 게임이라는 것은 하나의 프로그램이 실행되었을때 단 하나의 게임만 진행 가능, 즉 동시에 여러 게임을 실행 시킬 수 없기때문에,
 	// 프로그램 전체에서 통용이 가능하다.
 	public static Game game; // 따라서, public static으로 선언해준다. 이제 게임이라는 변수는 프로젝트 전체에서 사용 가능한 변수가 된다.
-
+	
+	//랭크선언
+	public static Rank rank;
+	
 	public DynamicBeat(Main win ) /* 생성자 */ {
 		// 순서에 맞게 넣어줌으로써 변수를 순식간에 초기화, 초기화 된 변수를 트랙리스트에 넣어줌으로써 곡들의 리스트를 관리할 수 있게 됨
 		trackList.add(
@@ -390,13 +391,18 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		g.drawImage(screenImage, 0, 0, null); // 스크린 이미지를 0,0위치에 그려줌
 
 	}
-
+	
+	//그림 그리는 부분
 	public void screenDraw(Graphics2D g) { // 그래픽스2D 매개변수로 변환
 		g.drawImage(background, 0, 0, null); // add 된 것들이 아닌 단순 이미지들을 화면에 출력해주는것
 		if (stage == 1) {
 			g.drawImage(selectedImage, 340, 100, null);
 			g.drawImage(titleImage, 340, 70, null);
 		}
+		if (stage ==2 ) {
+		rank.screenDraw(g);
+		}
+		
 		if (stage == 3) {
 			game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
 		}
@@ -492,7 +498,12 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		hardButton.setVisible(false);
 		if (selectedMusic != null)
 		selectedMusic.close();
-
+		rank = new Rank();
+		rank.start();
+		
+//		List<Rank>rank= new ArrayList<>();
+//		rank.add(1, "aa");
+//		rank.add(2, "aa");
 		
 	}
 	
@@ -501,8 +512,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		stage = 3;
 		if (selectedMusic != null)
 			selectedMusic.close();
-//		isMainScreen = false; // 메인 스크린이 아니란걸 변수로 표현, 따라서 screen draw에서 if 부분이 실행이 안됨
-//		isGameScreen = true;
 		leftButton.setVisible(false); // 메인화면이 아니므로, 곡 선택 버튼은 보여지면 안된다.
 		rightButton.setVisible(false);
 		easyButton.setVisible(false); // 메인화면이 아니므로, 난이도 버튼은 보여지면 안된다.
@@ -514,6 +523,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				trackList.get(nowSelected).getGameMusic());
 		game.start(); // 런 함수 자동 실행, 노트 생성됨.
 		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
+		
 	}
 	
 	
