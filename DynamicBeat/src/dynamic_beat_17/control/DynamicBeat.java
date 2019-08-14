@@ -20,11 +20,13 @@ import javax.swing.JPanel;
 
 import dynamic_beat_17.Main;
 import dynamic_beat_17.model.Track;
+import panelChangeExample.LoginTest;
 
 public class DynamicBeat extends JPanel /* JFrame */ {
 
 	private Image screenImage; // 더블버퍼링을 위해 전체 화면에 대해서 이미지를 담는 두 인스턴스
 	private Graphics screenGraphic;
+	private LoginTest win;
 
 	// Main클래스의 위치를 기반으로 해서 인트로이미지 파일을 얻어온 후 그것의 이미지 인스턴스를 background 라는 이미지
 	// 변수에 초기화 해주는것.
@@ -89,7 +91,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 프로그램 전체에서 통용이 가능하다.
 	public static Game game; // 따라서, public static으로 선언해준다. 이제 게임이라는 변수는 프로젝트 전체에서 사용 가능한 변수가 된다.
 
-	public DynamicBeat() /* 생성자 */ {
+	public DynamicBeat(LoginTest win ) /* 생성자 */ {
 		// 순서에 맞게 넣어줌으로써 변수를 순식간에 초기화, 초기화 된 변수를 트랙리스트에 넣어줌으로써 곡들의 리스트를 관리할 수 있게 됨
 		trackList.add(
 				new Track("Mighty Love Title Image.png", "Mighty Love Start Image.jpg", "Mighty Love Game Image.jpg",
@@ -110,6 +112,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
 //		setVisible(true); // 게임 화면이 정상적으로 출력되도록(보이게 하도록)
 		setBackground(new Color(0, 0, 0, 0)); // 페인트 컬러시 배경을 회색이 아니라 전부 흰색으로 변환
+		
+		this.win = win;
+		
 		setLayout(null); // 버튼이나 다른것들을 넣었을때 그 위치에 그대로 꽂히도록 설정
 
 		addKeyListener(new KeyListener()); // 키리스너를 사용

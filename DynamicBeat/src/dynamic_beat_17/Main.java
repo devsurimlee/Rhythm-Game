@@ -21,7 +21,7 @@ public class Main {
 		frame.setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
 		frame.setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
-		frame.add(new DynamicBeat());
+//		frame.add(new DynamicBeat());
 		frame.setVisible(true);
 	}
 }
