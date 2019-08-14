@@ -5,18 +5,26 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import dynamic_beat_17.Main;
+import dynamic_beat_17.common.DAO;
+import dynamic_beat_17.model.User;
+import dynamic_beat_17.service.impl.UserDAO;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class SignUp extends JPanel {
-	private JTextField textField;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
+	private JTextField IDField;
+	private JPasswordField PWField;
+	private JPasswordField CPWField;
 	private Main win;
-
+	JButton btnLogin;
+	JButton btnSignUp;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -36,30 +44,30 @@ public class SignUp extends JPanel {
 		label_2.setBounds(131, 181, 57, 15);
 		add(label_2);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(211, 93, 116, 21);
-		add(textField);
+		IDField = new JTextField();
+		IDField.setColumns(10);
+		IDField.setBounds(211, 93, 116, 21);
+		add(IDField);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(211, 139, 116, 21);
-		add(passwordField);
+		PWField = new JPasswordField();
+		PWField.setBounds(211, 139, 116, 21);
+		add(PWField);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(211, 178, 116, 21);
-		add(passwordField_1);
+		CPWField = new JPasswordField();
+		CPWField.setBounds(211, 178, 116, 21);
+		add(CPWField);
 		
-		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp =  new JButton("Sign Up");
 		
 		btnSignUp.setBounds(119, 230, 97, 23);
 		add(btnSignUp);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin  = new JButton("Login");
 		btnLogin.setBounds(230, 230, 97, 23);
 		add(btnLogin);
 		
 		btnLogin.addActionListener(new MyActionListener());
-			
+		btnSignUp.addActionListener(new MyActionListener());	
 		
 		JButton btnNewButton = new JButton("CF");
 		btnNewButton.setBounds(339, 92, 57, 23);
@@ -67,9 +75,27 @@ public class SignUp extends JPanel {
 
 	}
 	class MyActionListener implements ActionListener{
+		@SuppressWarnings("deprecation")
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			win.change("login");
+			if(e.getSource() == btnSignUp) {
+				try {
+					User user = new User();
+					System.out.println("아이디>");
+					user.setUserid(IDField.getText());
+					System.out.println("비밀번호>");
+					user.setPasswd(PWField.getText());
+					if(PWField.getText() != CPWField.getText()) {
+						System.out.println();
+					}
+					UserDAO.getInstance().insert(user);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}else if(e.getSource() == btnLogin)
+				win.change("login");
 		}
 	}
+	
+	
 }

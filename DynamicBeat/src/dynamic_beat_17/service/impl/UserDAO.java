@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import dynamic_beat_17.common.DAO;
 import dynamic_beat_17.model.User;
 
-public class UserDAO extends DAO{
+public class UserDAO {
 
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -20,12 +20,12 @@ public class UserDAO extends DAO{
 	}
 	
 	// 유저 등록
-		public void insert(Connection conn, User user) throws Exception {
+		public void insert( User user) throws Exception {
 
 			// 1. connect
-
+			Connection conn = DAO.getConnect();
 			// 2. 구문
-			String sql = "INSERT INTO GAME_USER (user_id, user_pw) values(?, ?)";
+			String sql = "INSERT INTO GAME_USER (id, pw) values(?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			// 3. 파라미터 셋팅
@@ -37,6 +37,7 @@ public class UserDAO extends DAO{
 			System.out.println(r + "건이 처리되었습니다.");
 
 			// 5. 연결 해제
+			DAO.close(conn);
 		}
 
 		
