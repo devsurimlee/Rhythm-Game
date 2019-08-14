@@ -1,75 +1,72 @@
 package dynamic_beat_17;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class SignUp {
-
-	private JFrame frame;
+public class SignUp extends JPanel {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private Main win;
 
 	/**
-	 * Launch the application.
+	 * Create the panel.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SignUp window = new SignUp();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public SignUp() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+	public SignUp(Main win) {
+		setLayout(null);
+		this.win = win;
 		
-		JLabel lblId = new JLabel("ID: ");
-		lblId.setBounds(82, 65, 57, 15);
-		frame.getContentPane().add(lblId);
+		JLabel label = new JLabel("ID: ");
+		label.setBounds(131, 96, 57, 15);
+		add(label);
 		
-		JLabel lblPw = new JLabel("PW: ");
-		lblPw.setBounds(82, 108, 57, 15);
-		frame.getContentPane().add(lblPw);
+		JLabel label_1 = new JLabel("PW: ");
+		label_1.setBounds(131, 139, 57, 15);
+		add(label_1);
 		
-		JLabel lblCpw = new JLabel("CPW: ");
-		lblCpw.setBounds(82, 150, 57, 15);
-		frame.getContentPane().add(lblCpw);
+		JLabel label_2 = new JLabel("CPW: ");
+		label_2.setBounds(131, 181, 57, 15);
+		add(label_2);
 		
 		textField = new JTextField();
-		textField.setBounds(162, 62, 116, 21);
-		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+		textField.setBounds(211, 93, 116, 21);
+		add(textField);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(162, 108, 116, 21);
-		frame.getContentPane().add(passwordField);
+		passwordField.setBounds(211, 139, 116, 21);
+		add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(162, 147, 116, 21);
-		frame.getContentPane().add(passwordField_1);
+		passwordField_1.setBounds(211, 178, 116, 21);
+		add(passwordField_1);
+		
+		JButton btnSignUp = new JButton("Sign Up");
+		
+		btnSignUp.setBounds(119, 230, 97, 23);
+		add(btnSignUp);
+		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBounds(230, 230, 97, 23);
+		add(btnLogin);
+		
+		btnLogin.addActionListener(new MyActionListener());
+			
+		
+		JButton btnNewButton = new JButton("CF");
+		btnNewButton.setBounds(339, 92, 57, 23);
+		add(btnNewButton);
+
+	}
+	class MyActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			win.change("login");
+		}
 	}
 }
