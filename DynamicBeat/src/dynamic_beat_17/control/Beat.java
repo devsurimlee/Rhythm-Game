@@ -1,4 +1,4 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 public class Beat {
 

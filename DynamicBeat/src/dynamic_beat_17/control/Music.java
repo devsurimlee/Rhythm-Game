@@ -1,10 +1,11 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 import java.io.BufferedInputStream;
 
 import java.io.File;
 import java.io.FileInputStream;
 
+import dynamic_beat_17.Main;
 import javazoom.jl.player.Player;
 
 public class Music extends Thread /* thread는 프로그램 안에 있는 하나의 작은 프로그램 */ {

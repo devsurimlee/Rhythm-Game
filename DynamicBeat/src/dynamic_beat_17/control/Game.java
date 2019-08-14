@@ -1,4 +1,4 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
+import dynamic_beat_17.Main;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
 

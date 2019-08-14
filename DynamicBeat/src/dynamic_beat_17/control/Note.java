@@ -1,9 +1,11 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+
+import dynamic_beat_17.Main;
 
 public class Note extends Thread {
 	private Image noteBasicImage = new ImageIcon(Main.class.getResource("../images/noteBasic.png")).getImage();

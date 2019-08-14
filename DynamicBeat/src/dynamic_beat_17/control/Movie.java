@@ -1,10 +1,11 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URISyntaxException;
 
+import dynamic_beat_17.Main;
 import javazoom.jl.player.Player;
 
 public class Movie extends Thread {

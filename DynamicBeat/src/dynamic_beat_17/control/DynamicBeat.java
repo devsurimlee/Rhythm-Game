@@ -1,4 +1,4 @@
-package dynamic_beat_17;
+package dynamic_beat_17.control;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import dynamic_beat_17.Main;
 
 public class DynamicBeat extends JPanel /* JFrame */ {
 
