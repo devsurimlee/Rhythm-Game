@@ -24,12 +24,12 @@ public class LoginTest extends JFrame{
 	public void change( String panelName) {
 		
 		
-		if(panelName.equals("login1")) {
+		if(panelName.equals("login")) {
 			getContentPane().removeAll();
 			getContentPane().add(login);
 			revalidate();
 			repaint();
-		}else if(panelName.equals("signUp2")) {
+		}else if(panelName.equals("signUp")) {
 			getContentPane().removeAll();
 			getContentPane().add(signUp);
 			revalidate();
