@@ -482,7 +482,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		startButton.setVisible(false);
 		rankButton.setVisible(false);
 		quitButton.setVisible(false);
-		background = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
+		background = new ImageIcon(Main.class.getResource("../images/rankBackground.jpg")).getImage();
 		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
 		rightButton.setVisible(false);
 		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
