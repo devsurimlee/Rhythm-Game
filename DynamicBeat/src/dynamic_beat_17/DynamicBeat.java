@@ -27,12 +27,17 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 변수에 초기화 해주는것.
 	// background를 위쪽에서 바로 초기화 하도록 설정
 	
-	//화면전환용 변수 0:인트로메인 1: 엔터메인 2:백메인 3:게임스타트
+	//화면전환용 변수 0:인트로메인 1:엔터메인(곡선택) 2:랭킹창 3:인게임
 	int stage = 0;
 	
 	private ImageIcon startButtonEnteredImage = new ImageIcon(
 			Main.class.getResource("../images/startButtonEntered.png"));
-	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));
+	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));	
+	
+	private ImageIcon rankButtonEnteredImage = new ImageIcon(
+			Main.class.getResource("../images/rankButtonEntered.png"));
+	private ImageIcon rankButtonBasicImage = new ImageIcon(Main.class.getResource("../images/rankButtonBasic.png"));
+
 	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
 	private ImageIcon quitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/quitButtonBasic.png"));
 	private ImageIcon leftButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/leftButtonEntered.png"));
@@ -54,6 +59,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 //	private JButton exitButton = new JButton(exitButtonBasicImage);
 	private JButton startButton = new JButton(startButtonBasicImage);
+	private JButton rankButton = new JButton(rankButtonBasicImage);
 	private JButton quitButton = new JButton(quitButtonBasicImage);
 	private JButton leftButton = new JButton(leftButtonBasicImage);
 	private JButton rightButton = new JButton(rightButtonBasicImage);
@@ -137,8 +143,45 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			}
 		});
 		add(startButton);
+		
+		
+		rankButton.setBounds(40, 330, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
+		rankButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
+		rankButton.setContentAreaFilled(false);
+		rankButton.setFocusPainted(false);
+		rankButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				rankButton.setIcon(rankButtonEnteredImage); // 마우스가 올라갔을때 엔터이미지로 변경
+				rankButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // 마우스가 올라갔을때 커서 변경
+				Music buttonEnteredMusic = new Music("buttonEnteredMusic.mp3", false);
+				buttonEnteredMusic.start(); // 마우스가 올라갔을때 효과음
+			}
 
-		quitButton.setBounds(40, 330, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
+			@Override
+			public void mouseExited(MouseEvent e) {
+				rankButton.setIcon(rankButtonBasicImage); // 마우스가 벗어났을때 베이직으로 변경
+				rankButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // 마우스가 벗어났을때 커서 변경
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
+				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
+				try {
+					Thread.sleep(1000); // 효과음을 못 듣고 꺼질 경우를 대비해 소리가 나온 후 1초 후에 종료시키는 것
+				} catch (InterruptedException ex) {
+					ex.printStackTrace();
+				}
+				//랭크시스템진입
+				rankMain();
+			}
+		});
+		add(rankButton);
+
+		
+
+		quitButton.setBounds(40, 460, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		quitButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
 		quitButton.setContentAreaFilled(false);
 		quitButton.setFocusPainted(false);
@@ -170,6 +213,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			}
 		});
 		add(quitButton);
+			
 
 		leftButton.setVisible(false); // 맨 처음은 보이지 않도록
 		leftButton.setBounds(140, 310, 60, 60); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
@@ -313,9 +357,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
 				
 				if (stage == 3) {
-					backMain(); // 메인 화면으로 돌아가는 이벤트
+					enterMain(); // 메인 화면으로 돌아가는 이벤트
 				}
-				else if (stage == 2 || stage == 1){
+				else if (stage == 1 || stage == 2){
 					introMain();
 					
 				}
@@ -346,7 +390,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 	public void screenDraw(Graphics2D g) { // 그래픽스2D 매개변수로 변환
 		g.drawImage(background, 0, 0, null); // add 된 것들이 아닌 단순 이미지들을 화면에 출력해주는것
-		if (stage == 1 || stage == 2) {
+		if (stage == 1) {
 			g.drawImage(selectedImage, 340, 100, null);
 			g.drawImage(titleImage, 340, 70, null);
 		}
@@ -395,6 +439,60 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		selectTrack(nowSelected);
 	}
 
+
+	//메인화면
+	public void introMain() {
+		stage = 0;	
+		backButton.setVisible(false);
+		startButton.setVisible(true);
+		rankButton.setVisible(true);
+		quitButton.setVisible(true);
+		background = new ImageIcon(Main.class.getResource("../images/introBackground(Title).jpg")).getImage();
+		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
+		rightButton.setVisible(false);
+		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
+		hardButton.setVisible(false);
+		if (selectedMusic != null)
+		selectedMusic.close();
+		nowSelected = 0;
+		introMusic = new Music("introMusic.mp3", true);
+		introMusic.start();
+		/// 클로즈로 저장하면 스레드가 지워져서 일드나 슬립으로 해야됨
+	}
+	
+	//게임선택창
+	public void enterMain() {
+		stage = 1;
+		backButton.setVisible(true);
+		startButton.setVisible(false);
+		rankButton.setVisible(false);
+		quitButton.setVisible(false);
+		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
+		leftButton.setVisible(true);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
+		rightButton.setVisible(true);
+		easyButton.setVisible(true);// 메인에서는 난이도 버튼이 보여야 하므로
+		hardButton.setVisible(true);
+		selectTrack(nowSelected); // 맨 처음에는 첫번째 곡을 실행
+		introMusic.close();
+	}
+	
+	public void rankMain() {
+		stage = 2;
+		backButton.setVisible(true);
+		startButton.setVisible(false);
+		rankButton.setVisible(false);
+		quitButton.setVisible(false);
+		background = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
+		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
+		rightButton.setVisible(false);
+		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
+		hardButton.setVisible(false);
+		if (selectedMusic != null)
+		selectedMusic.close();
+
+		
+	}
+	
 	// 곡선택부분
 	public void gameStart(int nowSelected, String difficulty) {
 		stage = 3;
@@ -402,7 +500,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			selectedMusic.close();
 //		isMainScreen = false; // 메인 스크린이 아니란걸 변수로 표현, 따라서 screen draw에서 if 부분이 실행이 안됨
 //		isGameScreen = true;
-		leftButton.setVisible(false); // 메인화면이 아니므로, 곣 선택 버튼은 보여지면 안된다.
+		leftButton.setVisible(false); // 메인화면이 아니므로, 곡 선택 버튼은 보여지면 안된다.
 		rightButton.setVisible(false);
 		easyButton.setVisible(false); // 메인화면이 아니므로, 난이도 버튼은 보여지면 안된다.
 		hardButton.setVisible(false);
@@ -413,55 +511,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				trackList.get(nowSelected).getGameMusic());
 		game.start(); // 런 함수 자동 실행, 노트 생성됨.
 		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
-	}
-
-	public void backMain() {
-		stage = 2;
-		backButton.setVisible(true);
-//		isMainScreen = true;
-//		isGameScreen = false;
-		leftButton.setVisible(true);
-		rightButton.setVisible(true);
-		easyButton.setVisible(true);
-		hardButton.setVisible(true);
-		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
-		selectTrack(nowSelected);
-		introMusic.close();
-		game.close(); // 현재 실행되고 있는 게임을 종료
-	}
-
-	public void enterMain() {
-		stage = 1;
-		backButton.setVisible(true);
-		startButton.setVisible(false);
-		quitButton.setVisible(false);
-		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
-//		isMainScreen = true;
-		leftButton.setVisible(true);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
-		rightButton.setVisible(true);
-		easyButton.setVisible(true);// 메인에서는 난이도 버튼이 보여야 하므로
-		hardButton.setVisible(true);
-		introMusic.close();
-		selectTrack(0); // 맨 처음에는 첫번째 곡을 실행
-	}
-
-	public void introMain() {
-		stage = 0;	
-		backButton.setVisible(false);
-		startButton.setVisible(true);
-		quitButton.setVisible(true);
-		background = new ImageIcon(Main.class.getResource("../images/introBackground(Title).jpg")).getImage();
-//		isMainScreen = true;
-//		isGameScreen = false;
-		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
-		rightButton.setVisible(false);
-		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
-		hardButton.setVisible(false);
-		selectedMusic.close();
-		
-		introMusic = new Music("introMusic.mp3", true);
-		introMusic.start();
-		/// 클로즈로 저장하면 스레드가 지워져서 일드나 슬립으로 해야됨
 	}
 	
 	
