@@ -1,8 +1,7 @@
 package dynamic_beat_17.service.impl;
 
-import java.util.Scanner;
 
-public class Main {
+public class ConsoleMain {
 	public static void main(String[] args) {
 		
 		new UserFrame();
