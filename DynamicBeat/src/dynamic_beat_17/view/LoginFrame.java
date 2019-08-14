@@ -1,4 +1,4 @@
-package dynamic_beat_17;
+package dynamic_beat_17.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
