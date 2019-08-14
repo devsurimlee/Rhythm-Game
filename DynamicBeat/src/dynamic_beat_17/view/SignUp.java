@@ -1,8 +1,11 @@
-package dynamic_beat_17;
+package dynamic_beat_17.view;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import dynamic_beat_17.Main;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
