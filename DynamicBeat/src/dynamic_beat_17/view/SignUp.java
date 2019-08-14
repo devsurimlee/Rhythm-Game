@@ -25,6 +25,8 @@ public class SignUp extends JPanel {
 	JButton btnLogin;
 	JButton btnSignUp;
 	
+	String cpw;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -81,14 +83,24 @@ public class SignUp extends JPanel {
 			if(e.getSource() == btnSignUp) {
 				try {
 					User user = new User();
-					System.out.println("아이디>");
+//					System.out.println("아이디>");
 					user.setUserid(IDField.getText());
-					System.out.println("비밀번호>");
+//					System.out.println("비밀번호>");
 					user.setPasswd(PWField.getText());
-					if(PWField.getText() != CPWField.getText()) {
-						System.out.println();
+//					if(PWField.getText() != CPWField.getText()) {
+//						System.out.println();
+//					}
+					cpw = CPWField.getText();
+					
+					if (user.getPasswd().equals(cpw)) {
+						UserDAO.getInstance().insert(user);
 					}
-					UserDAO.getInstance().insert(user);
+					else {System.out.println(cpw);
+					System.out.println(user.getPasswd());
+					}
+					
+					
+
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
