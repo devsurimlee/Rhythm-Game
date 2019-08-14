@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
-		;
+		
 		frame.setTitle("Dynamic Beat");
 		frame.setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
 		frame.setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.

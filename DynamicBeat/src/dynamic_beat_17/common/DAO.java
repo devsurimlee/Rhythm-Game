@@ -1,47 +1,59 @@
 package dynamic_beat_17.common;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class DAO {
 	protected Connection conn;
 	protected Statement stmt;
 	protected PreparedStatement pstmt;
 	protected ResultSet rs;
-
-	public void connect() {
+	
+	public static Connection getConnect() {
+		///////////////////
+		String user = "hr";
+		String pw = "hr";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		///////////////////
+		Properties prop = new Properties();
+		String path = DAO.class.getResource("../config/database.properties").getPath();
 		try {
-			// 1. 드라이버로딩
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			path = URLDecoder.decode(path, "utf-8");
+			prop.load(new FileReader(path));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		String driver = prop.getProperty("driver");
+		url = prop.getProperty("url");
+		user = prop.getProperty("user");
+		pw = prop.getProperty("passwd");
 
-			// 2. DB 연결
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection(url, "hr", "hr");
-
-		} catch (Exception e) {
+		//////////////////
+		Connection conn = null;
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		return conn;
 	}
 
-	public void disconnect() {
+	public static void close(Connection conn) {
 		if (conn != null)
 			try {
-				// 5. 연결 종료
 				conn.close();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
 }
-
-//connection pool에서 connection을 할당
-/*
- * Context initContext = new InitialContext(); Context envContext =
- * (Context)initContext.lookup("java:/comp/env"); DataSource ds =
- * (DataSource)envContext.lookup("jdbc/oracle"); conn = ds.getConnection();
- * if(conn != null) { System.out.println("연결 성공"); }
- */

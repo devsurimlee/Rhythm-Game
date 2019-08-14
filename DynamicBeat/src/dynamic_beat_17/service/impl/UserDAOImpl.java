@@ -11,6 +11,7 @@ import java.util.List;
 
 import dynamic_beat_17.common.DAO;
 
+
 public class UserDAOImpl extends DAO implements UserDAO {
 	
 //    java.util.Date utilDate = new java.util.Date();
@@ -30,7 +31,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 
 		try {
 			// 1 디비연결
-			this.connect();
+			this.getConnect();
 
 			// 2 구문 셀이름 안햇갈리게 적어줌
 			String sql = "insert into users(userid, userpw, role, birth) "
@@ -58,7 +59,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 		
 		} finally {
 			// 5 연결해제
-			this.disconnect();
+			this.close(conn);
 		}
 
 	}
@@ -68,7 +69,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	public void update(Users user) {
 
 		try {
-			this.connect();
+			this.getConnect();
 			String sql = "update users set userid = ?, userpw = ?, role = ?, birth = ? where userid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getUserId());
@@ -86,7 +87,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			e.printStackTrace();
 		} finally {
 			// 5 연결해제
-			this.disconnect();
+			this.close(conn);
 		}
 
 	}
@@ -96,7 +97,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	public void delete(String userId) {
 
 		try {
-			this.connect();
+			this.getConnect();
 			String sql = "delete users where userid = ? ";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -110,7 +111,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			e.printStackTrace();
 		} finally {
 			// 5 연결해제
-			this.disconnect();
+			this.close(conn);
 		}
 
 	}
@@ -122,7 +123,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 		Users user = null;
 
 		try {
-			this.connect();
+			this.getConnect();
 			String sql = "select userid, " 
 					+ "          userpw," 
 					+ "          role,"
@@ -147,7 +148,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 //			e.printStackTrace();
 			System.out.println("해당 회원이 없습니다");
 		} finally {
-			disconnect();
+			close(conn);
 		}
 
 		return user;
@@ -160,7 +161,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 		List<Users> list = new ArrayList<Users>(); //리턴값을 넣을 배열
 
 		try {
-			this.connect();
+			this.getConnect();
 			String sql = "select userid, " 
 					+ "          userpw, " 
 					+ "          role, "
@@ -183,7 +184,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			disconnect();
+			close(conn);
 		}
 
 		return list;

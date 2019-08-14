@@ -1,4 +1,4 @@
-package dynamic_beat_17.control;
+package dynamic_beat_17.model;
 
 public class Track {
 	

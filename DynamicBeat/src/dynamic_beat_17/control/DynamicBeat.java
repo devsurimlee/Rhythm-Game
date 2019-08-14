@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dynamic_beat_17.Main;
+import dynamic_beat_17.model.Track;
 
 public class DynamicBeat extends JPanel /* JFrame */ {
 
