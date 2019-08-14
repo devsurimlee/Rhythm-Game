@@ -24,7 +24,7 @@ public class DAO {
 		String url = "";
 		///////////////////
 		Properties prop = new Properties();
-		String path = DAO.class.getResource("../config/database.properties").getPath();
+		String path = DAO.class.getResource("../../config/database.properties").getPath();
 		try {
 			path = URLDecoder.decode(path, "utf-8");
 			prop.load(new FileReader(path));

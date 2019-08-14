@@ -92,9 +92,10 @@ public class UserFrame {
 			user.setUserid(stringput());
 			System.out.println("비밀번호>");
 			user.setPasswd(stringput());
-			UserServiceImpl.getInscance().insert(user);
+			UserDAO.getInstance().insert( user);
 			System.out.println("1건 등록 완료");
 		} catch (Exception e) {
+			e.printStackTrace();
 			sc = new Scanner(System.in);
 			System.out.println("잘못 입력하셨습니다");
 		}

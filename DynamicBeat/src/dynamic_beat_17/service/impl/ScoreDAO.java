@@ -10,7 +10,7 @@ import java.util.List;
 import dynamic_beat_17.common.DAO;
 import dynamic_beat_17.model.Score;
 
-public class ScoreDAO extends DAO {
+public class ScoreDAO  {
 	
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -24,7 +24,8 @@ public class ScoreDAO extends DAO {
 
 	// 점수 등록
 
-	public void insert(Connection conn, Score score) throws SQLException {
+	public void insert( Score score) throws SQLException {
+		Connection conn = DAO.getConnect();
 		String sql = "INSERT INTO Music (high_score, ID, Music) values(? , ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, score.getHighScore());
@@ -32,11 +33,13 @@ public class ScoreDAO extends DAO {
 		pstmt.setString(3, score.getMusic());
 		int r = pstmt.executeUpdate();
 		System.out.println(r + "건 등록완료. ");
+		DAO.close(conn);
 	}
 
 	// 최고 점수 수정
 
-	public void update(Connection conn, Score score) throws SQLException {
+	public void update( Score score) throws SQLException {
+		Connection conn = DAO.getConnect();
 		String sql = "UPDATE MUSIC SET high_score = ? WHERE ID = ? and music = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, score.getHighScore());
@@ -44,11 +47,12 @@ public class ScoreDAO extends DAO {
 		pstmt.setString(3, score.getMusic());
 		int r = pstmt.executeUpdate();
 		System.out.println(r + "건 수정완료");
-
+		DAO.close(conn);
 	}
 	
 	//곡에 따른 최고 점수 조회
-	public Score selectOne(Connection conn, String userid) throws SQLException {
+	public Score selectOne(String userid) throws SQLException {
+		Connection conn = DAO.getConnect();
 		Score score = null;
 		String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -61,6 +65,7 @@ public class ScoreDAO extends DAO {
 			score.setUserid(rs.getString("user_id"));
 			score.setMusic(rs.getString("music"));
 		}
+		DAO.close(conn); //try
 		return score;
 	}
 	

@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import dynamic_beat_17.Main;
+import dynamic_beat_17.model.User;
+import dynamic_beat_17.service.impl.UserDAO;
 
 import javax.swing.JPasswordField;
 
@@ -63,6 +65,9 @@ public class Login extends JPanel {
 			if (e.getSource() == signUpButton) {
 				win.change("signUp");
 			} else if (e.getSource() == loginButton) {
+				//DAO.로그인
+				
+				
 				win.change("dynamicBeat");
 			}
 		}
