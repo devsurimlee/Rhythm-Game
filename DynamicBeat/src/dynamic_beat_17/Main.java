@@ -2,6 +2,8 @@ package dynamic_beat_17;
 
 import javax.swing.JFrame;
 
+import dynamic_beat_17.control.DynamicBeat;
+
 public class Main {
 	
 	public static final int SCREEN_WIDTH = 1280;  //final은 한번 선언하면 절대 안바뀜, 상수는 전부 대문자
