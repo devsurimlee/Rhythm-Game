@@ -44,12 +44,6 @@ public class Rank extends Thread {
 		g.drawImage(rank2, 200, 350, null);
 		g.drawImage(rank3, 200, 500, null);
 
-
-		
-		
-//		String suffix = String.format("%06d", "11");
-//		g.drawString(suffix, 565, 702); // 점수 출력
-
 	}
 	
 	@Override
