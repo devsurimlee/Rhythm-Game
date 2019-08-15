@@ -53,14 +53,14 @@ public class Main extends JFrame{
 		win.dynamicBeat = new DynamicBeat(win);
 		
 		win.add(win.login);
-		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //		win.setVisible(true);
 		
 		win.setTitle("Dynamic Beat");
 		win.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		win.setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
 		win.setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
-//		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
+//		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 창닫으면 노래나옴
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프로그램 전체 종료
 		win.setVisible(true);
 		
 	}
