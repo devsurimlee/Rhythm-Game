@@ -105,15 +105,37 @@ public class SignUp extends JPanel {
 			if (e.getSource() == btnSignUp) {
 				try {
 					User user = new User();
-//					System.out.println("아이디>");
+					user.setUserid(IDField.getText());
+					user.setPasswd(PWField.getPassword());
+					cpw = CPWField.getPassword();
+					
+					//char -> string
+					String passwd = new String(PWField.getPassword());
+					String passcpw = new String(cpw);
+
+
+					if (passwd.equals(passcpw)) {
+						UserDAO.getInstance().insert(user);
+						JOptionPane.showMessageDialog(null, "회원가입을 축하합니다!!");
+						
+					} else {
+						System.out.println("PW: " + passwd);
+						System.out.println("CPW: " + passcpw);
+						JOptionPane.showMessageDialog(null, "잘못 입력하셨습니다.");
+					
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			} else if (e.getSource() == btnLogin)
+				win.change("login");
+			
+			//아이디 체크부분
+			if (e.getSource() == btnCF) {
+				try {
+					User user = new User();
 					user.setUserid(IDField.getText());
 
-//					System.out.println("비밀번호>");
-					user.setPasswd(PWField.getPassword());
-//					if(PWField.getText() != CPWField.getText()) {
-//						System.out.println();
-//					}
-					cpw = CPWField.getPassword();
 
 					if (user.getPasswd().equals(cpw)) {
 						UserDAO.getInstance().insert(user);
@@ -122,7 +144,7 @@ public class SignUp extends JPanel {
 					} else {
 						System.out.println("PW: " + user.getPasswd());
 						System.out.println("CPW: " + cpw);
-						JOptionPane.showMessageDialog(null, "비밀번호가 다릅니다.");
+						JOptionPane.showMessageDialog(null, "잘못 입력하셨습니다.");
 					
 					}
 				} catch (Exception e1) {
@@ -130,7 +152,9 @@ public class SignUp extends JPanel {
 				}
 			} else if (e.getSource() == btnLogin)
 				win.change("login");
+			
 		}
+	
 	}
 
 }
