@@ -23,7 +23,7 @@ public class Login extends JPanel {
 	private Main win;
 	JButton loginButton;
 	JButton signUpButton;
-
+	public static String userId;
 	/**
 	 * Create the panel.
 	 * 
@@ -84,6 +84,7 @@ public class Login extends JPanel {
 					if (UserDAO.getInstance().login(user) == true) {
 						System.out.println("Login Success.");
 						JOptionPane.showMessageDialog(null, "로그인 성공!!");
+						userId = id;        //  로그인 아이디 저장
 						win.change("dynamicBeat");
 					} else {
 						System.out.println("Login Failed");

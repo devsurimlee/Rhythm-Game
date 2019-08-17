@@ -1,28 +1,35 @@
 package dynamic_beat_17.control;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
+import dynamic_beat_17.view.Login;
 import dynamic_beat_17.Main;
+import dynamic_beat_17.common.DAO;
+import dynamic_beat_17.model.Score;
+import dynamic_beat_17.service.impl.ScoreDAO;
+import dynamic_beat_17.service.impl.UserDAO;
 import sun.security.util.Length;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
 
-	int score = 0;
+	String id = (dynamic_beat_17.view.Login.userId); // 로그인에서 가져온 아이디
+	public static String musicName; // 곡 이름
+	public static int score = 0;
 	public static GameResult gameresult;
 	int stage = 3;
-	
-	
-	//겜 스타트때 0 초기화
+
+	// 겜 스타트때 0 초기화
 	private Image background = new ImageIcon(Main.class.getResource("../images/resultBackground.jpg")).getImage();
 
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
@@ -38,8 +45,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 	private Image resultPopup = new ImageIcon(Main.class.getResource("../images/resultPopup.png")).getImage();
 
-	
-	
 //	private Image blueFlareImage;
 	private Image judgeImage;
 
@@ -75,11 +80,9 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		gameMusic = new Music(this.musicTitle, false);
 	}
 
-	public void screenDraw(Graphics2D g) {
+	public void screenDraw(Graphics2D g) throws SQLException {
 
-
-		
-		if(stage == 3) {
+		if (stage == 3) {
 			g.drawImage(noteRouteSImage, 228, 30, null);
 			g.drawImage(noteRouteDImage, 332, 30, null);
 			g.drawImage(noteRouteFImage, 436, 30, null);
@@ -96,10 +99,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			g.drawImage(noteRouteLineImage, 844, 30, null);
 			g.drawImage(noteRouteLineImage, 948, 30, null);
 			g.drawImage(noteRouteLineImage, 1052, 30, null);
-			
-			//공통부분 파란선
+
+			// 공통부분 파란선
 			g.drawImage(gameInfoImage, 0, 660, null);
-			//붉은선(판정라인)
+			// 붉은선(판정라인)
 			g.drawImage(judgementLineImage, 0, 580, null);
 			for (int i = 0; i < noteList.size(); i++) {
 				Note note = noteList.get(i);
@@ -114,8 +117,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 				}
 			}
 			g.setColor(Color.WHITE);
-			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로 깨짐 없이
-																												// 매끄럽게 출력됨.
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로
+																												// 깨짐 없이
+																												// 매끄럽게
+																												// 출력됨.
 			g.setFont(new Font("Arial", Font.BOLD, 30)); // 글씨를 그릴 수 있도록 세팅
 			g.drawString(titleName, 20, 702); // 실행중인 곡에 대한 정보
 			g.drawString(difficulty, 1190, 702);
@@ -155,23 +160,21 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			g.drawImage(keyPadJEffectImage, 680, 500, null);
 			g.drawImage(keyPadKEffectImage, 780, 500, null);
 			g.drawImage(keyPadLEffectImage, 880, 500, null);
-			
-
-
-			
-			
 		}
-		
-		if (stage == 4) {	
-			
+
+		if (stage == 4) {
+			// 최고 점수 조회
+
 			g.drawImage(background, 0, 0, null);
 
-			//공통부분 파란선
+			// 공통부분 파란선
 			g.drawImage(gameInfoImage, 0, 660, null);
-			
+
 			g.setColor(Color.WHITE);
-			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로 깨짐 없이
-																												// 매끄럽게 출력됨.
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로
+																												// 깨짐 없이
+																												// 매끄럽게
+																												// 출력됨.
 			g.setFont(new Font("Arial", Font.BOLD, 30)); // 글씨를 그릴 수 있도록 세팅
 			g.drawString(titleName, 20, 702); // 실행중인 곡에 대한 정보
 			g.drawString(difficulty, 1190, 702);
@@ -181,13 +184,51 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			// 점수 출력
 			String suffix = String.format("%06d", score);
 			g.drawString(suffix, 565, 702); // 점수 출력
-			
-			//결과창 레이어
+
+			// 결과창 레이어
 			g.drawImage(resultPopup, 200, 120, null);
+
+			// 결과창에 그려지는 것들
+			g.setFont(new Font("Arial", Font.BOLD, 50));
+			g.setColor(Color.BLUE);
+			g.drawString("Score  : ", 475, 425);
+//			g.setFont(new Font("Arial", Font.BOLD, 50));
+			g.setColor(Color.WHITE);
+			g.drawString(suffix, 700, 425); // 점수 출력
+			try {
+				Connection conn = DAO.getConnect();
+				Score daoScore = null;
+				daoScore.setUserid(id);
+				daoScore.setMusic(musicName);
+				ScoreDAO.getInscance().selectOne(id);
+
+				if (daoScore.getHighScore() >= score) {
+					// 점수 등록
+					g.setFont(new Font("Arial", Font.BOLD, 50));
+					g.setColor(Color.GREEN);
+					g.drawString("High_Score  : ", 337, 500);
+					String hiScore = String.format("%06d", daoScore.getHighScore());
+					g.drawString(hiScore, 700, 500); // 최고 점수 출력
+					conn = DAO.getConnect();
+					
+				} else if (daoScore.getHighScore() < score) {
+					// 점수 수정
+					g.setColor(Color.GREEN);
+					g.drawString("High_Score  : ", 337, 500);
+					g.drawString(suffix, 700, 500); // 최고 점수 출력
+				}
+			} catch (NullPointerException e) {
+//				e.printStackTrace();
+				System.out.println("기록이 없어서 등록합니다.");
+				g.setColor(Color.GREEN);
+				g.drawString("High_Score  : ", 337, 500);
+				g.drawString(suffix, 700, 500); // 최고 점수 출력
+			} finally {
+
+			}
+
 		}
-		
-		
-		
+
 	}
 
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
@@ -306,9 +347,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	}
 
 	// 노트찍는부분
-	public void dropNotes(String titleName ) {
+	public void dropNotes(String titleName) {
 		Beat[] beats = null;
 		if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Easy")) {
+			musicName = "JK - ML , E"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 4460 - Main.REACH_TIME * 1000; // 항상 똑같은 첫번째 노트가 판정바에 적중하는 박자 타이밍
 			int gap = 125; // 박자 계산
 			beats = new Beat[] {
@@ -396,30 +438,35 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 			};
 		} else if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Hard")) {
+			musicName = "JK - ML , H"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
 
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Easy")) {
+			musicName = "JK - WF , E"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
 
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Hard")) {
+			musicName = "JK - WF , H"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
 
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Easy")) {
+			musicName = "B - E , E"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
 
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Hard")) {
+			musicName = "B - E , H"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
@@ -428,6 +475,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 
 		else if (titleName.equals("Miya - Ask The Wind") && difficulty.equals("Easy")) {
+			musicName = "M - ATW , E"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
@@ -435,6 +483,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 
 		else if (titleName.equals("Miya - Ask The Wind") && difficulty.equals("Hard")) {
+			musicName = "M - ATW , H"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 4460 - Main.REACH_TIME * 1000; // 항상 똑같은 첫번째 노트가 판정바에 적중하는 박자 타이밍
 			int gap = 125; // 박자 계산
 			beats = new Beat[] {
@@ -542,8 +591,8 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 //					e.printStackTrace();
 				}
 			}
-			
-			//결과창
+
+			// 결과창
 			if (beats[beats.length - 1].getTime() <= gameMusic.getTime()) {
 				close();
 				stage = 4;
