@@ -5,6 +5,7 @@ package dynamic_beat_17.service.impl;
 import java.util.Scanner;
 
 import dynamic_beat_17.model.User;
+import oracle.sql.CHAR;
 
 
 public class UserFrame {
@@ -67,9 +68,9 @@ public class UserFrame {
 	}
 
 	private void printMenu() {
-		System.out.println("================================================");
+		System.out.println("=======================================================================");
 		System.out.println("1.회원가입  2. 점수등록  3.최고 점수 수정  4.최고 점수 조회 5.전체 총점  6. 총점 랭킹 9.종료");
-		System.out.println("================================================");
+		System.out.println("========================================================================");
 
 	}
 
@@ -90,9 +91,11 @@ public class UserFrame {
 			User user = new User();
 			System.out.println("아이디>");
 			user.setUserid(stringput());
-			System.out.println("비밀번호>");
-			user.setPasswd(stringput());
-			UserDAO.getInstance().insert( user);
+			System.out.println("비밀번호>");	
+			//string -> char
+	        char[] passwd = stringput().toCharArray();		
+			user.setPasswd(passwd);
+			UserDAO.getInstance().insert(user);
 			System.out.println("1건 등록 완료");
 		} catch (Exception e) {
 			e.printStackTrace();

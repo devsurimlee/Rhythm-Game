@@ -11,12 +11,15 @@ import dynamic_beat_17.model.User;
 import dynamic_beat_17.service.impl.UserDAO;
 
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class SignUp extends JPanel {
 	private JTextField IDField;
@@ -27,7 +30,8 @@ public class SignUp extends JPanel {
 	JButton btnSignUp;
 	JButton btnCF;
 
-	String cpw;
+	char[] cpw;
+	private JLabel label_3;
 
 	/**
 	 * Create the panel.
@@ -37,42 +41,56 @@ public class SignUp extends JPanel {
 		this.win = win;
 
 		JLabel label = new JLabel("ID: ");
-		label.setBounds(131, 96, 57, 15);
+		label.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		label.setBounds(530, 300, 86, 30);
 		add(label);
 
 		JLabel label_1 = new JLabel("PW: ");
-		label_1.setBounds(131, 139, 57, 15);
+		label_1.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		label_1.setBounds(530, 350, 75, 30);
 		add(label_1);
 
 		JLabel label_2 = new JLabel("CPW: ");
-		label_2.setBounds(131, 181, 57, 15);
+		label_2.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		label_2.setBounds(530, 400, 86, 30);
 		add(label_2);
 
 		IDField = new JTextField();
+		IDField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		IDField.setColumns(10);
-		IDField.setBounds(211, 93, 116, 21);
+		IDField.setBounds(630, 300, 116, 30);
 		add(IDField);
 
 		PWField = new JPasswordField();
-		PWField.setBounds(211, 139, 116, 21);
+		PWField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		PWField.setBounds(630, 350, 116, 30);
 		add(PWField);
 
 		CPWField = new JPasswordField();
-		CPWField.setBounds(211, 178, 116, 21);
+		CPWField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		CPWField.setBounds(630, 400, 116, 30);
 		add(CPWField);
 
 		btnSignUp = new JButton("Sign Up");
 
-		btnSignUp.setBounds(119, 230, 97, 23);
+		btnSignUp.setBounds(530, 465, 97, 23);
 		add(btnSignUp);
 
 		btnLogin = new JButton("Login");
-		btnLogin.setBounds(230, 230, 97, 23);
+		btnLogin.setBounds(649, 465, 97, 23);
 		add(btnLogin);
 
 		btnCF = new JButton("CF");
-		btnCF.setBounds(339, 92, 57, 23);
+		btnCF.setBounds(814, 304, 57, 23);
 		add(btnCF);
+		
+		
+		//배경부분
+		JLabel lblNewLabel = new JLabel("");
+		Image backgound = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(backgound));	
+		lblNewLabel.setBounds(0, 0, 1280, 720);
+		add(lblNewLabel);
 
 		btnLogin.addActionListener(new MyActionListener());
 		btnSignUp.addActionListener(new MyActionListener());
@@ -91,21 +109,22 @@ public class SignUp extends JPanel {
 					user.setUserid(IDField.getText());
 
 //					System.out.println("비밀번호>");
-					user.setPasswd(PWField.getText());
+					user.setPasswd(PWField.getPassword());
 //					if(PWField.getText() != CPWField.getText()) {
 //						System.out.println();
 //					}
-					cpw = CPWField.getText();
+					cpw = CPWField.getPassword();
 
 					if (user.getPasswd().equals(cpw)) {
 						UserDAO.getInstance().insert(user);
 						JOptionPane.showMessageDialog(null, "회원가입을 축하합니다!!");
+						
 					} else {
 						System.out.println("PW: " + user.getPasswd());
 						System.out.println("CPW: " + cpw);
-						JOptionPane.showMessageDialog(null, "회원가입에 실패하였습니다.");
+						JOptionPane.showMessageDialog(null, "비밀번호가 다릅니다.");
+					
 					}
-
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

@@ -30,8 +30,10 @@ public class UserDAO {
 		pstmt = conn.prepareStatement(sql);
 
 		// 3. 파라미터 셋팅
+		String passString = new String(user.getPasswd());
+	
 		pstmt.setString(1, user.getUserid());
-		pstmt.setString(2, user.getPasswd());
+		pstmt.setString(2, passString);
 
 		// 4. 실행
 		int r = pstmt.executeUpdate();
@@ -52,8 +54,10 @@ public class UserDAO {
 		pstmt = conn.prepareStatement(sql);
 		// 3. 파라미터 셋팅
 		try {
+			String passString = new String(user.getPasswd());
+			
 			pstmt.setString(1, user.getUserid());
-			pstmt.setString(2, user.getPasswd());
+			pstmt.setString(2, passString);
 			// 4. 실행
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
