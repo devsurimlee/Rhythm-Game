@@ -30,7 +30,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// background를 위쪽에서 바로 초기화 하도록 설정
 
 	// 화면전환용 변수 0:인트로메인 1:엔터메인(곡선택) 2:랭킹창 3:인게임
-	int stage = 0;
+	static int stage = 0;
 
 	private ImageIcon startButtonEnteredImage = new ImageIcon(
 			Main.class.getResource("../images/startButtonEntered.png"));
@@ -84,6 +84,10 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 	// 랭크선언
 	public static Rank rank;
+	
+	//게임결과창
+	public static GameResult gameresult;
+
 
 	public DynamicBeat(Main win) /* 생성자 */ {
 		// 순서에 맞게 넣어줌으로써 변수를 순식간에 초기화, 초기화 된 변수를 트랙리스트에 넣어줌으로써 곡들의 리스트를 관리할 수 있게 됨
@@ -410,6 +414,10 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		if (stage == 3) {
 			game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
 		}
+		
+		if (stage == 4) {
+			gameresult.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+		}
 		paintComponents(g); // 메뉴바, JLabel등을 JFrame안에 추가하면 그것을 그려주는 것 (add로 추가된것들 )
 		// draw로 그리거나 paint로 그리는데 메뉴바의 경우 항상 존재, 역동적으로 움직이지 않으므로 항상 고정이므로 페인트를 사용(정적)
 		// 백그라운드 같이 단순 이미지는 draw로 그림
@@ -504,10 +512,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		rank = new Rank();
 		rank.start();
 
-//		List<Rank>rank= new ArrayList<>();
-//		rank.add(1, "aa");
-//		rank.add(2, "aa");
-
 	}
 
 	// 곡선택부분
@@ -526,7 +530,26 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				trackList.get(nowSelected).getGameMusic());
 		game.start(); // 런 함수 자동 실행, 노트 생성됨.
 		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
+		}
 
+	
+	public void gameResult() {
+		
+		backButton.setVisible(true);
+		startButton.setVisible(false);
+		rankButton.setVisible(false);
+		quitButton.setVisible(false);
+		background = new ImageIcon(Main.class.getResource("../images/rankBackground.jpg")).getImage();
+		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
+		rightButton.setVisible(false);
+		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
+		hardButton.setVisible(false);
+		if (selectedMusic != null)
+			selectedMusic.close();
+		rank = new Rank();
+		rank.start();
+		
+	
 	}
 
 }

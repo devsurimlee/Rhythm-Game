@@ -5,16 +5,26 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 import dynamic_beat_17.Main;
+import sun.security.util.Length;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
 
 	int score = 0;
-//겜 스타트때 0 초기화
+	public static GameResult gameresult;
+	int stage = 3;
+	
+	
+	//겜 스타트때 0 초기화
+	private Image background = new ImageIcon(Main.class.getResource("../images/resultBackground.jpg")).getImage();
+
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
 	private Image gameInfoImage = new ImageIcon(Main.class.getResource("../images/gameInfo.png")).getImage();
@@ -26,6 +36,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image noteRouteJImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 	private Image noteRouteKImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 	private Image noteRouteLImage = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
+	private Image resultPopup = new ImageIcon(Main.class.getResource("../images/resultPopup.png")).getImage();
+
+	
+	
 //	private Image blueFlareImage;
 	private Image judgeImage;
 
@@ -62,80 +76,118 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	}
 
 	public void screenDraw(Graphics2D g) {
-		g.drawImage(noteRouteSImage, 228, 30, null);
-		g.drawImage(noteRouteDImage, 332, 30, null);
-		g.drawImage(noteRouteFImage, 436, 30, null);
-		g.drawImage(noteRouteSpace1Image, 540, 30, null);
-		g.drawImage(noteRouteSpace2Image, 640, 30, null);
-		g.drawImage(noteRouteJImage, 744, 30, null);
-		g.drawImage(noteRouteKImage, 848, 30, null);
-		g.drawImage(noteRouteLImage, 952, 30, null);
-		g.drawImage(noteRouteLineImage, 224, 30, null);
-		g.drawImage(noteRouteLineImage, 328, 30, null);
-		g.drawImage(noteRouteLineImage, 432, 30, null);
-		g.drawImage(noteRouteLineImage, 536, 30, null);
-		g.drawImage(noteRouteLineImage, 740, 30, null);
-		g.drawImage(noteRouteLineImage, 844, 30, null);
-		g.drawImage(noteRouteLineImage, 948, 30, null);
-		g.drawImage(noteRouteLineImage, 1052, 30, null);
 
-		g.drawImage(gameInfoImage, 0, 660, null);
-		g.drawImage(judgementLineImage, 0, 580, null);
-		for (int i = 0; i < noteList.size(); i++) {
-			Note note = noteList.get(i);
-			if (note.getY() > 620) {
-				judgeImage = new ImageIcon(Main.class.getResource("../images/judgeMiss.png")).getImage(); // Miss 출력
+
+		
+		if(stage == 3) {
+			g.drawImage(noteRouteSImage, 228, 30, null);
+			g.drawImage(noteRouteDImage, 332, 30, null);
+			g.drawImage(noteRouteFImage, 436, 30, null);
+			g.drawImage(noteRouteSpace1Image, 540, 30, null);
+			g.drawImage(noteRouteSpace2Image, 640, 30, null);
+			g.drawImage(noteRouteJImage, 744, 30, null);
+			g.drawImage(noteRouteKImage, 848, 30, null);
+			g.drawImage(noteRouteLImage, 952, 30, null);
+			g.drawImage(noteRouteLineImage, 224, 30, null);
+			g.drawImage(noteRouteLineImage, 328, 30, null);
+			g.drawImage(noteRouteLineImage, 432, 30, null);
+			g.drawImage(noteRouteLineImage, 536, 30, null);
+			g.drawImage(noteRouteLineImage, 740, 30, null);
+			g.drawImage(noteRouteLineImage, 844, 30, null);
+			g.drawImage(noteRouteLineImage, 948, 30, null);
+			g.drawImage(noteRouteLineImage, 1052, 30, null);
+			
+			//공통부분 파란선
+			g.drawImage(gameInfoImage, 0, 660, null);
+			//붉은선(판정라인)
+			g.drawImage(judgementLineImage, 0, 580, null);
+			for (int i = 0; i < noteList.size(); i++) {
+				Note note = noteList.get(i);
+				if (note.getY() > 620) {
+					judgeImage = new ImageIcon(Main.class.getResource("../images/judgeMiss.png")).getImage(); // Miss 출력
+				}
+				if (!note.isProceeded()) {
+					noteList.remove(i);
+					i--;
+				} else {
+					note.screenDraw(g);
+				}
 			}
-			if (!note.isProceeded()) {
-				noteList.remove(i);
-				i--;
-			} else {
-				note.screenDraw(g);
-			}
+			g.setColor(Color.WHITE);
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로 깨짐 없이
+																												// 매끄럽게 출력됨.
+			g.setFont(new Font("Arial", Font.BOLD, 30)); // 글씨를 그릴 수 있도록 세팅
+			g.drawString(titleName, 20, 702); // 실행중인 곡에 대한 정보
+			g.drawString(difficulty, 1190, 702);
+			g.setFont(new Font("Arial", Font.PLAIN, 26));
+			g.setColor(Color.DARK_GRAY);
+			g.drawString("S", 270, 609);
+			g.drawString("D", 374, 609);
+			g.drawString("F", 478, 609);
+			g.drawString("Space Bar", 580, 609); // 해당 키패드 각각 출력
+			g.drawString("J", 784, 609);
+			g.drawString("K", 889, 609);
+			g.drawString("L", 993, 609);
+			g.setColor(Color.LIGHT_GRAY);
+			g.setFont(new Font("Elephant", Font.BOLD, 30));
+
+			// 점수 출력
+			String suffix = String.format("%06d", score);
+//			String stringScore = String.valueOf(this.score);
+//			String temp = leftPad(stringScore, 6, '0');
+			g.drawString(suffix, 565, 702); // 점수 출력
+//			g.drawImage(blueFlareImage, 320, 430, null);
+			g.drawImage(judgeImage, 460, 420, null);
+			g.drawImage(keyPadSImage, 228, 580, null);
+			g.drawImage(keyPadDImage, 332, 580, null);
+			g.drawImage(keyPadFImage, 436, 580, null);
+			g.drawImage(keyPadSpace1Image, 540, 580, null);
+			g.drawImage(keyPadSpace2Image, 640, 580, null);
+			g.drawImage(keyPadJImage, 744, 580, null);
+			g.drawImage(keyPadKImage, 848, 580, null);
+			g.drawImage(keyPadLImage, 952, 580, null);
+
+			g.drawImage(keyPadSEffectImage, 180, 500, null);
+			g.drawImage(keyPadDEffectImage, 280, 500, null);
+			g.drawImage(keyPadFEffectImage, 380, 500, null);
+
+//			g.drawImage(keyPadSpaceEffectImage, 180, 500, null);
+			g.drawImage(keyPadJEffectImage, 680, 500, null);
+			g.drawImage(keyPadKEffectImage, 780, 500, null);
+			g.drawImage(keyPadLEffectImage, 880, 500, null);
+			
+
+
+			
+			
 		}
-		g.setColor(Color.WHITE);
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로 깨짐 없이
-																											// 매끄럽게 출력됨.
-		g.setFont(new Font("Arial", Font.BOLD, 30)); // 글씨를 그릴 수 있도록 세팅
-		g.drawString(titleName, 20, 702); // 실행중인 곡에 대한 정보
-		g.drawString(difficulty, 1190, 702);
-		g.setFont(new Font("Arial", Font.PLAIN, 26));
-		g.setColor(Color.DARK_GRAY);
-		g.drawString("S", 270, 609);
-		g.drawString("D", 374, 609);
-		g.drawString("F", 478, 609);
-		g.drawString("Space Bar", 580, 609); // 해당 키패드 각각 출력
-		g.drawString("J", 784, 609);
-		g.drawString("K", 889, 609);
-		g.drawString("L", 993, 609);
-		g.setColor(Color.LIGHT_GRAY);
-		g.setFont(new Font("Elephant", Font.BOLD, 30));
+		
+		if (stage == 4) {	
+			
+			g.drawImage(background, 0, 0, null);
 
-		// 점수 출력
-		String suffix = String.format("%06d", score);
-//		String stringScore = String.valueOf(this.score);
-//		String temp = leftPad(stringScore, 6, '0');
-		g.drawString(suffix, 565, 702); // 점수 출력
-//		g.drawImage(blueFlareImage, 320, 430, null);
-		g.drawImage(judgeImage, 460, 420, null);
-		g.drawImage(keyPadSImage, 228, 580, null);
-		g.drawImage(keyPadDImage, 332, 580, null);
-		g.drawImage(keyPadFImage, 436, 580, null);
-		g.drawImage(keyPadSpace1Image, 540, 580, null);
-		g.drawImage(keyPadSpace2Image, 640, 580, null);
-		g.drawImage(keyPadJImage, 744, 580, null);
-		g.drawImage(keyPadKImage, 848, 580, null);
-		g.drawImage(keyPadLImage, 952, 580, null);
+			//공통부분 파란선
+			g.drawImage(gameInfoImage, 0, 660, null);
+			
+			g.setColor(Color.WHITE);
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로 깨짐 없이
+																												// 매끄럽게 출력됨.
+			g.setFont(new Font("Arial", Font.BOLD, 30)); // 글씨를 그릴 수 있도록 세팅
+			g.drawString(titleName, 20, 702); // 실행중인 곡에 대한 정보
+			g.drawString(difficulty, 1190, 702);
+			g.setColor(Color.LIGHT_GRAY);
+			g.setFont(new Font("Elephant", Font.BOLD, 30));
 
-		g.drawImage(keyPadSEffectImage, 180, 500, null);
-		g.drawImage(keyPadDEffectImage, 280, 500, null);
-		g.drawImage(keyPadFEffectImage, 380, 500, null);
-
-//		g.drawImage(keyPadSpaceEffectImage, 180, 500, null);
-		g.drawImage(keyPadJEffectImage, 680, 500, null);
-		g.drawImage(keyPadKEffectImage, 780, 500, null);
-		g.drawImage(keyPadLEffectImage, 880, 500, null);
-
+			// 점수 출력
+			String suffix = String.format("%06d", score);
+			g.drawString(suffix, 565, 702); // 점수 출력
+			
+			//결과창 레이어
+			g.drawImage(resultPopup, 200, 120, null);
+		}
+		
+		
+		
 	}
 
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
@@ -254,7 +306,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	}
 
 	// 노트찍는부분
-	public void dropNotes(String titleName) {
+	public void dropNotes(String titleName ) {
 		Beat[] beats = null;
 		if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Easy")) {
 			int startTime = 4460 - Main.REACH_TIME * 1000; // 항상 똑같은 첫번째 노트가 판정바에 적중하는 박자 타이밍
@@ -345,24 +397,41 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			};
 		} else if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Hard")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Easy")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Hard")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Easy")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Hard")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+
 		}
 
 		else if (titleName.equals("Miya - Ask The Wind") && difficulty.equals("Easy")) {
 			int startTime = 1000;
-			beats = new Beat[] { new Beat(startTime, "Space"), };
+			int gap = 125; // 박자 계산
+
+			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
 		}
 
 		else if (titleName.equals("Miya - Ask The Wind") && difficulty.equals("Hard")) {
@@ -465,14 +534,24 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			}
 			if (!dropped) {
 				try {
-					Thread.sleep(5);
+//					Thread.sleep(5);
+					System.out.println("gameMusic: " + gameMusic.getTime());
+					System.out.println("beats: " + beats[i].getTime());
+
 				} catch (Exception e) {
 //					e.printStackTrace();
 				}
 			}
+			
+			//결과창
+			if (beats[beats.length - 1].getTime() <= gameMusic.getTime()) {
+				close();
+				stage = 4;
+//				gameresult = new GameResult();
+//				gameresult.start();
+			}
 		}
 	}
-
 
 	public void judgeKey(String input) {
 		for (int i = 0; i < noteList.size(); i++) { // 먼저 입력된 것부터 찾음. 큐처럼 사용
@@ -515,10 +594,4 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 	}
 
-//	public void noteEffect(String judge) {
-//		judgeKey("S");
-//		if (judge.equals("Miss")) {
-//		keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
-//		}
-//	}
 }
