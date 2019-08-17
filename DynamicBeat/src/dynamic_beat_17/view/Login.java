@@ -29,6 +29,7 @@ public class Login extends JPanel {
 	JButton loginButton;
 	JButton signUpButton;
 	
+	public static String userId;
 	/**
 	 * Create the panel.
 	 * @return 

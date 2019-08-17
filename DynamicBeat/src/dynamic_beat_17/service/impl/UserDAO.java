@@ -43,7 +43,7 @@ public class UserDAO {
 		DAO.close(conn);
 	}
 
-	// id체크버튼
+	// 아이디체크버튼
 	public boolean checkId(User user) throws SQLException {
 		Connection conn = DAO.getConnect();
 		boolean possible = false;
