@@ -1,5 +1,7 @@
 package dynamic_beat_17;
 
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 
 import javax.swing.JPanel;
@@ -21,7 +23,7 @@ public class Main extends JFrame{
 	public DynamicBeat dynamicBeat = null;
 	
 	
-	public void change( String panelName) {
+	public void change(String panelName) {
 		
 		
 		if(panelName.equals("login")) {
@@ -42,7 +44,7 @@ public class Main extends JFrame{
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
 		
 		Main win = new Main();
