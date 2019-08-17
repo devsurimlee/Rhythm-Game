@@ -355,13 +355,22 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 				if (stage == 3) {
 					enterMain(); // 메인 화면으로 돌아가는 이벤트
-				} else if (stage == 1 || stage == 2) {
+					game.close();
+				} else if (stage == 1) {
+					introMain();
+					introMusic = new Music("introMusic.mp3", true);
+					introMusic.start();
+
+				} else if (stage == 2) {
 					introMain();
 
 				}
 			}
 		});
 		add(backButton);
+
+//		introMusic = new Music("introMusic.mp3", true);
+//		introMusic.start();
 
 //메뉴바부분 삭제 -> 16참고
 
@@ -458,8 +467,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		if (selectedMusic != null)
 			selectedMusic.close();
 		nowSelected = 0;
-		introMusic = new Music("introMusic.mp3", true);
-		introMusic.start();
+//		introMusic = new Music("introMusic.mp3", true);
+//		introMusic.start();
 		/// 클로즈로 저장하면 스레드가 지워져서 일드나 슬립으로 해야됨
 	}
 
