@@ -2,6 +2,7 @@ package dynamic_beat_17.view;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import dynamic_beat_17.Main;
@@ -24,90 +25,93 @@ public class SignUp extends JPanel {
 	private Main win;
 	JButton btnLogin;
 	JButton btnSignUp;
-	
+	JButton btnCF;
+
 	String cpw;
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public SignUp(Main win) {
 		setLayout(null);
 		this.win = win;
-		
+
 		JLabel label = new JLabel("ID: ");
 		label.setBounds(131, 96, 57, 15);
 		add(label);
-		
+
 		JLabel label_1 = new JLabel("PW: ");
 		label_1.setBounds(131, 139, 57, 15);
 		add(label_1);
-		
+
 		JLabel label_2 = new JLabel("CPW: ");
 		label_2.setBounds(131, 181, 57, 15);
 		add(label_2);
-		
+
 		IDField = new JTextField();
 		IDField.setColumns(10);
 		IDField.setBounds(211, 93, 116, 21);
 		add(IDField);
-		
+
 		PWField = new JPasswordField();
 		PWField.setBounds(211, 139, 116, 21);
 		add(PWField);
-		
+
 		CPWField = new JPasswordField();
 		CPWField.setBounds(211, 178, 116, 21);
 		add(CPWField);
-		
-		btnSignUp =  new JButton("Sign Up");
-		
+
+		btnSignUp = new JButton("Sign Up");
+
 		btnSignUp.setBounds(119, 230, 97, 23);
 		add(btnSignUp);
-		
-		btnLogin  = new JButton("Login");
+
+		btnLogin = new JButton("Login");
 		btnLogin.setBounds(230, 230, 97, 23);
 		add(btnLogin);
-		
+
+		btnCF = new JButton("CF");
+		btnCF.setBounds(339, 92, 57, 23);
+		add(btnCF);
+
 		btnLogin.addActionListener(new MyActionListener());
-		btnSignUp.addActionListener(new MyActionListener());	
-		
-		JButton btnNewButton = new JButton("CF");
-		btnNewButton.setBounds(339, 92, 57, 23);
-		add(btnNewButton);
+		btnSignUp.addActionListener(new MyActionListener());
+//		btnCF.addActionListener(new MyActionListener());
 
 	}
-	class MyActionListener implements ActionListener{
+
+	class MyActionListener implements ActionListener {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == btnSignUp) {
+			if (e.getSource() == btnSignUp) {
 				try {
 					User user = new User();
 //					System.out.println("아이디>");
 					user.setUserid(IDField.getText());
+
 //					System.out.println("비밀번호>");
 					user.setPasswd(PWField.getText());
 //					if(PWField.getText() != CPWField.getText()) {
 //						System.out.println();
 //					}
 					cpw = CPWField.getText();
-					
+
 					if (user.getPasswd().equals(cpw)) {
 						UserDAO.getInstance().insert(user);
+						JOptionPane.showMessageDialog(null, "회원가입을 축하합니다!!");
+					} else {
+						System.out.println("PW: " + user.getPasswd());
+						System.out.println("CPW: " + cpw);
+						JOptionPane.showMessageDialog(null, "회원가입에 실패하였습니다.");
 					}
-					else {System.out.println(cpw);
-					System.out.println(user.getPasswd());
-					}
-					
-					
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-			}else if(e.getSource() == btnLogin)
+			} else if (e.getSource() == btnLogin)
 				win.change("login");
 		}
 	}
-	
-	
+
 }
