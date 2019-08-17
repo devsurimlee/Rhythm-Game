@@ -83,17 +83,18 @@ public class SignUp extends JPanel {
 		btnCF = new JButton("CF");
 		btnCF.setBounds(814, 304, 57, 23);
 		add(btnCF);
-		
-		
-		//배경부분
+
+		// 배경부분
 		JLabel lblNewLabel = new JLabel("");
 		Image backgound = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(backgound));	
+		lblNewLabel.setIcon(new ImageIcon(backgound));
 		lblNewLabel.setBounds(0, 0, 1280, 720);
 		add(lblNewLabel);
 
 		btnLogin.addActionListener(new MyActionListener());
 		btnSignUp.addActionListener(new MyActionListener());
+		btnCF.addActionListener(new MyActionListener());
+
 //		btnCF.addActionListener(new MyActionListener());
 
 	}
@@ -108,53 +109,62 @@ public class SignUp extends JPanel {
 					user.setUserid(IDField.getText());
 					user.setPasswd(PWField.getPassword());
 					cpw = CPWField.getPassword();
-					
-					//char -> string
+
+					// char -> string
 					String passwd = new String(PWField.getPassword());
 					String passcpw = new String(cpw);
 
+					if (IDField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
+					}
 
-					if (passwd.equals(passcpw)) {
+					else if (passwd.length() == 0 || passcpw.length() == 0) {
+						JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요");
+					} else if (!IDField.getText().isEmpty() && passwd.equals(passcpw) 
+							&& IDField.getText().length() >=4 && passwd.length() >= 4 && UserDAO.getInstance().checkId(user) == false) {
 						UserDAO.getInstance().insert(user);
 						JOptionPane.showMessageDialog(null, "회원가입을 축하합니다!!");
-						
+						win.change("login");
+					} else if (UserDAO.getInstance().checkId(user) == true) {
+						JOptionPane.showMessageDialog(null, "ID를 확인해주세요");
+
+					} else if (IDField.getText().length() < 4 ||passwd.length() < 4) {
+						JOptionPane.showMessageDialog(null, "ID, 비밀번호는 4글자 이상 입력해주세요");
+
 					} else {
 						System.out.println("PW: " + passwd);
 						System.out.println("CPW: " + passcpw);
 						JOptionPane.showMessageDialog(null, "잘못 입력하셨습니다.");
-					
+
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			} else if (e.getSource() == btnLogin)
 				win.change("login");
-			
-			//아이디 체크부분
-			if (e.getSource() == btnCF) {
+
+			// 아이디 체크부분
+			else if (e.getSource() == btnCF) {				
+				// DAO.로그인
 				try {
 					User user = new User();
 					user.setUserid(IDField.getText());
-
-
-					if (user.getPasswd().equals(cpw)) {
-						UserDAO.getInstance().insert(user);
-						JOptionPane.showMessageDialog(null, "회원가입을 축하합니다!!");
-						
-					} else {
-						System.out.println("PW: " + user.getPasswd());
-						System.out.println("CPW: " + cpw);
-						JOptionPane.showMessageDialog(null, "잘못 입력하셨습니다.");
+					UserDAO.getInstance().checkId(user);
 					
+					if (UserDAO.getInstance().checkId(user) == true) {
+						System.out.println("사용가능한 ID입니다");
+						JOptionPane.showMessageDialog(null, "이미 있는 ID입니다");
+					}else if(IDField.getText().length() < 4) {
+						JOptionPane.showMessageDialog(null, "ID는 4글자 이상 가능합니다");
+					} else {
+						JOptionPane.showMessageDialog(null, "사용가능한 ID입니다");
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-			} else if (e.getSource() == btnLogin)
-				win.change("login");
-			
+			}
 		}
-	
+
 	}
 
 }
