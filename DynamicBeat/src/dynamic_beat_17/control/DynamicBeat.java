@@ -393,7 +393,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		screenGraphic = screenImage.getGraphics(); // 스크린 그래픽은 스크린 이미지를 이용해서 그래픽 객체를 얻어옴
 		try {
 			screenDraw((Graphics2D) screenGraphic);
-		} catch (SQLException e) {
+		} catch (NullPointerException | SQLException e) {
 			e.printStackTrace();
 		}
 		g.drawImage(screenImage, 0, 0, null); // 스크린 이미지를 0,0위치에 그려줌
@@ -417,17 +417,21 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 		if (stage == 3) {
 			try {
-			game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
-			}catch(Exception e) {
+				game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+			}catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				
 			}
 		}
 		
 		if (stage == 4) {
 			try {
-			gameresult.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
-			}catch(Exception e) {
+				gameresult.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+			}catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				
 			}
 		}
 		paintComponents(g); // 메뉴바, JLabel등을 JFrame안에 추가하면 그것을 그려주는 것 (add로 추가된것들 )

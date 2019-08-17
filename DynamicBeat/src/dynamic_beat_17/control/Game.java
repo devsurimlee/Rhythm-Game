@@ -22,22 +22,16 @@ import dynamic_beat_17.service.impl.UserDAO;
 import sun.security.util.Length;
 
 public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌아가는 프로그램 */ {
-
+	Connection conn = DAO.getConnect();
 	String id = (dynamic_beat_17.view.Login.userId); // 로그인에서 가져온 아이디
 	public static String musicName; // 곡 이름
 	public static int score = 0;
 	public static GameResult gameresult;
+	int highScore;
 	int stage = 3;
-<<<<<<< HEAD
 
 	// 겜 스타트때 0 초기화
 	private Image background = new ImageIcon(Main.class.getResource("../images/resultBackground.jpg")).getImage();
-=======
-	
-	
-	//겜 스타트때 0 초기화
-	private Image background = new ImageIcon(Main.class.getResource("../images/result/resultBackground.jpg")).getImage();
->>>>>>> branch 'master' of https://github.com/Haeam337/DynamicBeat
 
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
@@ -167,10 +161,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			g.drawImage(keyPadJEffectImage, 680, 500, null);
 			g.drawImage(keyPadKEffectImage, 780, 500, null);
 			g.drawImage(keyPadLEffectImage, 880, 500, null);
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/Haeam337/DynamicBeat
 		}
 
 		if (stage == 4) {
@@ -214,28 +204,48 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 				ScoreDAO.getInscance().selectOne(id);
 
 				if (daoScore.getHighScore() >= score) {
-					// 점수 등록
+					// 최고 점수 유지
 					g.setFont(new Font("Arial", Font.BOLD, 50));
 					g.setColor(Color.GREEN);
 					g.drawString("High_Score  : ", 337, 500);
 					String hiScore = String.format("%06d", daoScore.getHighScore());
 					g.drawString(hiScore, 700, 500); // 최고 점수 출력
-					conn = DAO.getConnect();
-					
+
 				} else if (daoScore.getHighScore() < score) {
-					// 점수 수정
+					// 최고 점수 수정
 					g.setColor(Color.GREEN);
 					g.drawString("High_Score  : ", 337, 500);
 					g.drawString(suffix, 700, 500); // 최고 점수 출력
+//					highScore = score;
+//					conn = DAO.getConnect();
+//					Score daoScore2 = null;
+//					daoScore2.setUserid(id);
+//					daoScore2.setMusic(musicName);
+//					daoScore2.setHighScore(highScore);
+//					ScoreDAO.getInscance().update(daoScore2);
 				}
 			} catch (NullPointerException e) {
+				// 최고 점수 등록, 이미지 노출
 //				e.printStackTrace();
-				System.out.println("기록이 없어서 등록합니다.");
+//				System.out.println("기록이 없어서 등록합니다.");
 				g.setColor(Color.GREEN);
 				g.drawString("High_Score  : ", 337, 500);
 				g.drawString(suffix, 700, 500); // 최고 점수 출력
+//				highScore = score;
+//				Connection conn = DAO.getConnect();
+//				Score daoScore1 = null;
+//				daoScore1.setUserid(id);
+//				daoScore1.setMusic(musicName);
+//				daoScore1.setHighScore(highScore);
+//				ScoreDAO.getInscance().update(daoScore1);
 			} finally {
-
+//				Connection conn = DAO.getConnect();
+//				Score daoScore1 = null;
+//				daoScore1.setUserid(id);
+//				daoScore1.setMusic(musicName);
+//				daoScore1.setHighScore(highScore);
+//				ScoreDAO.getInscance().update(daoScore1);
+//				DAO.close(conn);
 			}
 
 		}
@@ -595,10 +605,8 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			if (!dropped) {
 				try {
 //					Thread.sleep(5);
-					
-					//음악재생 gettime확인부분
-//					System.out.println("gameMusic: " + gameMusic.getTime());
-//					System.out.println("beats: " + beats[i].getTime());
+					System.out.println("gameMusic: " + gameMusic.getTime());
+					System.out.println("beats: " + beats[i].getTime());
 
 				} catch (Exception e) {
 //					e.printStackTrace();
