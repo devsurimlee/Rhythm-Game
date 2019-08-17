@@ -27,7 +27,7 @@ public class ScoreDAO  {
 	public void insert( Score score) throws SQLException {
 		Connection conn = DAO.getConnect();
 		String sql = "INSERT INTO Music (high_score, ID, Music) values(? , ?, ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, score.getHighScore());
 		pstmt.setString(2, score.getUserid());
 		pstmt.setString(3, score.getMusic());
@@ -41,7 +41,7 @@ public class ScoreDAO  {
 	public void update( Score score) throws SQLException {
 		Connection conn = DAO.getConnect();
 		String sql = "UPDATE MUSIC SET high_score = ? WHERE ID = ? and music = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, score.getHighScore());
 		pstmt.setString(2, score.getUserid());
 		pstmt.setString(3, score.getMusic());
@@ -55,10 +55,10 @@ public class ScoreDAO  {
 		Connection conn = DAO.getConnect();
 		Score score = null;
 		String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, score.getUserid());
 		pstmt.setString(2, score.getMusic());
-		ResultSet rs = pstmt.executeQuery();
+		rs = pstmt.executeQuery();
 		if(rs.next()) {
 			score = new Score();
 			score.setHighScore(rs.getInt("high_score"));
@@ -91,12 +91,12 @@ public class ScoreDAO  {
 	public List<Score> rankList(Connection conn) throws SQLException{
 		List<Score> list = new ArrayList<>();
 		Score score = null;
-		String sql = "SELECT ID, SUM(HIGH_SCORE) score,  RANK() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID";
+		String sql = "SELECT * FROM (SELECT ID, SUM(HIGH_SCORE) score,  ROW_NUMBER() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where  rank<=3";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		while(rs.next()) {
 			score = new Score();
-			score.setHighScore(rs.getInt("high_score"));
+			score.setTotalScore(rs.getInt("score"));
 //			score.setMusic(rs.getString("music"));
 			score.setUserid(rs.getString("id"));
 			score.setRank(rs.getInt("rank"));

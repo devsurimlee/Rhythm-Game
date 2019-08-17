@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +28,15 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// Main클래스의 위치를 기반으로 해서 인트로이미지 파일을 얻어온 후 그것의 이미지 인스턴스를 background 라는 이미지
 	// 변수에 초기화 해주는것.
 	// background를 위쪽에서 바로 초기화 하도록 설정
-	
-	//화면전환용 변수 0:인트로메인 1:엔터메인(곡선택) 2:랭킹창 3:인게임
+
+	// 화면전환용 변수 0:인트로메인 1:엔터메인(곡선택) 2:랭킹창 3:인게임
 	int stage = 0;
-	
+
 	private ImageIcon startButtonEnteredImage = new ImageIcon(
 			Main.class.getResource("../images/startButtonEntered.png"));
-	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));	
-	
-	private ImageIcon rankButtonEnteredImage = new ImageIcon(
-			Main.class.getResource("../images/rankButtonEntered.png"));
+	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));
+
+	private ImageIcon rankButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/rankButtonEntered.png"));
 	private ImageIcon rankButtonBasicImage = new ImageIcon(Main.class.getResource("../images/rankButtonBasic.png"));
 
 	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
@@ -52,8 +52,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	private ImageIcon hardButtonBasicImage = new ImageIcon(Main.class.getResource("../images/hardButtonBasic.png"));
 	private ImageIcon backButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/backButtonEntered.png"));
 	private ImageIcon backButtonBasicImage = new ImageIcon(Main.class.getResource("../images/backButtonBasic.png"));
-	
-
 
 	// introBackground => background 로 한 이유는 시작화면에서 메인화면으로 전환되었을 경우 단순히 변수에 이미지만
 	// 변경하기 위해서
@@ -83,11 +81,11 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 하나의 게임이라는 것은 하나의 프로그램이 실행되었을때 단 하나의 게임만 진행 가능, 즉 동시에 여러 게임을 실행 시킬 수 없기때문에,
 	// 프로그램 전체에서 통용이 가능하다.
 	public static Game game; // 따라서, public static으로 선언해준다. 이제 게임이라는 변수는 프로젝트 전체에서 사용 가능한 변수가 된다.
-	
-	//랭크선언
+
+	// 랭크선언
 	public static Rank rank;
-	
-	public DynamicBeat(Main win ) /* 생성자 */ {
+
+	public DynamicBeat(Main win) /* 생성자 */ {
 		// 순서에 맞게 넣어줌으로써 변수를 순식간에 초기화, 초기화 된 변수를 트랙리스트에 넣어줌으로써 곡들의 리스트를 관리할 수 있게 됨
 		trackList.add(
 				new Track("Mighty Love Title Image.png", "Mighty Love Start Image.jpg", "Mighty Love Game Image.jpg",
@@ -108,9 +106,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 게임 창을 닫을때 프로그램 전체가 종료되는것
 //		setVisible(true); // 게임 화면이 정상적으로 출력되도록(보이게 하도록)
 		setBackground(new Color(0, 0, 0, 0)); // 페인트 컬러시 배경을 회색이 아니라 전부 흰색으로 변환
-		
+
 		this.win = win;
-		
+
 		setLayout(null); // 버튼이나 다른것들을 넣었을때 그 위치에 그대로 꽂히도록 설정
 
 		addKeyListener(new KeyListener()); // 키리스너를 사용
@@ -118,7 +116,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		introMusic.start(); // 게임을 실행하면서 동시에 음악이 시작됨.
 
 		// exit버튼 삭제 ->16참고
-		
 
 		startButton.setBounds(40, 200, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		startButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
@@ -147,8 +144,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			}
 		});
 		add(startButton);
-		
-		
+
 		rankButton.setBounds(40, 330, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		rankButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
 		rankButton.setContentAreaFilled(false);
@@ -177,13 +173,11 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();
 				}
-				//랭크시스템진입
+				// 랭크시스템진입
 				rankMain();
 			}
 		});
 		add(rankButton);
-
-		
 
 		quitButton.setBounds(40, 460, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		quitButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
@@ -217,7 +211,6 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			}
 		});
 		add(quitButton);
-			
 
 		leftButton.setVisible(false); // 맨 처음은 보이지 않도록
 		leftButton.setBounds(140, 310, 60, 60); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
@@ -359,20 +352,19 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			public void mousePressed(MouseEvent e) {
 				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
-				
+
 				if (stage == 3) {
 					enterMain(); // 메인 화면으로 돌아가는 이벤트
-				}
-				else if (stage == 1 || stage == 2){
+				} else if (stage == 1 || stage == 2) {
 					introMain();
-					
+
 				}
 			}
 		});
 		add(backButton);
 
 //메뉴바부분 삭제 -> 16참고
-		
+
 	}
 
 	public int getStage() {
@@ -382,27 +374,30 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	public void setStage(int stage) {
 		this.stage = stage;
 	}
-	
 
 	public void paint(Graphics g) {
 		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT); // 크기만큼 스크린 이미지
 		screenGraphic = screenImage.getGraphics(); // 스크린 그래픽은 스크린 이미지를 이용해서 그래픽 객체를 얻어옴
-		screenDraw((Graphics2D) screenGraphic); // 그림을 그려줌 Grapics2D 라는 라이브러리는 글씨 깨짐 현상을 없애고 출력하게끔 형변환을 시켜주는 것이다.
+		screenDraw((Graphics2D) screenGraphic);
 		g.drawImage(screenImage, 0, 0, null); // 스크린 이미지를 0,0위치에 그려줌
 
 	}
-	
-	//그림 그리는 부분
+
+	// 그림 그리는 부분
 	public void screenDraw(Graphics2D g) { // 그래픽스2D 매개변수로 변환
 		g.drawImage(background, 0, 0, null); // add 된 것들이 아닌 단순 이미지들을 화면에 출력해주는것
 		if (stage == 1) {
 			g.drawImage(selectedImage, 340, 100, null);
 			g.drawImage(titleImage, 340, 70, null);
 		}
-		if (stage ==2 ) {
-		rank.screenDraw(g);
+		if (stage == 2) {
+			try {
+				rank.screenDraw(g);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 		if (stage == 3) {
 			game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
 		}
@@ -448,10 +443,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		selectTrack(nowSelected);
 	}
 
-
-	//메인화면
+	// 메인화면
 	public void introMain() {
-		stage = 0;	
+		stage = 0;
 		backButton.setVisible(false);
 		startButton.setVisible(true);
 		rankButton.setVisible(true);
@@ -462,14 +456,14 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
 		hardButton.setVisible(false);
 		if (selectedMusic != null)
-		selectedMusic.close();
+			selectedMusic.close();
 		nowSelected = 0;
 		introMusic = new Music("introMusic.mp3", true);
 		introMusic.start();
 		/// 클로즈로 저장하면 스레드가 지워져서 일드나 슬립으로 해야됨
 	}
-	
-	//게임선택창
+
+	// 게임선택창
 	public void enterMain() {
 		stage = 1;
 		backButton.setVisible(true);
@@ -484,7 +478,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		selectTrack(nowSelected); // 맨 처음에는 첫번째 곡을 실행
 		introMusic.close();
 	}
-	
+
 	public void rankMain() {
 		stage = 2;
 		backButton.setVisible(true);
@@ -497,16 +491,16 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
 		hardButton.setVisible(false);
 		if (selectedMusic != null)
-		selectedMusic.close();
+			selectedMusic.close();
 		rank = new Rank();
 		rank.start();
-		
+
 //		List<Rank>rank= new ArrayList<>();
 //		rank.add(1, "aa");
 //		rank.add(2, "aa");
-		
+
 	}
-	
+
 	// 곡선택부분
 	public void gameStart(int nowSelected, String difficulty) {
 		stage = 3;
@@ -523,8 +517,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				trackList.get(nowSelected).getGameMusic());
 		game.start(); // 런 함수 자동 실행, 노트 생성됨.
 		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
-		
+
 	}
-	
-	
+
 }
