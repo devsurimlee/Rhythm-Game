@@ -28,9 +28,16 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	public static int score = 0;
 	public static GameResult gameresult;
 	int stage = 3;
+<<<<<<< HEAD
 
 	// 겜 스타트때 0 초기화
 	private Image background = new ImageIcon(Main.class.getResource("../images/resultBackground.jpg")).getImage();
+=======
+	
+	
+	//겜 스타트때 0 초기화
+	private Image background = new ImageIcon(Main.class.getResource("../images/result/resultBackground.jpg")).getImage();
+>>>>>>> branch 'master' of https://github.com/Haeam337/DynamicBeat
 
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
@@ -160,6 +167,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			g.drawImage(keyPadJEffectImage, 680, 500, null);
 			g.drawImage(keyPadKEffectImage, 780, 500, null);
 			g.drawImage(keyPadLEffectImage, 880, 500, null);
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/Haeam337/DynamicBeat
 		}
 
 		if (stage == 4) {
@@ -584,8 +595,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			if (!dropped) {
 				try {
 //					Thread.sleep(5);
-					System.out.println("gameMusic: " + gameMusic.getTime());
-					System.out.println("beats: " + beats[i].getTime());
+					
+					//음악재생 gettime확인부분
+//					System.out.println("gameMusic: " + gameMusic.getTime());
+//					System.out.println("beats: " + beats[i].getTime());
 
 				} catch (Exception e) {
 //					e.printStackTrace();
