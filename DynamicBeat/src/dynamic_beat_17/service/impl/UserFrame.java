@@ -4,8 +4,9 @@ package dynamic_beat_17.service.impl;
 
 import java.util.Scanner;
 
+
 import dynamic_beat_17.model.User;
-import oracle.sql.CHAR;
+//import oracle.sql.CHAR;
 
 
 public class UserFrame {

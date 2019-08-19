@@ -62,6 +62,7 @@ public class Rank extends Thread {
 			g.drawString(userID, 450, 275+(150*i));
 			g.drawString(totalScore, 900, 275+(150*i)); // 각각 출력
 		}
+		DAO.close(conn);
 		g.drawImage(rank1, 200, 200, null);
 		g.drawImage(rank2, 200, 350, null);
 		g.drawImage(rank3, 200, 500, null);
