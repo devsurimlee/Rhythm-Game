@@ -116,7 +116,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		setLayout(null); // 버튼이나 다른것들을 넣었을때 그 위치에 그대로 꽂히도록 설정
 
 		addKeyListener(new KeyListener()); // 키리스너를 사용
-
+		
 		introMusic.start(); // 게임을 실행하면서 동시에 음악이 시작됨.
 
 		// exit버튼 삭제 ->16참고
@@ -544,10 +544,12 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		background = new ImageIcon(Main.class.getResource("../images/" + trackList.get(nowSelected).getGameImage()))
 				.getImage();
 		backButton.setVisible(true);
+		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
+		requestFocusInWindow();
+
 		game = new Game(trackList.get(nowSelected).getTitleName(), difficulty,
 				trackList.get(nowSelected).getGameMusic());
 		game.start(); // 런 함수 자동 실행, 노트 생성됨.
-		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
 		}
 
 	

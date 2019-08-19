@@ -22,6 +22,23 @@ public class Main extends JFrame{
 	public SignUp signUp = null;
 	public DynamicBeat dynamicBeat = null;
 	
+	public Main() throws SQLException {
+		this.login = new Login(this);
+		this.signUp = new SignUp(this);
+		this.dynamicBeat = new DynamicBeat(this);
+		
+	//	this.add(this.login);
+		this.add(this.dynamicBeat);
+
+		
+		this.setTitle("Dynamic Beat");
+		this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
+		this.setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
+//		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 창닫으면 노래나옴
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프로그램 전체 종료
+		this.setVisible(true);
+	}
 	
 	public void change(String panelName) {
 		
@@ -49,21 +66,8 @@ public class Main extends JFrame{
 		
 		Main win = new Main();
 		
-		win.setTitle("Frame test");
-		win.login = new Login(win);
-		win.signUp = new SignUp(win);
-		win.dynamicBeat = new DynamicBeat(win);
-		
-		win.add(win.login);
-//		win.setVisible(true);
-		
-		win.setTitle("Dynamic Beat");
-		win.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		win.setResizable(false); // 한번 만들어진 창은 사용자가 임의로 줄이거나 늘릴 수 없다.
-		win.setLocationRelativeTo(null); // 실행시 게임 화면이 정 중앙에 뜨게 설정
-//		win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // 창닫으면 노래나옴
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프로그램 전체 종료
-		win.setVisible(true);
+
+
 		
 	}
 

@@ -7,6 +7,7 @@ public class KeyListener extends KeyAdapter {
 
 	@Override
 	public void keyPressed(KeyEvent e) { // 어떤 키를 입력받았는지 감지하는 전반적인 것.
+		System.out.println(e.getKeyCode());
 		if(DynamicBeat.game == null) {
 			return; //return 을 넣어줌으로써 현재 게임이 진행되지 않으면 밑에 작업들은 거치지 않도록 리턴해준다.
 		}
