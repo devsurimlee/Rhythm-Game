@@ -545,7 +545,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 				.getImage();
 		backButton.setVisible(true);
 		setFocusable(true); // 메인 프레임에 키보드 포커스가 맞춰짐.
-		requestFocusInWindow();
+		requestFocusInWindow(); // 키리스너 필수
 
 		game = new Game(trackList.get(nowSelected).getTitleName(), difficulty,
 				trackList.get(nowSelected).getGameMusic());
