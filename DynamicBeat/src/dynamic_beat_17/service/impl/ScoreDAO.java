@@ -10,8 +10,8 @@ import java.util.List;
 import dynamic_beat_17.common.DAO;
 import dynamic_beat_17.model.Score;
 
-public class ScoreDAO  {
-	
+public class ScoreDAO {
+
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 
@@ -40,6 +40,7 @@ public class ScoreDAO  {
 
 	public void update(Score score) throws SQLException {
 		Connection conn = DAO.getConnect();
+		System.out.println(score);
 		String sql = "UPDATE MUSIC SET high_score = ? WHERE ID = ? and music = ?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, score.getHighScore());
@@ -49,53 +50,62 @@ public class ScoreDAO  {
 		System.out.println(r + "건 수정완료");
 		DAO.close(conn);
 	}
-	
-	//곡에 따른 최고 점수 조회
-	public Score selectOne(String userid) throws SQLException {
-		Connection conn = DAO.getConnect();
-		Score score = null;
-		String sql = "SELECT  high_score FROM music RIGHT OUTER JOIN DUAL ON id = ? and music = ?";
-//		String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, score.getUserid());
-		pstmt.setString(2, score.getMusic());
-		rs = pstmt.executeQuery();
-		if(rs.next()) {
-			score = new Score();
-			score.setHighScore(rs.getInt("high_score"));
+
+	// 곡에 따른 최고 점수 조회
+	public Score selectOne(Score score) {
+		Connection conn = null;
+		try {
+			score.setStart(false);
+			conn = DAO.getConnect();
+//			String sql = "SELECT  high_score FROM music RIGHT OUTER JOIN DUAL ON id = ? and music = ?";
+			String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, score.getUserid());
+			pstmt.setString(2, score.getMusic());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				score.setHighScore(rs.getInt("high_score"));
+				score.setStart(false);
 //			score.setUserid(rs.getString("user_id"));
 //			score.setMusic(rs.getString("music"));
+			} else {
+				score.setHighScore(0);
+				score.setStart(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DAO.close(conn); // try
 		}
-		DAO.close(conn); //try
 		return score;
 	}
-	
-	//전체 총점
-	public List<Score>/*util로 import*/ selectTotal(Connection conn) throws SQLException {
+
+	// 전체 총점
+	public List<Score>/* util로 import */ selectTotal(Connection conn) throws SQLException {
 		List<Score> list = new ArrayList<>();
 		Score score = null;
 		String sql = "SELECT Id, SUM(HIGH_SCORE) total_score FROM music GROUP BY Id";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
-		while(rs.next()) {
-		score = new Score();
-		score.setHighScore(rs.getInt("high_score"));
+		while (rs.next()) {
+			score = new Score();
+			score.setHighScore(rs.getInt("high_score"));
 //		score.setUserid(rs.getString("id"));
 //		score.setMusic(rs.getString("music"));
-		score.setTotalScore(rs.getInt("Total_score"));
-		list.add(score);
+			score.setTotalScore(rs.getInt("Total_score"));
+			list.add(score);
 		}
 		return list;
 	}
 
-	//전체 총점에 대한 랭킹
-	public List<Score> rankList(Connection conn) throws SQLException{
+	// 전체 총점에 대한 랭킹
+	public List<Score> rankList(Connection conn) throws SQLException {
 		List<Score> list = new ArrayList<>();
 		Score score = null;
 		String sql = "SELECT * FROM (SELECT ID, SUM(HIGH_SCORE) score,  ROW_NUMBER() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where  rank<=3";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			score = new Score();
 			score.setTotalScore(rs.getInt("score"));
 //			score.setMusic(rs.getString("music"));

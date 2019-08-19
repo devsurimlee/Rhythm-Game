@@ -298,7 +298,11 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			public void mousePressed(MouseEvent e) {
 				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
-				gameStart(nowSelected, "Easy");
+				try {
+					gameStart(nowSelected, "Easy");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		add(easyButton);
@@ -325,7 +329,11 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				gameStart(nowSelected, "Hard");
+				try {
+					gameStart(nowSelected, "Hard");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
 			}
@@ -525,7 +533,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	}
 
 	// 곡선택부분
-	public void gameStart(int nowSelected, String difficulty) {
+	public void gameStart(int nowSelected, String difficulty) throws SQLException {
 		stage = 3;
 		if (selectedMusic != null)
 			selectedMusic.close();

@@ -6,8 +6,14 @@ public class Score {
 	private int highScore;
 	private int rank;
 	private int totalScore;
+	private boolean start;
 	
-	
+	public boolean isStart() {
+		return start;
+	}
+	public void setStart(boolean start) {
+		this.start = start;
+	}
 	public int getTotalScore() {
 		return totalScore;
 	}
@@ -40,4 +46,10 @@ public class Score {
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
 	}
+	@Override
+	public String toString() {
+		return "Score [userid : " + userid + "\n, music : " + music + "\n, highScore : " + highScore + "\n, rank : "
+				+ rank + "\n, totalScore : " + totalScore + "\n, start : " + start + "]";
+	}
+	
 }

@@ -28,11 +28,10 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	public static GameResult gameresult;
 	int highScore;
 	int stage = 3;
-	
-	
-	//겜 스타트때 0 초기화
-	private Image background = new ImageIcon(Main.class.getResource("../images/result/resultBackground.jpg")).getImage();
 
+	// 겜 스타트때 0 초기화
+	private Image background = new ImageIcon(Main.class.getResource("../images/result/resultBackground.jpg"))
+			.getImage();
 
 	private Image noteRouteLineImage = new ImageIcon(Main.class.getResource("../images/noteRouteLine.png")).getImage();
 	private Image judgementLineImage = new ImageIcon(Main.class.getResource("../images/judgementLine.png")).getImage();
@@ -75,11 +74,19 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Music gameMusic;
 	ArrayList<Note> noteList = new ArrayList<Note>();
 
-	public Game(String titleName, String difficulty, String musicTitle) { // 생성자 생성
+	public Game(String titleName, String difficulty, String musicTitle) throws SQLException { // 생성자 생성
 		this.titleName = titleName;
 		this.difficulty = difficulty;
 		this.musicTitle = musicTitle;
 		gameMusic = new Music(this.musicTitle, false);
+//		getHighScore();
+//		if (highScore >= score) {
+//			// 최고 점수 유지
+//		} else if (highScore < score) {
+//			// 최고 점수 수정
+//			highScore = score;
+//		}
+
 	}
 
 	public void screenDraw(Graphics2D g) throws SQLException {
@@ -197,60 +204,51 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 //			g.setFont(new Font("Arial", Font.BOLD, 50));
 			g.setColor(Color.WHITE);
 			g.drawString(suffix, 700, 425); // 점수 출력
-			try {
-				Connection conn = DAO.getConnect();
-				Score daoScore = null;
-				daoScore.setUserid(id);
-				daoScore.setMusic(musicName);
-				ScoreDAO.getInscance().selectOne(id);
 
-				if (daoScore.getHighScore() >= score) {
-					// 최고 점수 유지
-					g.setFont(new Font("Arial", Font.BOLD, 50));
-					g.setColor(Color.GREEN);
-					g.drawString("High_Score  : ", 337, 500);
-					String hiScore = String.format("%06d", daoScore.getHighScore());
-					g.drawString(hiScore, 700, 500); // 최고 점수 출력
+//			if (highScore >= score) {
+			// 최고 점수 유지
+			g.setFont(new Font("Arial", Font.BOLD, 50));
+			g.setColor(Color.GREEN);
+			g.drawString("High_Score  : ", 337, 500);
+			String hiScore = String.format("%06d", highScore);
+			g.drawString(hiScore, 700, 500); // 최고 점수 출력
 
-				} else if (daoScore.getHighScore() < score) {
-					// 최고 점수 수정
-					g.setColor(Color.GREEN);
-					g.drawString("High_Score  : ", 337, 500);
-					g.drawString(suffix, 700, 500); // 최고 점수 출력
-//					highScore = score;
-//					conn = DAO.getConnect();
-//					Score daoScore2 = null;
-//					daoScore2.setUserid(id);
-//					daoScore2.setMusic(musicName);
-//					daoScore2.setHighScore(highScore);
-//					ScoreDAO.getInscance().update(daoScore2);
-				}
-			} catch (NullPointerException e) {
-				// 최고 점수 등록, 이미지 노출
-//				e.printStackTrace();
-//				System.out.println("기록이 없어서 등록합니다.");
-				g.setColor(Color.GREEN);
-				g.drawString("High_Score  : ", 337, 500);
-				g.drawString(suffix, 700, 500); // 최고 점수 출력
-//				highScore = score;
-//				Connection conn = DAO.getConnect();
-//				Score daoScore1 = null;
-//				daoScore1.setUserid(id);
-//				daoScore1.setMusic(musicName);
-//				daoScore1.setHighScore(highScore);
-//				ScoreDAO.getInscance().update(daoScore1);
-			} finally {
-//				Connection conn = DAO.getConnect();
-//				Score daoScore1 = null;
-//				daoScore1.setUserid(id);
-//				daoScore1.setMusic(musicName);
-//				daoScore1.setHighScore(highScore);
-//				ScoreDAO.getInscance().update(daoScore1);
-//				DAO.close(conn);
-			}
+//			} else if (highScore < score) {
+//				// 최고 점수 수정
+//				g.setColor(Color.GREEN);
+//				g.drawString("High_Score  : ", 337, 500);
+//				g.drawString(suffix, 700, 500); // 최고 점수 출력
+//			}
 
 		}
 
+	}
+
+	public Score getHighScore() throws SQLException { // highScore 가져옴
+		Score daoScore = new Score();
+		daoScore.setUserid(id);
+		daoScore.setMusic(musicName);
+		ScoreDAO.getInscance().selectOne(daoScore);
+		highScore = daoScore.getHighScore();
+		return daoScore;
+	}
+
+	public void updateHighScore() throws SQLException {
+//		highScore = score;
+		Score daoScore = new Score();
+		daoScore.setHighScore(score);
+		daoScore.setUserid(id);
+		daoScore.setMusic(musicName);
+		ScoreDAO.getInscance().update(daoScore);
+	}
+
+	public void insertHighScore() throws SQLException {
+//		highScore = score;
+		Score daoScore = new Score();
+		daoScore.setHighScore(score);
+		daoScore.setUserid(id);
+		daoScore.setMusic(musicName);
+		ScoreDAO.getInscance().insert(daoScore);
 	}
 
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
@@ -360,7 +358,12 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 	@Override
 	public void run() {
-		dropNotes(this.titleName);
+		try {
+			dropNotes(this.titleName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void close() {
@@ -369,8 +372,9 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	}
 
 	// 노트찍는부분
-	public void dropNotes(String titleName) {
+	public void dropNotes(String titleName) throws SQLException {
 		Beat[] beats = null;
+		score = 0;
 		if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Easy")) {
 			musicName = "JK - ML , E"; // 글자 수 때문에.. 어쩔 수 없음
 			int startTime = 4460 - Main.REACH_TIME * 1000; // 항상 똑같은 첫번째 노트가 판정바에 적중하는 박자 타이밍
@@ -526,70 +530,71 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 					new Beat(startTime + gap * 52, "Space"), new Beat(startTime + gap * 52, "J"),
 					new Beat(startTime + gap * 54, "S"), new Beat(startTime + gap * 56, "D"),
 					new Beat(startTime + gap * 59, "F"), new Beat(startTime + gap * 59, "Space"),
-					new Beat(startTime + gap * 59, "J"), new Beat(startTime + gap * 61, "K"),
-					new Beat(startTime + gap * 63, "D"), new Beat(startTime + gap * 65, "F"),
-					new Beat(startTime + gap * 65, "Space"), new Beat(startTime + gap * 65, "J"),
-					new Beat(startTime + gap * 70, "S"), new Beat(startTime + gap * 72, "S"),
-					new Beat(startTime + gap * 74, "S"), new Beat(startTime + gap * 78, "J"),
-					new Beat(startTime + gap * 79, "K"), new Beat(startTime + gap * 80, "L"),
-					new Beat(startTime + gap * 83, "Space"), new Beat(startTime + gap * 85, "S"),
-					new Beat(startTime + gap * 87, "D"), new Beat(startTime + gap * 89, "S"),
-					new Beat(startTime + gap * 91, "D"), new Beat(startTime + gap * 93, "F"),
-					new Beat(startTime + gap * 96, "Space"), new Beat(startTime + gap * 98, "L"),
-					new Beat(startTime + gap * 100, "Space"), new Beat(startTime + gap * 102, "S"),
-					new Beat(startTime + gap * 103, "D"), new Beat(startTime + gap * 109, "Space"),
-					new Beat(startTime + gap * 111, "Space"), new Beat(startTime + gap * 116, "Space"),
-					new Beat(startTime + gap * 118, "S"), new Beat(startTime + gap * 119, "D"),
-					new Beat(startTime + gap * 120, "F"), new Beat(startTime + gap * 123, "S"),
-					new Beat(startTime + gap * 124, "D"), new Beat(startTime + gap * 125, "F"),
-					new Beat(startTime + gap * 126, "J"), new Beat(startTime + gap * 127, "K"),
-					new Beat(startTime + gap * 130, "J"), new Beat(startTime + gap * 133, "K"),
-					new Beat(startTime + gap * 136, "L"), new Beat(startTime + gap * 138, "S"),
-					new Beat(startTime + gap * 140, "Space"), new Beat(startTime + gap * 142, "S"),
-					new Beat(startTime + gap * 144, "Space"), new Beat(startTime + gap * 146, "Space"),
-					new Beat(startTime + gap * 150, "Space"), new Beat(startTime + gap * 152, "Space"),
-					new Beat(startTime + gap * 157, "J"), new Beat(startTime + gap * 161, "K"),
-					new Beat(startTime + gap * 165, "L"), new Beat(startTime + gap * 167, "S"),
-					new Beat(startTime + gap * 169, "D"), new Beat(startTime + gap * 171, "F"),
-					new Beat(startTime + gap * 174, "S"), new Beat(startTime + gap * 176, "D"),
-					new Beat(startTime + gap * 178, "F"), new Beat(startTime + gap * 180, "Space"),
-					new Beat(startTime + gap * 181, "L"), new Beat(startTime + gap * 184, "Space"),
-					new Beat(startTime + gap * 187, "L"), new Beat(startTime + gap * 188, "K"),
-					new Beat(startTime + gap * 189, "J"), new Beat(startTime + gap * 192, "S"),
-					new Beat(startTime + gap * 192, "Space"), new Beat(startTime + gap * 196, "D"),
-					new Beat(startTime + gap * 196, "Space"), new Beat(startTime + gap * 200, "S"),
-					new Beat(startTime + gap * 200, "Space"), new Beat(startTime + gap * 207, "J"),
-					new Beat(startTime + gap * 216, "L"), new Beat(startTime + gap * 216, "Space"),
-					new Beat(startTime + gap * 218, "Space"), new Beat(startTime + gap * 221, "J"),
-					new Beat(startTime + gap * 223, "K"), new Beat(startTime + gap * 225, "L"),
-					new Beat(startTime + gap * 227, "Space"), new Beat(startTime + gap * 231, "D"),
-					new Beat(startTime + gap * 231, "Space"), new Beat(startTime + gap * 235, "S"),
-					new Beat(startTime + gap * 235, "Space"), new Beat(startTime + gap * 242, "S"),
-					new Beat(startTime + gap * 242, "Space"), new Beat(startTime + gap * 242, "L"),
-					new Beat(startTime + gap * 246, "D"), new Beat(startTime + gap * 246, "Space"),
-					new Beat(startTime + gap * 246, "K"), new Beat(startTime + gap * 250, "F"),
-					new Beat(startTime + gap * 250, "Space"), new Beat(startTime + gap * 250, "J"),
-					new Beat(startTime + gap * 255, "J"), new Beat(startTime + gap * 257, "K"),
-					new Beat(startTime + gap * 259, "K"), new Beat(startTime + gap * 262, "S"),
-					new Beat(startTime + gap * 262, "Space"), new Beat(startTime + gap * 266, "D"),
-					new Beat(startTime + gap * 266, "S"), new Beat(startTime + gap * 266, "Space"),
-					new Beat(startTime + gap * 270, "S"), new Beat(startTime + gap * 270, "Space"),
-					new Beat(startTime + gap * 275, "J"), new Beat(startTime + gap * 277, "K"),
-					new Beat(startTime + gap * 279, "L"), new Beat(startTime + gap * 282, "J"),
-					new Beat(startTime + gap * 284, "K"), new Beat(startTime + gap * 286, "L"),
-					new Beat(startTime + gap * 289, "J"), new Beat(startTime + gap * 291, "K"),
-					new Beat(startTime + gap * 293, "L"), new Beat(startTime + gap * 295, "J"),
-					new Beat(startTime + gap * 297, "L"), new Beat(startTime + gap * 299, "D"),
-					new Beat(startTime + gap * 301, "S"), new Beat(startTime + gap * 304, "F"),
-					new Beat(startTime + gap * 306, "S"), new Beat(startTime + gap * 308, "S"),
-					new Beat(startTime + gap * 310, "F"), new Beat(startTime + gap * 312, "D"),
-					new Beat(startTime + gap * 314, "S"), new Beat(startTime + gap * 317, "F"),
-					new Beat(startTime + gap * 319, "D"), new Beat(startTime + gap * 321, "S"),
-					new Beat(startTime + gap * 323, "F"), new Beat(startTime + gap * 325, "D"),
-					new Beat(startTime + gap * 327, "S"), new Beat(startTime + gap * 330, "F"),
-					new Beat(startTime + gap * 332, "S"), new Beat(startTime + gap * 332, "Space"),
-					new Beat(startTime + gap * 336, "D"), new Beat(startTime + gap * 336, "Space"),
-					new Beat(startTime + gap * 340, "S"), new Beat(startTime + gap * 340, "Space"), };
+//					new Beat(startTime + gap * 59, "J"), new Beat(startTime + gap * 61, "K"),
+//					new Beat(startTime + gap * 63, "D"), new Beat(startTime + gap * 65, "F"),
+//					new Beat(startTime + gap * 65, "Space"), new Beat(startTime + gap * 65, "J"),
+//					new Beat(startTime + gap * 70, "S"), new Beat(startTime + gap * 72, "S"),
+//					new Beat(startTime + gap * 74, "S"), new Beat(startTime + gap * 78, "J"),
+//					new Beat(startTime + gap * 79, "K"), new Beat(startTime + gap * 80, "L"),
+//					new Beat(startTime + gap * 83, "Space"), new Beat(startTime + gap * 85, "S"),
+//					new Beat(startTime + gap * 87, "D"), new Beat(startTime + gap * 89, "S"),
+//					new Beat(startTime + gap * 91, "D"), new Beat(startTime + gap * 93, "F"),
+//					new Beat(startTime + gap * 96, "Space"), new Beat(startTime + gap * 98, "L"),
+//					new Beat(startTime + gap * 100, "Space"), new Beat(startTime + gap * 102, "S"),
+//					new Beat(startTime + gap * 103, "D"), new Beat(startTime + gap * 109, "Space"),
+//					new Beat(startTime + gap * 111, "Space"), new Beat(startTime + gap * 116, "Space"),
+//					new Beat(startTime + gap * 118, "S"), new Beat(startTime + gap * 119, "D"),
+//					new Beat(startTime + gap * 120, "F"), new Beat(startTime + gap * 123, "S"),
+//					new Beat(startTime + gap * 124, "D"), new Beat(startTime + gap * 125, "F"),
+//					new Beat(startTime + gap * 126, "J"), new Beat(startTime + gap * 127, "K"),
+//					new Beat(startTime + gap * 130, "J"), new Beat(startTime + gap * 133, "K"),
+//					new Beat(startTime + gap * 136, "L"), new Beat(startTime + gap * 138, "S"),
+//					new Beat(startTime + gap * 140, "Space"), new Beat(startTime + gap * 142, "S"),
+//					new Beat(startTime + gap * 144, "Space"), new Beat(startTime + gap * 146, "Space"),
+//					new Beat(startTime + gap * 150, "Space"), new Beat(startTime + gap * 152, "Space"),
+//					new Beat(startTime + gap * 157, "J"), new Beat(startTime + gap * 161, "K"),
+//					new Beat(startTime + gap * 165, "L"), new Beat(startTime + gap * 167, "S"),
+//					new Beat(startTime + gap * 169, "D"), new Beat(startTime + gap * 171, "F"),
+//					new Beat(startTime + gap * 174, "S"), new Beat(startTime + gap * 176, "D"),
+//					new Beat(startTime + gap * 178, "F"), new Beat(startTime + gap * 180, "Space"),
+//					new Beat(startTime + gap * 181, "L"), new Beat(startTime + gap * 184, "Space"),
+//					new Beat(startTime + gap * 187, "L"), new Beat(startTime + gap * 188, "K"),
+//					new Beat(startTime + gap * 189, "J"), new Beat(startTime + gap * 192, "S"),
+//					new Beat(startTime + gap * 192, "Space"), new Beat(startTime + gap * 196, "D"),
+//					new Beat(startTime + gap * 196, "Space"), new Beat(startTime + gap * 200, "S"),
+//					new Beat(startTime + gap * 200, "Space"), new Beat(startTime + gap * 207, "J"),
+//					new Beat(startTime + gap * 216, "L"), new Beat(startTime + gap * 216, "Space"),
+//					new Beat(startTime + gap * 218, "Space"), new Beat(startTime + gap * 221, "J"),
+//					new Beat(startTime + gap * 223, "K"), new Beat(startTime + gap * 225, "L"),
+//					new Beat(startTime + gap * 227, "Space"), new Beat(startTime + gap * 231, "D"),
+//					new Beat(startTime + gap * 231, "Space"), new Beat(startTime + gap * 235, "S"),
+//					new Beat(startTime + gap * 235, "Space"), new Beat(startTime + gap * 242, "S"),
+//					new Beat(startTime + gap * 242, "Space"), new Beat(startTime + gap * 242, "L"),
+//					new Beat(startTime + gap * 246, "D"), new Beat(startTime + gap * 246, "Space"),
+//					new Beat(startTime + gap * 246, "K"), new Beat(startTime + gap * 250, "F"),
+//					new Beat(startTime + gap * 250, "Space"), new Beat(startTime + gap * 250, "J"),
+//					new Beat(startTime + gap * 255, "J"), new Beat(startTime + gap * 257, "K"),
+//					new Beat(startTime + gap * 259, "K"), new Beat(startTime + gap * 262, "S"),
+//					new Beat(startTime + gap * 262, "Space"), new Beat(startTime + gap * 266, "D"),
+//					new Beat(startTime + gap * 266, "S"), new Beat(startTime + gap * 266, "Space"),
+//					new Beat(startTime + gap * 270, "S"), new Beat(startTime + gap * 270, "Space"),
+//					new Beat(startTime + gap * 275, "J"), new Beat(startTime + gap * 277, "K"),
+//					new Beat(startTime + gap * 279, "L"), new Beat(startTime + gap * 282, "J"),
+//					new Beat(startTime + gap * 284, "K"), new Beat(startTime + gap * 286, "L"),
+//					new Beat(startTime + gap * 289, "J"), new Beat(startTime + gap * 291, "K"),
+//					new Beat(startTime + gap * 293, "L"), new Beat(startTime + gap * 295, "J"),
+//					new Beat(startTime + gap * 297, "L"), new Beat(startTime + gap * 299, "D"),
+//					new Beat(startTime + gap * 301, "S"), new Beat(startTime + gap * 304, "F"),
+//					new Beat(startTime + gap * 306, "S"), new Beat(startTime + gap * 308, "S"),
+//					new Beat(startTime + gap * 310, "F"), new Beat(startTime + gap * 312, "D"),
+//					new Beat(startTime + gap * 314, "S"), new Beat(startTime + gap * 317, "F"),
+//					new Beat(startTime + gap * 319, "D"), new Beat(startTime + gap * 321, "S"),
+//					new Beat(startTime + gap * 323, "F"), new Beat(startTime + gap * 325, "D"),
+//					new Beat(startTime + gap * 327, "S"), new Beat(startTime + gap * 330, "F"),
+//					new Beat(startTime + gap * 332, "S"), new Beat(startTime + gap * 332, "Space"),
+//					new Beat(startTime + gap * 336, "D"), new Beat(startTime + gap * 336, "Space"),
+//					new Beat(startTime + gap * 340, "S"), new Beat(startTime + gap * 340, "Space"), 
+			};
 		}
 
 		int i = 0;
@@ -606,8 +611,8 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			if (!dropped) {
 				try {
 //					Thread.sleep(5);
-					
-					//음악재생 gettime확인부분
+
+					// 음악재생 gettime확인부분
 //					System.out.println("gameMusic: " + gameMusic.getTime());
 //					System.out.println("beats: " + beats[i].getTime());
 
@@ -622,6 +627,21 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 				stage = 4;
 //				gameresult = new GameResult();
 //				gameresult.start();
+				Score score1 = getHighScore();
+				System.out.println("high:====="+score1);
+				if (score1.getHighScore() >= score) {
+					highScore = score1.getHighScore();
+					// 최고 점수 유지
+				} else if (score1.getHighScore() < score) {
+					// 최고 점수 수정
+					highScore = score;
+					if (score1.isStart() == true) { // true 했을때 밑으로
+						insertHighScore();
+					} else {
+						System.out.println("안됨");
+						updateHighScore();
+					}
+				}
 			}
 		}
 	}

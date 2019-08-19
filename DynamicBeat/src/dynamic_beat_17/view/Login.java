@@ -107,6 +107,7 @@ public class Login extends JPanel {
 					if (UserDAO.getInstance().login(user) == true) {
 						System.out.println("Login Success.");
 						JOptionPane.showMessageDialog(null, "로그인 성공!!");
+						userId = IDField.getText();
 						win.change("dynamicBeat");
 					} else {
 						System.out.println("Login Failed");
