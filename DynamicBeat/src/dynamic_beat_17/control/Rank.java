@@ -22,7 +22,16 @@ import dynamic_beat_17.service.impl.ScoreDAO;
 import dynamic_beat_17.service.impl.UserDAO;
 
 public class Rank extends Thread {
-
+	List<Score> list = new ArrayList<>();
+	public Rank() { //rank 생성자
+		Connection conn = DAO.getConnect();
+		try {
+			list = ScoreDAO.getInscance().rankList(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private Image screenImage;
 	private Graphics screenGraphic;
 
@@ -30,18 +39,20 @@ public class Rank extends Thread {
 	private Image rank2 = new ImageIcon(Main.class.getResource("../images/rank/2rd.png")).getImage();
 	private Image rank3 = new ImageIcon(Main.class.getResource("../images/rank/3nd.png")).getImage();
 
-	String userId;
+//	String userId;
 	int rank;
 	String UserPw;
 
-	public String getUserId() {
-		return userId;
-	}
+//	public String getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(String userId) {
+//		this.userId = userId;
+//	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
+	
+	
 	public String getUserPw() {
 		return UserPw;
 	}
@@ -49,11 +60,22 @@ public class Rank extends Thread {
 	public void setUserPw(String userPw) {
 		UserPw = userPw;
 	}
+	
+//	public void rank() throws SQLException {
+//		List<Score> list = new ArrayList<>();
+//		list = ScoreDAO.getInscance().rankList(conn);
+//		for (int i = 0; i < list.size(); i++) {
+//			totalScore.set = list.get(i).getTotalScore();
+//			userId.set( , element) = list.get(i).getUserid();
+// 		}
+//			String totalScore = String.format("%10d", list.get(i).getTotalScore());
+//			String userID = String.format("%20s", list.get(i).getUserid());
+//	}
 
 	public void screenDraw(Graphics2D g) throws SQLException {
-		Connection conn = DAO.getConnect();
-		List<Score> list = new ArrayList<>();
-		list = ScoreDAO.getInscance().rankList(conn);
+//		Connection conn = DAO.getConnect();
+//		List<Score> list = new ArrayList<>();
+//		list = ScoreDAO.getInscance().rankList(conn);
 		for (int i = 0; i < list.size(); i++) {
 			String totalScore = String.format("%10d", list.get(i).getTotalScore());
 			String userID = String.format("%20s", list.get(i).getUserid());

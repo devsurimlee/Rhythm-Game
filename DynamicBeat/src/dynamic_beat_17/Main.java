@@ -27,8 +27,8 @@ public class Main extends JFrame{
 		this.signUp = new SignUp(this);
 		this.dynamicBeat = new DynamicBeat(this);
 		
-	//	this.add(this.login);
-		this.add(this.dynamicBeat);
+		this.add(this.login);
+//		this.add(this.dynamicBeat);
 
 		
 		this.setTitle("Dynamic Beat");
