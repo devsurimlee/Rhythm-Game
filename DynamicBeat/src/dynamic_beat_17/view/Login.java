@@ -11,11 +11,16 @@ import dynamic_beat_17.service.impl.UserDAO;
 
 import javax.swing.JPasswordField;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Font;
 
 public class Login extends JPanel {
 	private JTextField IDField;
@@ -23,40 +28,58 @@ public class Login extends JPanel {
 	private Main win;
 	JButton loginButton;
 	JButton signUpButton;
-
+	
+	public static String userId;
 	/**
 	 * Create the panel.
+	 * @return 
 	 * 
 	 * @throws SQLException
 	 */
+	
+
+	
+	
 	public Login(Main win) throws SQLException {
 		this.win = win;
 		setLayout(null);
 
-		JLabel label = new JLabel("ID :");
-		label.setBounds(128, 66, 74, 29);
+		JLabel label = new JLabel("ID:");
+		label.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		label.setBounds(530, 300, 81, 30);
 		add(label);
 
-		JLabel label_1 = new JLabel("PW :");
-		label_1.setBounds(128, 122, 74, 29);
+		JLabel label_1 = new JLabel("PW:");
+		label_1.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		label_1.setBounds(530, 350, 81, 30);
 		add(label_1);
 
 		IDField = new JTextField();
+		IDField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		IDField.setColumns(10);
-		IDField.setBounds(219, 70, 116, 21);
+		IDField.setBounds(630, 300, 116, 30);
 		add(IDField);
 
 		PWField = new JPasswordField();
-		PWField.setBounds(219, 126, 116, 21);
+		PWField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		PWField.setBounds(630, 350, 116, 30);
 		add(PWField);
 
 		loginButton = new JButton("Login");
-		loginButton.setBounds(176, 175, 97, 23);
+		loginButton.setBounds(526, 420, 97, 23);
 		add(loginButton);
 
 		signUpButton = new JButton("Sign up");
-		signUpButton.setBounds(176, 218, 97, 23);
+		signUpButton.setBounds(651, 420, 97, 23);
 		add(signUpButton);
+		
+		//배경부분
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setFont(new Font("돋움", Font.BOLD, 30));
+		Image backgound = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(backgound));	
+		lblNewLabel.setBounds(0, 0, 1280, 720);
+		add(lblNewLabel);
 
 		signUpButton.addActionListener(new MyActionListener());
 
@@ -66,7 +89,7 @@ public class Login extends JPanel {
 	class MyActionListener implements ActionListener {
 		User user = new User();
 		String id = (IDField.getText());
-		String pw = (PWField.getText());
+		char[] pw = (PWField.getPassword());
 //		boolean possible;
 //		possible = UserDAO.getInstance().login(user);
 		@SuppressWarnings("deprecation")
@@ -79,7 +102,7 @@ public class Login extends JPanel {
 				try {
 					User user = new User();
 					user.setUserid(IDField.getText());
-					user.setPasswd(PWField.getText());
+					user.setPasswd(PWField.getPassword());
 					UserDAO.getInstance().login(user);
 					if (UserDAO.getInstance().login(user) == true) {
 						System.out.println("Login Success.");
@@ -96,5 +119,4 @@ public class Login extends JPanel {
 			}
 		}
 	}
-
 }

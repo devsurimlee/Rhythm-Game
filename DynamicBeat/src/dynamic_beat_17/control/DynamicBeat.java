@@ -325,9 +325,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				gameStart(nowSelected, "Hard");
 				Music buttonEnteredMusic = new Music("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start(); // 마우스가 클릭되었을때 효과음
-				gameStart(nowSelected, "Hard");
 			}
 		});
 		add(hardButton);
@@ -412,7 +412,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		}
 
 		if (stage == 3) {
-			game.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+			game.screenDraw(g);
 		}
 		
 		if (stage == 4) {

@@ -3,7 +3,7 @@ package dynamic_beat_17.model;
 public class User {
 	
 	private String userid;
-	private String passwd;
+	private char[] passwd;
 	
 	
 	public String getUserid() {
@@ -12,11 +12,11 @@ public class User {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public String getPasswd() {
+	public char[] getPasswd() {
 		return passwd;
 	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setPasswd(char[] cs) {
+		this.passwd = cs;
 	}
 	
 

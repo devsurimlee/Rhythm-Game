@@ -24,7 +24,7 @@ public class ScoreDAO  {
 
 	// 점수 등록
 
-	public void insert( Score score) throws SQLException {
+	public void insert(Score score) throws SQLException {
 		Connection conn = DAO.getConnect();
 		String sql = "INSERT INTO Music (high_score, ID, Music) values(? , ?, ?)";
 		pstmt = conn.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class ScoreDAO  {
 
 	// 최고 점수 수정
 
-	public void update( Score score) throws SQLException {
+	public void update(Score score) throws SQLException {
 		Connection conn = DAO.getConnect();
 		String sql = "UPDATE MUSIC SET high_score = ? WHERE ID = ? and music = ?";
 		pstmt = conn.prepareStatement(sql);
@@ -54,7 +54,8 @@ public class ScoreDAO  {
 	public Score selectOne(String userid) throws SQLException {
 		Connection conn = DAO.getConnect();
 		Score score = null;
-		String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
+		String sql = "SELECT  high_score FROM music RIGHT OUTER JOIN DUAL ON id = ? and music = ?";
+//		String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, score.getUserid());
 		pstmt.setString(2, score.getMusic());
@@ -62,8 +63,8 @@ public class ScoreDAO  {
 		if(rs.next()) {
 			score = new Score();
 			score.setHighScore(rs.getInt("high_score"));
-			score.setUserid(rs.getString("user_id"));
-			score.setMusic(rs.getString("music"));
+//			score.setUserid(rs.getString("user_id"));
+//			score.setMusic(rs.getString("music"));
 		}
 		DAO.close(conn); //try
 		return score;
