@@ -14,6 +14,7 @@ public class ScoreDAO {
 
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	String id = (dynamic_beat_17.view.Login.userId);
 
 	// singletone
 	private static ScoreDAO instance = new ScoreDAO();
@@ -119,6 +120,31 @@ public class ScoreDAO {
 		}
 		return list;
 	}
-	
 
+//	// 본인랭킹 보기
+//	public Score myRank(Score score) {
+//		Connection conn = DAO.getConnect();
+//
+//		try {
+//			System.out.println(id);
+//			String sql = "SELECT * FROM (SELECT id, SUM(HIGH_SCORE) score,  ROW_NUMBER() "
+//			+ "OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where id = ? ";
+//			pstmt = conn.prepareStatement(sql);
+//			rs = pstmt.executeQuery();
+//			pstmt.setString(1, id);
+//
+//
+//			while (rs.next()) {
+//				Score myRank = new Score();
+//				myRank.setUserid(rs.getString("id"));
+//				myRank.setTotalScore(rs.getInt("score"));
+//				myRank.setRank(rs.getInt("rank"));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			DAO.close(conn); // try
+//		}
+//		return score;
+//	}
 }

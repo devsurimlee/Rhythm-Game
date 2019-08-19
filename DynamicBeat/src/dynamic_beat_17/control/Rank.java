@@ -22,61 +22,71 @@ import dynamic_beat_17.service.impl.ScoreDAO;
 import dynamic_beat_17.service.impl.UserDAO;
 
 public class Rank extends Thread {
-   List<Score> list = new ArrayList<>();
+	List<Score> list = new ArrayList<>();
+	Score myRank = new Score();
+	Score score = null;
+	
+	public Rank() { // rank 생성자
+		Connection conn = DAO.getConnect();
+		try {
+			list = ScoreDAO.getInscance().rankList(conn);
 
-   public Rank() { // rank 생성자
-      Connection conn = DAO.getConnect();
-      try {
-         list = ScoreDAO.getInscance().rankList(conn);
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-   }
+//			myRank = ScoreDAO.getInscance().myRank(score);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-   private Image screenImage;
-   private Graphics screenGraphic;
+	private Image screenImage;
+	private Graphics screenGraphic;
 
-   private Image rank1 = new ImageIcon(Main.class.getResource("../images/rank/1st.png")).getImage();
-   private Image rank2 = new ImageIcon(Main.class.getResource("../images/rank/2rd.png")).getImage();
-   private Image rank3 = new ImageIcon(Main.class.getResource("../images/rank/3nd.png")).getImage();
+	private Image rank1 = new ImageIcon(Main.class.getResource("../images/rank/1st.png")).getImage();
+	private Image rank2 = new ImageIcon(Main.class.getResource("../images/rank/2rd.png")).getImage();
+	private Image rank3 = new ImageIcon(Main.class.getResource("../images/rank/3nd.png")).getImage();
 
 //   String userId;
-   int rank;
-   String UserPw;
+	int rank;
+	String UserPw;
 
+	public String getUserPw() {
+		return UserPw;
+	}
 
+	public void setUserPw(String userPw) {
+		UserPw = userPw;
+	}
 
-   public String getUserPw() {
-      return UserPw;
-   }
+	public void screenDraw(Graphics2D g) throws SQLException {
+		// 총랭킹출력
+		for (int i = 0; i < list.size(); i++) {
+			String userID = String.format("%20s", list.get(i).getUserid());
+			String totalScore = String.format("%10d", list.get(i).getTotalScore());
+			g.setFont(new Font("Arial", Font.BOLD, 30));
+			g.setColor(Color.white);
+			g.drawString(userID, 450, 275 + (150 * i));
+			g.drawString(totalScore, 900, 275 + (150 * i)); // 각각 출력
 
-   public void setUserPw(String userPw) {
-      UserPw = userPw;
-   }
+//			 //내랭킹출력
+//         String myID = String.format("%20s", myRank.getUserid());
+//         String myScore = String.format("%10d", myRank.getTotalScore());
+//         g.setFont(new Font("Arial", Font.BOLD, 30));
+//         g.setColor(Color.white);
+//         g.drawString(myID, 450, 900);
+//         g.drawString(myScore, 900, 900);
+		}
 
+		g.drawImage(rank1, 200, 200, null);
+		g.drawImage(rank2, 200, 350, null);
+		g.drawImage(rank3, 200, 500, null);
 
-   public void screenDraw(Graphics2D g) throws SQLException {
-      for (int i = 0; i < list.size(); i++) {
-         String totalScore = String.format("%10d", list.get(i).getTotalScore());
-         String userID = String.format("%20s", list.get(i).getUserid());
-         g.setFont(new Font("Arial", Font.BOLD, 30));
-         g.setColor(Color.white);
-         g.drawString(userID, 450, 275 + (150 * i));
-         g.drawString(totalScore, 900, 275 + (150 * i)); // 각각 출력
-      }
+	}
 
-      g.drawImage(rank1, 200, 200, null);
-      g.drawImage(rank2, 200, 350, null);
-      g.drawImage(rank3, 200, 500, null);
+	@Override
+	public void run() {
+	}
 
-   }
-
-   @Override
-   public void run() {
-   }
-
-   public void close() {
-      this.interrupt();
-   }
+	public void close() {
+		this.interrupt();
+	}
 
 }
