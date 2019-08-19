@@ -57,7 +57,6 @@ public class ScoreDAO {
 		try {
 			score.setStart(false);
 			conn = DAO.getConnect();
-//			String sql = "SELECT  high_score FROM music RIGHT OUTER JOIN DUAL ON id = ? and music = ?";
 			String sql = "SELECT high_score FROM music WHERE id = ? and music = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, score.getUserid());
@@ -120,4 +119,6 @@ public class ScoreDAO {
 		}
 		return list;
 	}
+	
+
 }

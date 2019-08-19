@@ -101,28 +101,4 @@ public class UserDAO {
 
 	}
 
-	// 유저 정보 수정은 아직 안됨.
-//		public void update(Connection conn, User user) throws Exception {
-//
-//			String sql = "UPDATE game SET  department_name = ? , location_id = ? , manager_id = ? WHERE department_id = ?";
-//			pstmt = conn.prepareStatement(sql);
-//
-//			pstmt.setString(1, dept.getDepartment_name());
-//			pstmt.setInt(2, dept.getLocation_id());
-//			pstmt.setInt(3, dept.getManager_id());
-//			pstmt.setInt(4, dept.getDepartment_id());
-//			int r = pstmt.executeUpdate();
-//			System.out.println(r + "건 수정완료");
-//		}
-
-	// 유저 삭제도 아직 구현 안됨.
-//		public void delete(Connection conn, int dept_id) throws Exception {
-//			String sql = "DELETE FROM game_user WHERE id = ? ";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setInt(1, dept_id);
-//			int r = pstmt.executeUpdate();
-//			System.out.println(r + "건 삭제완료 ");
-//
-//		}
-
 }
