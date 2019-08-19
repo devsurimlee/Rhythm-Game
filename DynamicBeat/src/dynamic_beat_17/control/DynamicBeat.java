@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dynamic_beat_17.Main;
+import dynamic_beat_17.common.DAO;
+import dynamic_beat_17.model.Score;
 import dynamic_beat_17.model.Track;
+import dynamic_beat_17.service.impl.ScoreDAO;
 
 public class DynamicBeat extends JPanel /* JFrame */ {
 
@@ -514,6 +518,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		introMusic.close();
 	}
 
+	
 	public void rankMain() {
 		stage = 2;
 		backButton.setVisible(true);

@@ -63,6 +63,17 @@ public class Rank extends Thread {
 //		String userID = String.format("%20s", list.get(i).getUserid());
 //	}
 	
+	
+//	public void rank() throws SQLException {
+//		List<Score> list = new ArrayList<>();
+//		list = ScoreDAO.getInscance().rankList(conn);
+//		for (int i = 0; i < list.size(); i++) {
+//			totalScore.set = list.get(i).getTotalScore();
+//			userId.set( , element) = list.get(i).getUserid();
+// 		}
+//			String totalScore = String.format("%10d", list.get(i).getTotalScore());
+//			String userID = String.format("%20s", list.get(i).getUserid());
+//	}
 
 	public void screenDraw(Graphics2D g) throws SQLException {
 		Connection conn = DAO.getConnect();

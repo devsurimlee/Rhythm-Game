@@ -101,6 +101,7 @@ public class ScoreDAO {
 	// 전체 총점에 대한 랭킹
 	public List<Score> rankList(Connection conn) throws SQLException {
 		List<Score> list = new ArrayList<>();
+		try {
 		Score score = null;
 		String sql = "SELECT * FROM (SELECT ID, SUM(HIGH_SCORE) score,  ROW_NUMBER() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where  rank<=3";
 		pstmt = conn.prepareStatement(sql);
@@ -111,6 +112,11 @@ public class ScoreDAO {
 			score.setUserid(rs.getString("id"));
 			score.setRank(rs.getInt("rank"));
 			list.add(score);
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DAO.close(conn);
 		}
 		return list;
 	}
