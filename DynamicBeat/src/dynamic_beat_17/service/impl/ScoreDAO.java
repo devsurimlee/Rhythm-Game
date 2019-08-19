@@ -14,7 +14,6 @@ public class ScoreDAO {
 
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String id = (dynamic_beat_17.view.Login.userId);
 
 	// singletone
 	private static ScoreDAO instance = new ScoreDAO();
@@ -66,8 +65,7 @@ public class ScoreDAO {
 			if (rs.next()) {
 				score.setHighScore(rs.getInt("high_score"));
 				score.setStart(false);
-//			score.setUserid(rs.getString("user_id"));
-//			score.setMusic(rs.getString("music"));
+
 			} else {
 				score.setHighScore(0);
 				score.setStart(true);
@@ -75,7 +73,7 @@ public class ScoreDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DAO.close(conn); // try
+			DAO.close(conn);
 		}
 		return score;
 	}
@@ -102,49 +100,47 @@ public class ScoreDAO {
 	public List<Score> rankList(Connection conn) throws SQLException {
 		List<Score> list = new ArrayList<>();
 		try {
-		Score score = null;
-		String sql = "SELECT * FROM (SELECT ID, SUM(HIGH_SCORE) score,  ROW_NUMBER() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where  rank<=3";
-		pstmt = conn.prepareStatement(sql);
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			score = new Score();
-			score.setTotalScore(rs.getInt("score"));
-			score.setUserid(rs.getString("id"));
-			score.setRank(rs.getInt("rank"));
-			list.add(score);
-		}
-		}catch(Exception e) {
+			Score score = null;
+			String sql = "SELECT * FROM (SELECT ID, SUM(HIGH_SCORE) score,  ROW_NUMBER() OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where  rank<=3";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				score = new Score();
+				score.setTotalScore(rs.getInt("score"));
+				score.setUserid(rs.getString("id"));
+				score.setRank(rs.getInt("rank"));
+				list.add(score);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			DAO.close(conn);
 		}
 		return list;
 	}
 
-//	// 본인랭킹 보기
-//	public Score myRank(Score score) {
-//		Connection conn = DAO.getConnect();
-//
-//		try {
-//			System.out.println(id);
-//			String sql = "SELECT * FROM (SELECT id, SUM(HIGH_SCORE) score,  ROW_NUMBER() "
-//			+ "OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where id = ? ";
-//			pstmt = conn.prepareStatement(sql);
-//			rs = pstmt.executeQuery();
-//			pstmt.setString(1, id);
-//
-//
-//			while (rs.next()) {
-//				Score myRank = new Score();
-//				myRank.setUserid(rs.getString("id"));
-//				myRank.setTotalScore(rs.getInt("score"));
-//				myRank.setRank(rs.getInt("rank"));
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			DAO.close(conn); // try
-//		}
-//		return score;
-//	}
+	// 본인랭킹 보기
+
+	String id = (dynamic_beat_17.view.Login.userId);
+
+	public Score myRank(Connection conn) {
+		Score score = null;
+		try {
+			String sql = "SELECT * FROM (SELECT id, SUM(HIGH_SCORE) score,  ROW_NUMBER() "
+					+ "OVER (ORDER BY SUM(HIGH_SCORE) DESC) as rank FROM MUSIC GROUP BY ID) where id = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				score = new Score();
+				score.setUserid(id);
+				score.setTotalScore(rs.getInt("score"));
+				score.setRank(rs.getInt("rank"));
+
+			}
+			System.out.println(score);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return score;
+	}
 }

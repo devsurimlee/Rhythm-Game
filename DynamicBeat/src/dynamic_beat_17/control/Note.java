@@ -54,7 +54,7 @@ public class Note extends Thread {
 		{
 			g.drawImage(noteSpaceImage, x, y, null);
 		}
-		if(noteType.equals("D")||noteType.equals("K"))
+		else if(noteType.equals("D")||noteType.equals("K"))
 		{
 			g.drawImage(noteSilverImage, x, y, null);
 		}	

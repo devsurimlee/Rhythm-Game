@@ -22,18 +22,19 @@ import dynamic_beat_17.service.impl.ScoreDAO;
 import dynamic_beat_17.service.impl.UserDAO;
 
 public class Rank extends Thread {
-	List<Score> list = new ArrayList<>();
-	Score myRank = new Score();
-	Score score = null;
+	List<Score> list;
+	Score myRank;
 	
 	public Rank() { // rank 생성자
 		Connection conn = DAO.getConnect();
 		try {
 			list = ScoreDAO.getInscance().rankList(conn);
-
-//			myRank = ScoreDAO.getInscance().myRank(score);
+			myRank = ScoreDAO.getInscance().myRank(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		finally {
+			DAO.close(conn);
 		}
 	}
 
@@ -63,16 +64,17 @@ public class Rank extends Thread {
 			String totalScore = String.format("%10d", list.get(i).getTotalScore());
 			g.setFont(new Font("Arial", Font.BOLD, 30));
 			g.setColor(Color.white);
-			g.drawString(userID, 450, 275 + (150 * i));
-			g.drawString(totalScore, 900, 275 + (150 * i)); // 각각 출력
+			g.drawString(userID, 450, 275 + (100 * i));
+			g.drawString(totalScore, 900, 275 + (100 * i)); // 각각 출력
+			
 
-//			 //내랭킹출력
-//         String myID = String.format("%20s", myRank.getUserid());
-//         String myScore = String.format("%10d", myRank.getTotalScore());
-//         g.setFont(new Font("Arial", Font.BOLD, 30));
-//         g.setColor(Color.white);
-//         g.drawString(myID, 450, 900);
-//         g.drawString(myScore, 900, 900);
+			 //내랭킹출력
+         String myID = String.format("%20s", dynamic_beat_17.view.Login.userId);
+         String myScore = String.format("%10d", myRank.getTotalScore());
+         g.setFont(new Font("Arial", Font.BOLD, 30));
+         g.setColor(Color.white);
+         g.drawString(myID, 450, 600);
+         g.drawString(myScore, 900, 600);
 		}
 
 		g.drawImage(rank1, 200, 200, null);
