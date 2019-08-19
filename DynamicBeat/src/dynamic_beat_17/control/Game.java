@@ -465,6 +465,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+			
 
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Easy")) {
 			musicName = "JK - WF , E"; // 글자 수 때문에.. 어쩔 수 없음

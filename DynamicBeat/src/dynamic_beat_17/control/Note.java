@@ -9,6 +9,7 @@ import dynamic_beat_17.Main;
 
 public class Note extends Thread {
 	private Image noteBasicImage = new ImageIcon(Main.class.getResource("../images/noteBasic.png")).getImage();
+	private Image noteSilverImage = new ImageIcon(Main.class.getResource("../images/noteSilver.png")).getImage();
 	private Image noteSpaceImage = new ImageIcon(Main.class.getResource("../images/noteSpace.png")).getImage();
 	private Image noteEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 
@@ -49,14 +50,17 @@ public class Note extends Thread {
 	}
 	
 	public void screenDraw(Graphics2D g) {
-		if(!noteType.equals("Space"))
+		if(noteType.equals("Space"))
 		{
-			g.drawImage(noteBasicImage, x, y, null);
+			g.drawImage(noteSpaceImage, x, y, null);
 		}
+		if(noteType.equals("D")||noteType.equals("K"))
+		{
+			g.drawImage(noteSilverImage, x, y, null);
+		}	
 		else 
 		{
-			g.drawImage(noteSpaceImage, x, y, null); //Space 파일 추가
-//			g.drawImage(noteBasicImage, x + 100, y, null); //가로의 길이가 다른 것보다 두 배 긴것. 기본적인 노트의 가로폭은 100픽셀 이므로.
+			g.drawImage(noteBasicImage, x, y, null); //Space 파일 추가
 		}
 	}
 	
