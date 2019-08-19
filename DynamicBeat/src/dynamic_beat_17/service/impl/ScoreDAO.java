@@ -98,7 +98,6 @@ public class ScoreDAO  {
 		while(rs.next()) {
 			score = new Score();
 			score.setTotalScore(rs.getInt("score"));
-//			score.setMusic(rs.getString("music"));
 			score.setUserid(rs.getString("id"));
 			score.setRank(rs.getInt("rank"));
 			list.add(score);

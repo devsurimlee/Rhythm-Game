@@ -49,7 +49,7 @@ public class Rank extends Thread {
 	public void setUserPw(String userPw) {
 		UserPw = userPw;
 	}
-
+	
 	public void screenDraw(Graphics2D g) throws SQLException {
 		Connection conn = DAO.getConnect();
 		List<Score> list = new ArrayList<>();
@@ -59,12 +59,18 @@ public class Rank extends Thread {
 			String userID = String.format("%20s", list.get(i).getUserid());
 			g.setFont(new Font("Arial", Font.BOLD, 30));
 			g.setColor(Color.white);
-			g.drawString(userID, 450, 275+(150*i));
-			g.drawString(totalScore, 900, 275+(150*i)); // 각각 출력
+			g.drawString(userID, 450, 275+(100*i));
+			g.drawString(totalScore, 900, 275+(100*i)); // 각각 출력
+			
+			System.out.println(list.get(i).getUserid());
+			System.out.println(list.get(i).getTotalScore());
+			
+			conn.close();
 		}
+
 		g.drawImage(rank1, 200, 200, null);
-		g.drawImage(rank2, 200, 350, null);
-		g.drawImage(rank3, 200, 500, null);
+		g.drawImage(rank2, 200, 300, null);
+		g.drawImage(rank3, 200, 400, null);
 
 	}
 
