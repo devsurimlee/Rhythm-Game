@@ -391,13 +391,17 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	public void paint(Graphics g) {
 		screenImage = createImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT); // 크기만큼 스크린 이미지
 		screenGraphic = screenImage.getGraphics(); // 스크린 그래픽은 스크린 이미지를 이용해서 그래픽 객체를 얻어옴
-		screenDraw((Graphics2D) screenGraphic);
+		try {
+			screenDraw((Graphics2D) screenGraphic);
+		} catch (NullPointerException | SQLException e) {
+			e.printStackTrace();
+		}
 		g.drawImage(screenImage, 0, 0, null); // 스크린 이미지를 0,0위치에 그려줌
 
 	}
 
 	// 그림 그리는 부분
-	public void screenDraw(Graphics2D g) { // 그래픽스2D 매개변수로 변환
+	public void screenDraw(Graphics2D g) throws SQLException { // 그래픽스2D 매개변수로 변환
 		g.drawImage(background, 0, 0, null); // add 된 것들이 아닌 단순 이미지들을 화면에 출력해주는것
 		if (stage == 1) {
 			g.drawImage(selectedImage, 340, 100, null);
@@ -416,7 +420,13 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		}
 		
 		if (stage == 4) {
-			gameresult.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+			try {
+				gameresult.screenDraw(g); // 원래 내용은 Game클래스로 이동한것.
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				
+			}
 		}
 		paintComponents(g); // 메뉴바, JLabel등을 JFrame안에 추가하면 그것을 그려주는 것 (add로 추가된것들 )
 		// draw로 그리거나 paint로 그리는데 메뉴바의 경우 항상 존재, 역동적으로 움직이지 않으므로 항상 고정이므로 페인트를 사용(정적)
