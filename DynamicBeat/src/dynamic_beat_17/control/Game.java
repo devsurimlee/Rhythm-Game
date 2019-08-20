@@ -125,6 +125,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 					note.screenDraw(g);
 				}
 			}
+			//테두리 부드럽게
 			g.setColor(Color.WHITE);
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로
 																												// 깨짐 없이

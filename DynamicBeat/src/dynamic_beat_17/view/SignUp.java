@@ -87,7 +87,7 @@ public class SignUp extends JPanel {
 
 		// 배경부분
 		JLabel lblNewLabel = new JLabel("");
-		Image backgound = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
+		Image backgound = new ImageIcon(Main.class.getResource("../images/moveBackground.gif")).getImage();
 		lblNewLabel.setIcon(new ImageIcon(backgound));
 		lblNewLabel.setBounds(0, 0, 1280, 720);
 		add(lblNewLabel);

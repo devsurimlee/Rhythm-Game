@@ -2,9 +2,15 @@ package dynamic_beat_17.control;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.LinearGradientPaint;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.font.TextLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,26 +67,41 @@ public class Rank extends Thread {
 		for (int i = 0; i < list.size(); i++) {
 			String userID = String.format("%20s", list.get(i).getUserid());
 			String totalScore = String.format("%10d", list.get(i).getTotalScore());
-			g.setFont(new Font("Arial", Font.BOLD, 30));
+			g.setFont(new Font("Arial", Font.BOLD, 40));
 			g.setColor(Color.white);
-			g.drawString(userID, 450, 275 + (100 * i));
-			g.drawString(totalScore, 900, 275 + (100 * i)); // 각각 출력
+			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g.drawString(userID, 400, 275 + (100 * i));
+			g.drawString(totalScore, 800, 275 + (100 * i)); // 각각 출력
+		
+			
+		
+			g.drawString("1st", 270, 275);
+			g.drawString("2nd", 270, 275 + (100));
+			g.drawString("3rd", 270, 275 + (200));
+
+			g.drawString(". . .", 580, 530);
+
+			
 
 			// 내랭킹출력
-			String myRank = String.format("%10d", myRankResult.getRank());
+			String myRank = String.format("%3d", myRankResult.getRank());
 			String myID = String.format("%20s", dynamic_beat_17.view.Login.userId);
 			String myScore = String.format("%10d", myRankResult.getTotalScore());
-			g.setFont(new Font("Arial", Font.BOLD, 30));
-			g.setColor(Color.white);
-			g.drawString(myRank, 200, 600);
-			g.drawString(myID, 450, 600);
-			g.drawString(myScore, 900, 600);
+			
+			g.setFont(new Font("Arial", Font.BOLD, 40));
+			g.setColor(new Color(118, 255, 237));
+			g.drawString(myRank+" th", 250, 600);
+			g.drawString(myID, 400, 600);
+			g.drawString(myScore, 800, 600);
 		}
 
-		g.drawImage(rank1, 200, 200, null);
-		g.drawImage(rank2, 200, 300, null);
-		g.drawImage(rank3, 200, 400, null);
-
+		
+//		g.drawImage(rank1, 200, 200, null);
+//		g.drawImage(rank2, 200, 300, null);
+//		g.drawImage(rank3, 200, 400, null);
+		
+	
+		
 	}
 
 	@Override

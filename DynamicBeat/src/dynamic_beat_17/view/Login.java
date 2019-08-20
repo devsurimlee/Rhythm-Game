@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -29,7 +30,10 @@ public class Login extends JPanel {
 	JButton loginButton;
 	JButton signUpButton;
 	
+	
+
 	public static String userId;
+	
 	/**
 	 * Create the panel.
 	 * @return 
@@ -38,6 +42,13 @@ public class Login extends JPanel {
 	 */
 	
 
+	
+	
+//	public void paintComponent(Graphics2D g) {
+//		super.paintComponent(g);
+//		g.drawImage(image, 0, 0, this);
+//	}
+	
 	
 	
 	public Login(Main win) throws SQLException {
@@ -73,10 +84,12 @@ public class Login extends JPanel {
 		signUpButton.setBounds(651, 420, 97, 23);
 		add(signUpButton);
 		
+		//이미지테스트
+		
 		//배경부분
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setFont(new Font("돋움", Font.BOLD, 30));
-		Image backgound = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
+		Image backgound = new ImageIcon(Main.class.getResource("../images/moveBackground.gif")).getImage();
 		lblNewLabel.setIcon(new ImageIcon(backgound));	
 		lblNewLabel.setBounds(0, 0, 1280, 720);
 		add(lblNewLabel);
