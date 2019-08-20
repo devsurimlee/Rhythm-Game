@@ -56,11 +56,13 @@ public class Login extends JPanel {
 		setLayout(null);
 
 		JLabel label = new JLabel("ID:");
+		label.setForeground(Color.WHITE);
 		label.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		label.setBounds(530, 300, 81, 30);
 		add(label);
 
 		JLabel label_1 = new JLabel("PW:");
+		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		label_1.setBounds(530, 350, 81, 30);
 		add(label_1);
@@ -77,6 +79,7 @@ public class Login extends JPanel {
 		add(PWField);
 
 		loginButton = new JButton("Login");
+		loginButton.setForeground(Color.BLACK);
 		loginButton.setBounds(526, 420, 97, 23);
 		add(loginButton);
 
@@ -84,15 +87,23 @@ public class Login extends JPanel {
 		signUpButton.setBounds(651, 420, 97, 23);
 		add(signUpButton);
 		
-		//이미지테스트
+		//로고
+		JLabel TestLabel = new JLabel("");
+		Image shadow = new ImageIcon(Main.class.getResource("../images/Logo.png")).getImage();
+		TestLabel.setIcon(new ImageIcon(shadow));	
+		TestLabel.setBounds(520, 25, 300, 300);
+		add(TestLabel);
 		
 		//배경부분
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("돋움", Font.BOLD, 30));
 		Image backgound = new ImageIcon(Main.class.getResource("../images/moveBackground.gif")).getImage();
 		lblNewLabel.setIcon(new ImageIcon(backgound));	
 		lblNewLabel.setBounds(0, 0, 1280, 720);
 		add(lblNewLabel);
+		
+
+		
+		
 
 		signUpButton.addActionListener(new MyActionListener());
 

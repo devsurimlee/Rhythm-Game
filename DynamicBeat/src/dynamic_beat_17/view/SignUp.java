@@ -21,6 +21,7 @@ import java.util.Scanner;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Color;
 
 public class SignUp extends JPanel {
 	private JTextField IDField;
@@ -40,18 +41,28 @@ public class SignUp extends JPanel {
 	public SignUp(Main win) {
 		setLayout(null);
 		this.win = win;
+		
+		//로고
+		JLabel TestLabel = new JLabel("");
+		Image shadow = new ImageIcon(Main.class.getResource("../images/Logo.png")).getImage();
+		TestLabel.setIcon(new ImageIcon(shadow));	
+		TestLabel.setBounds(520, 25, 300, 300);
+		add(TestLabel);
 
 		JLabel label = new JLabel("ID: ");
+		label.setForeground(Color.WHITE);
 		label.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		label.setBounds(530, 300, 86, 30);
 		add(label);
 
 		JLabel label_1 = new JLabel("PW: ");
+		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		label_1.setBounds(530, 350, 75, 30);
 		add(label_1);
 
 		JLabel label_2 = new JLabel("CPW: ");
+		label_2.setForeground(Color.WHITE);
 		label_2.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		label_2.setBounds(530, 400, 86, 30);
 		add(label_2);
