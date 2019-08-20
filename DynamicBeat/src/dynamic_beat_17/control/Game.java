@@ -134,7 +134,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 					note.screenDraw(g);
 				}
 			}
-			//테두리 부드럽게
+			// 테두리 부드럽게
 			g.setColor(Color.WHITE);
 			g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON); // 결론적으로
 																												// 깨짐 없이
@@ -166,9 +166,9 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			if (cnt < 750) {
 				g.drawImage(judgeImage, 460, 420, null);
 				cnt++;
-			} else if(cnt <850) {
+			} else if (cnt < 850) {
 				cnt++;
-			}else {
+			} else {
 				cnt = 0;
 			}
 			g.drawImage(keyPadSImage, 228, 580, null);
@@ -275,10 +275,22 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		ScoreDAO.getInscance().insert(daoScore);
 	}
 
+//	public void noteEffectEvent(String judge) {
+//		if (judge.equals("Good")) {
+//			keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
+//		} else if (judge.equals("Great")) {
+//			keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
+//
+//		}else if (judge.equals("Perfect")) {
+//			keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
+//		}else {
+//			
+//		}
+//	}
+
 	public void pressS() { // S를 눌렀을때 이벤트 처리를 해주는 함수
 		judgeKey("S");
 		// 눌렀을때만 이펙트 뜸
-
 //		if (judge.equals("Good") || judge.equals("Great") || judge.equals("Perfect")) {
 		keyPadSEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
 		noteRouteSImage = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
@@ -390,7 +402,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 		}
 	}
 
-	public void close() { 
+	public void close() {
 		gameMusic.close();
 		this.interrupt(); // 지금 실행되고 있는 하나의 게임 쓰레드를 종료
 	}
@@ -818,7 +830,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 //					new Beat(startTime + gap * 1871, "J"), new Beat(startTime + gap * 1873, "K"),
 //					new Beat(startTime + gap * 1876, "L"), new Beat(startTime + gap * 1878, "S"),
 //					new Beat(startTime + gap * 2800, "L")
-					//여기까지
+					// 여기까지
 
 			};
 		} else if (titleName.equals("Joakim Karud - Mighty Love") && difficulty.equals("Hard")) {
@@ -1009,7 +1021,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 			// 결과창
 			if (beats[beats.length - 1].getTime() <= gameMusic.getTime()) {
-				
+
 				close();
 				stage = 4;
 //				gameresult = new GameResult();
