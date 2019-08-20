@@ -28,6 +28,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	public static GameResult gameresult;
 	int highScore;
 	int stage = 3;
+	public boolean newHighScore = false;
 
 	// 겜 스타트때 0 초기화
 	private Image background = new ImageIcon(Main.class.getResource("../images/result/resultBackground.jpg"))
@@ -67,7 +68,11 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	private Image keyPadJEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 	private Image keyPadKEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
 	private Image keyPadLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect.png")).getImage();
-
+	
+	//결과창 이펙트 추가
+	private Image newEffectImage = new ImageIcon(Main.class.getResource("../images/result/new.png")).getImage();
+	private Image newHighScoreImage = new ImageIcon(Main.class.getResource("../images/result/newHighScore.png")).getImage();
+	
 	private String titleName;
 	private String difficulty;
 	private String musicTitle;
@@ -213,6 +218,11 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			String hiScore = String.format("%06d", highScore);
 			g.drawString(hiScore, 700, 500); // 최고 점수 출력
 
+			if(newHighScore == true) {
+				g.drawImage(newEffectImage, 315, 425, null);  //작은 new
+				g.drawImage(newHighScoreImage, 300, 250, null);  //큰 new
+			}
+			
 //			} else if (highScore < score) {
 //				// 최고 점수 수정
 //				g.setColor(Color.GREEN);
@@ -469,7 +479,6 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			int gap = 125; // 박자 계산
 
 			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
-			
 
 		} else if (titleName.equals("Joakim Karud - Wild Flower") && difficulty.equals("Easy")) {
 			musicName = "JK - WF , E"; // 글자 수 때문에.. 어쩔 수 없음
@@ -487,10 +496,48 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Easy")) {
 			musicName = "B - E , E"; // 글자 수 때문에.. 어쩔 수 없음
-			int startTime = 1000;
+			int startTime = 4460 - Main.REACH_TIME * 1000;
+//			int startTime = 1000;
 			int gap = 125; // 박자 계산
 
-			beats = new Beat[] { new Beat(startTime + gap * 1, "S"), };
+			beats = new Beat[] { 
+					new Beat(startTime + gap * 1, "S"),
+					new Beat(startTime + gap * 3, "D"),
+					new Beat(startTime + gap * 5, "S"),
+					new Beat(startTime + gap * 6, "D"),
+					new Beat(startTime + gap * 7, "S"),
+					new Beat(startTime + gap * 9, "S"),
+					new Beat(startTime + gap * 11, "D"),
+					new Beat(startTime + gap * 13, "S"),
+					new Beat(startTime + gap * 14, "D"),
+					new Beat(startTime + gap * 15, "S"),
+					new Beat(startTime + gap * 17, "S"),
+					new Beat(startTime + gap * 19, "D"),
+					new Beat(startTime + gap * 21, "S"),
+					new Beat(startTime + gap * 22, "D"),
+					new Beat(startTime + gap * 23, "S"),
+					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 3, "D"),
+//					new Beat(startTime + gap * 5, "S"),
+//					new Beat(startTime + gap * 6, "D"),
+//					new Beat(startTime + gap * 7, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+//					new Beat(startTime + gap * 1, "S"),
+					};
 
 		} else if (titleName.equals("Bensound - Energy") && difficulty.equals("Hard")) {
 			musicName = "B - E , H"; // 글자 수 때문에.. 어쩔 수 없음
@@ -594,8 +641,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 					new Beat(startTime + gap * 327, "S"), new Beat(startTime + gap * 330, "F"),
 					new Beat(startTime + gap * 332, "S"), new Beat(startTime + gap * 332, "Space"),
 					new Beat(startTime + gap * 336, "D"), new Beat(startTime + gap * 336, "Space"),
-					new Beat(startTime + gap * 340, "S"), new Beat(startTime + gap * 340, "Space"), 
-			};
+					new Beat(startTime + gap * 340, "S"), new Beat(startTime + gap * 340, "Space"), };
 		}
 
 		int i = 0;
@@ -629,13 +675,14 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 //				gameresult = new GameResult();
 //				gameresult.start();
 				Score score1 = getHighScore();
-				System.out.println("high:====="+score1);
+				System.out.println("high:=====" + score1);
 				if (score1.getHighScore() >= score) {
 					highScore = score1.getHighScore();
 					// 최고 점수 유지
 				} else if (score1.getHighScore() < score) {
 					// 최고 점수 수정
 					highScore = score;
+					newHighScore = true;
 					if (score1.isStart() == true) { // true 했을때 밑으로
 						insertHighScore();
 					} else {
