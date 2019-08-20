@@ -37,8 +37,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	static int stage = 0;
 
 	private ImageIcon startButtonEnteredImage = new ImageIcon(
-			Main.class.getResource("../images/startButtonEntered.png"));
-	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/startButtonBasic.png"));
+			Main.class.getResource("../images/ButtonBasic2.png"));
+	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/ButtonBasic.png"));
 
 	private ImageIcon rankButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/rankButtonEntered.png"));
 	private ImageIcon rankButtonBasicImage = new ImageIcon(Main.class.getResource("../images/rankButtonBasic.png"));
@@ -59,7 +59,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 
 	// introBackground => background 로 한 이유는 시작화면에서 메인화면으로 전환되었을 경우 단순히 변수에 이미지만
 	// 변경하기 위해서
-	private Image background = new ImageIcon(Main.class.getResource("../images/introBackGround(Title).jpg")).getImage();
+	private Image background = new ImageIcon(Main.class.getResource("../images/backGround2.jpg")).getImage();
 	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
 
 //	private JButton exitButton = new JButton(exitButtonBasicImage);
@@ -489,7 +489,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		startButton.setVisible(true);
 		rankButton.setVisible(true);
 		quitButton.setVisible(true);
-		background = new ImageIcon(Main.class.getResource("../images/introBackground(Title).jpg")).getImage();
+		background = new ImageIcon(Main.class.getResource("../images/backGround2.jpg")).getImage();
 		leftButton.setVisible(false);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
 		rightButton.setVisible(false);
 		easyButton.setVisible(false);// 메인에서는 난이도 버튼이 보여야 하므로
@@ -509,7 +509,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		startButton.setVisible(false);
 		rankButton.setVisible(false);
 		quitButton.setVisible(false);
-		background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
+		background = new ImageIcon(Main.class.getResource("../images/backGround2.jpg")).getImage();
 		leftButton.setVisible(true);// 메인에서는 좌, 우 이동 가능한 버튼이 보여야 하므로
 		rightButton.setVisible(true);
 		easyButton.setVisible(true);// 메인에서는 난이도 버튼이 보여야 하므로

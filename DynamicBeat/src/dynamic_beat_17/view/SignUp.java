@@ -46,7 +46,7 @@ public class SignUp extends JPanel {
 		JLabel TestLabel = new JLabel("");
 		Image shadow = new ImageIcon(Main.class.getResource("../images/Logo.png")).getImage();
 		TestLabel.setIcon(new ImageIcon(shadow));	
-		TestLabel.setBounds(520, 25, 300, 300);
+		TestLabel.setBounds(400, 150, 440, 75);
 		add(TestLabel);
 
 		JLabel label = new JLabel("ID: ");

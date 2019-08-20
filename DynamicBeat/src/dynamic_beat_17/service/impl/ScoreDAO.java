@@ -135,7 +135,6 @@ public class ScoreDAO {
 				score.setUserid(id);
 				score.setTotalScore(rs.getInt("score"));
 				score.setRank(rs.getInt("rank"));
-
 			}
 			System.out.println(score);
 		} catch (Exception e) {

@@ -80,20 +80,30 @@ public class Rank extends Thread {
 			g.drawString("3rd", 270, 275 + (200));
 
 			g.drawString(". . .", 580, 530);
+		}
 
-			
-
-			// 내랭킹출력
-			String myRank = String.format("%3d", myRankResult.getRank());
+		
+		// 내랭킹출력
+		if (myRankResult != null) {	
+		String myRank = String.format("%3d", myRankResult.getRank());
+		String myID = String.format("%20s", dynamic_beat_17.view.Login.userId);
+		String myScore = String.format("%10d", myRankResult.getTotalScore());
+		
+		g.setFont(new Font("Arial", Font.BOLD, 40));
+		g.setColor(new Color(118, 255, 237));
+		g.drawString(myRank+" th", 250, 600);
+		g.drawString(myID, 400, 600);
+		g.drawString(myScore, 800, 600);
+		} else {
 			String myID = String.format("%20s", dynamic_beat_17.view.Login.userId);
-			String myScore = String.format("%10d", myRankResult.getTotalScore());
-			
 			g.setFont(new Font("Arial", Font.BOLD, 40));
 			g.setColor(new Color(118, 255, 237));
-			g.drawString(myRank+" th", 250, 600);
+			g.drawString("999 th", 250, 600);
 			g.drawString(myID, 400, 600);
-			g.drawString(myScore, 800, 600);
+			g.drawString("        0", 800, 600);
+			
 		}
+		
 
 		
 //		g.drawImage(rank1, 200, 200, null);
