@@ -66,7 +66,7 @@ public class Note extends Thread {
 	
 	public void drop() {
 		y += Main.NOTE_SPEED; //노트 스피드 만큼 떨어진다. 즉 아래쪽으로 7만큼 떨어진다.
-		if(y > 620) {
+		if(y > 634) {
 			System.out.println("Miss");
 			close();
 		}
@@ -91,17 +91,17 @@ public class Note extends Thread {
 	}
 	
 	public String judge() {
-		if(y >= 613) {
+		if(y >= 620) {
 			System.out.println("Late");
 			close();
 			return "Late";
 		}
-		else if(y >= 600) {
+		else if(y >= 605) {
 			System.out.println("Good");
 			close();
 			return "Good";
 		}
-		else if(y >= 587) {
+		else if(y >= 592) {
 			System.out.println("Great");
 			close();
 			return "Great";
@@ -111,17 +111,17 @@ public class Note extends Thread {
 			close();
 			return "Perfect";
 		}
-		else if(y >= 565) {
+		else if(y >= 562) {
 			System.out.println("Great");
 			close();
 			return "Great";
 		}
-		else if(y >= 550) {
+		else if(y >= 545) {
 			System.out.println("Good");
 			close();
 			return "Good";
 		}
-		else if(y >= 535) {
+		else if(y >= 529) {
 			System.out.println("Early");
 			close();
 			return "Early";
