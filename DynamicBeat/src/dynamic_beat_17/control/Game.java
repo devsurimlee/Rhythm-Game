@@ -184,7 +184,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 			g.drawImage(keyPadDEffectImage, 280, 500, null);
 			g.drawImage(keyPadFEffectImage, 380, 500, null);
 
-//			g.drawImage(keyPadSpaceEffectImage, 180, 500, null);
+			g.drawImage(keyPadSpaceLEffectImage, 550, 500, null);
 			g.drawImage(keyPadJEffectImage, 680, 500, null);
 			g.drawImage(keyPadKEffectImage, 780, 500, null);
 			g.drawImage(keyPadLEffectImage, 880, 500, null);
@@ -335,6 +335,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 
 	public void pressSpace() {
 		judgeKey("Space");
+		keyPadSpaceLEffectImage = new ImageIcon(Main.class.getResource("../images/noteEffect_on.png")).getImage();
 		noteRouteSpace1Image = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		noteRouteSpace2Image = new ImageIcon(Main.class.getResource("../images/noteRoutePressed.png")).getImage();
 		keyPadSpace1Image = new ImageIcon(Main.class.getResource("../images/keyPadPressed.png")).getImage();
@@ -343,6 +344,7 @@ public class Game extends Thread /* 하나의 프로그램 안에서 작게 돌�
 	}
 
 	public void releaseSpace() {
+		keyPadSpaceLEffectImage = null;
 		noteRouteSpace1Image = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		noteRouteSpace2Image = new ImageIcon(Main.class.getResource("../images/noteRoute.png")).getImage();
 		keyPadSpace1Image = new ImageIcon(Main.class.getResource("../images/keyPadBasic.png")).getImage();
