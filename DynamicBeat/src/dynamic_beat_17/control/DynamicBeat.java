@@ -56,6 +56,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	private ImageIcon hardButtonBasicImage = new ImageIcon(Main.class.getResource("../images/hardButtonBasic.png"));
 	private ImageIcon backButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/backButtonEntered.png"));
 	private ImageIcon backButtonBasicImage = new ImageIcon(Main.class.getResource("../images/backButtonBasic.png"));
+	
+	private ImageIcon popupImage = new ImageIcon(Main.class.getResource("../images/popupWhite.png"));
+
 
 	// introBackground => background 로 한 이유는 시작화면에서 메인화면으로 전환되었을 경우 단순히 변수에 이미지만
 	// 변경하기 위해서
@@ -71,6 +74,9 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	private JButton easyButton = new JButton(easyButtonBasicImage);
 	private JButton hardButton = new JButton(hardButtonBasicImage);
 	private JButton backButton = new JButton(backButtonBasicImage);
+	
+	private JLabel popup = new JLabel(popupImage);
+ 
 
 	ArrayList<Track> trackList = new ArrayList<Track>(); // ArrayList 사용, 인덱스 0부터 사용.
 
@@ -124,6 +130,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 		introMusic.start(); // 게임을 실행하면서 동시에 음악이 시작됨.
 
 		// exit버튼 삭제 ->16참고
+		
 
 		startButton.setBounds(40, 200, 400, 100); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
 		startButton.setBorderPainted(false);// 제공하는 모습은 우리가 원하는 모습이 아니므로, 수정해준다.
@@ -221,6 +228,12 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 			}
 		});
 		add(quitButton);
+		
+//		//흰색 팝업까는거
+		popup.setBounds(55, 200, 360, 360); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
+		add(popup);
+
+		
 
 		leftButton.setVisible(false); // 맨 처음은 보이지 않도록
 		leftButton.setBounds(140, 310, 60, 60); // 메뉴바의 가장 오른쪽에 위치 (x, y, 가로크기, 세로크기)
@@ -487,6 +500,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 메인화면
 	public void introMain() {
 		stage = 0;
+		popup.setVisible(true);
 		backButton.setVisible(false);
 		startButton.setVisible(true);
 		rankButton.setVisible(true);
@@ -507,6 +521,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	// 게임선택창
 	public void enterMain() {
 		stage = 1;
+		popup.setVisible(false);
+
 		backButton.setVisible(true);
 		startButton.setVisible(false);
 		rankButton.setVisible(false);
@@ -523,6 +539,8 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	
 	public void rankMain() {
 		stage = 2;
+		popup.setVisible(false);
+
 		backButton.setVisible(true);
 		startButton.setVisible(false);
 		rankButton.setVisible(false);
