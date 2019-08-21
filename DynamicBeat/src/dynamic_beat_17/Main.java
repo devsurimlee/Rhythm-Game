@@ -1,5 +1,9 @@
 package dynamic_beat_17;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -61,13 +65,17 @@ public class Main extends JFrame{
 		}
 	}
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, FileNotFoundException {
 		
+		File file = new File("d:/log.txt");
+		PrintStream printStream = new PrintStream(new FileOutputStream(file));
+		// standard out과 err을 file로 변경
+		System.setOut(printStream);
+		System.setErr(printStream);
+
 		
 		Main win = new Main();
 		
-
-
 		
 	}
 

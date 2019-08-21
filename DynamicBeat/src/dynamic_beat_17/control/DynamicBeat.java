@@ -37,14 +37,14 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 	static int stage = 0;
 
 	private ImageIcon startButtonEnteredImage = new ImageIcon(
-			Main.class.getResource("../images/ButtonBasic2.png"));
-	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/ButtonBasic.png"));
+			Main.class.getResource("../images/button/startButtonEntered.png"));
+	private ImageIcon startButtonBasicImage = new ImageIcon(Main.class.getResource("../images/button/startButton.png"));
 
-	private ImageIcon rankButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/rankButtonEntered.png"));
-	private ImageIcon rankButtonBasicImage = new ImageIcon(Main.class.getResource("../images/rankButtonBasic.png"));
+	private ImageIcon rankButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/button/rankButtonEntered.png"));
+	private ImageIcon rankButtonBasicImage = new ImageIcon(Main.class.getResource("../images/button/rankButton.png"));
 
-	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
-	private ImageIcon quitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/quitButtonBasic.png"));
+	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/button/quitButtonEnteted.png"));
+	private ImageIcon quitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/button/quitButton.png"));
 	private ImageIcon leftButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/leftButtonEntered.png"));
 	private ImageIcon leftButtonBasicImage = new ImageIcon(Main.class.getResource("../images/leftButtonBasic.png"));
 	private ImageIcon rightButtonEnteredImage = new ImageIcon(
@@ -180,6 +180,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 					Thread.sleep(1000); // 효과음을 못 듣고 꺼질 경우를 대비해 소리가 나온 후 1초 후에 종료시키는 것
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();
+					System.out.println(ex.getMessage());
 				}
 				// 랭크시스템진입
 				rankMain();
@@ -214,6 +215,7 @@ public class DynamicBeat extends JPanel /* JFrame */ {
 					Thread.sleep(1000); // 효과음을 못 듣고 꺼질 경우를 대비해 소리가 나온 후 1초 후에 종료시키는 것
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();
+					System.out.println(ex.getMessage());
 				}
 				System.exit(0); // 클릭 했을때 해당 자체 게임이 종료가 된다.
 			}
