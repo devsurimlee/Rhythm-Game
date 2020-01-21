@@ -12,8 +12,8 @@ Java1.8, Swing, AWT, Oracle
 
 수록곡
 + Sound: - 바람에게 부탁해 
-+ Joakim Karud - Wild Flower.mp3
-+ Joakim Karud - Mighty Love.mp3
++ Joakim Karud - Wild Flower
++ Joakim Karud - Mighty Love
 + Energy - Bensound
 
 
