@@ -11,7 +11,7 @@ Java1.8, Swing, AWT, Oracle
 참고: [나동빈님 자바(JAVA) 리듬게임 만들기 강좌](https://youtu.be/xs92kqU2YWg)
 
 수록곡
-+ Sound: DJmax- 바람에게 부탁해 
++ Sound: - 바람에게 부탁해 
 + Joakim Karud - Wild Flower.mp3
 + Joakim Karud - Mighty Love.mp3
 + Energy - Bensound
