@@ -2,12 +2,19 @@
 <img width="80%" src="https://user-images.githubusercontent.com/53467957/72764973-96d5a480-3c2d-11ea-802d-cc6a77f03952.gif">
 
 ### 1. 게임설명
-PC기반 리듬게임으로 S/D/F/Space/J/K/L 7키를 이용합니다.
+PC기반 리듬게임으로 S/D/F/Space/J/K/L 7키를 이용합니다.   
 Easy, Hard 난이도로 나누어져 있으며, 게임 플레이시 획득한 포인트가 랭킹에 반영됩니다
 
 
 ### 2. 개발환경
-Java1.8, Swing, AWT, Oracle
+Java1.8, Swing, AWT, Oracle   
+참고: [나동빈님 자바(JAVA) 리듬게임 만들기 강좌](https://youtu.be/xs92kqU2YWg)
+
+수록곡
++ Sound: DJmax- 바람에게 부탁해 
++ Joakim Karud - Wild Flower.mp3
++ Joakim Karud - Mighty Love.mp3
++ Energy - Bensound
 
 
 ### 3. 게임화면
